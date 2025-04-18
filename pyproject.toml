@@ -2,7 +2,7 @@
 name = "haive-tools"
 version = "0.1.0"
 description = "haive-tools for Haive framework"
-authors = ["0rac130fD31phi <william.astley@algebraicwealth.com>"]
+authors = ["pr1m8 <william.astley@algebraicwealth.com>"]
 license = "MIT"
 readme = "README.md"
 

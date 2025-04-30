@@ -1,5 +1,5 @@
 import pytest
-from src.haive.toolkits.chucknorris_toolkit import (
+from haive.haive.toolkits.chucknorris_toolkit import (
     get_random_joke,
     get_random_joke_by_category,
     get_available_categories,

@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 # Import the tool manager components
-from haive_core.graph.ToolManager import (
+from haive.core.graph.ToolManager import (
     ToolManager, ToolConfig, ToolResult,
     state_tool, store_tool, hybrid_tool,
     tool_manager

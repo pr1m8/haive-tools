@@ -1,7 +1,8 @@
-import requests
-from langchain.tools import StructuredTool, BaseToolkit
-from pydantic import BaseModel, Field
 from typing import List
+
+import requests
+from langchain_core.tools import BaseToolkit, StructuredTool
+from pydantic import BaseModel, Field
 
 
 class BinLookupInput(BaseModel):
@@ -10,7 +11,9 @@ class BinLookupInput(BaseModel):
 
 def lookup_bin(input: BinLookupInput) -> dict:
     headers = {"Accept-Version": "3"}
-    response = requests.get(f"https://lookup.binlist.net/{input.bin_number}", headers=headers)
+    response = requests.get(
+        f"https://lookup.binlist.net/{input.bin_number}", headers=headers
+    )
     if response.status_code == 404:
         return {"error": "No matching card found"}
     response.raise_for_status()
@@ -20,5 +23,5 @@ def lookup_bin(input: BinLookupInput) -> dict:
 bin_lookup_tool = StructuredTool.from_function(
     name="lookup_card_bin_info",
     description="Look up card information based on the first 6 to 8 digits (BIN/IIN) using Binlist.net API",
-    func=lookup_bin
+    func=lookup_bin,
 )

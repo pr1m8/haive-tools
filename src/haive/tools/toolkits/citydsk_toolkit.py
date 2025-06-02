@@ -1,13 +1,18 @@
-from typing import Optional, List
-from pydantic import BaseModel, Field
-from langchain.tools import StructuredTool
-from langchain.tools.base import BaseToolkit
+from typing import List, Optional
+
 import requests
+from langchain_core.tools import StructuredTool
+from langchain_core.tools.base import BaseToolkit
+from pydantic import BaseModel, Field
 
 # --- Linked Data Tool ---
 
+
 class CitySDKLinkedDataQueryInput(BaseModel):
-    query: str = Field(..., description="SPARQL query to send to the CitySDK Linked Data endpoint.")
+    query: str = Field(
+        ..., description="SPARQL query to send to the CitySDK Linked Data endpoint."
+    )
+
 
 def run_citysdk_linkeddata_query(query: str) -> dict:
     endpoint = "https://citysdk.dm.fhnw.ch/sparql"
@@ -15,6 +20,7 @@ def run_citysdk_linkeddata_query(query: str) -> dict:
     response = requests.get(endpoint, params={"query": query}, headers=headers)
     response.raise_for_status()
     return response.json()
+
 
 citysdk_linked_data_tool = StructuredTool.from_function(
     func=run_citysdk_linkeddata_query,
@@ -25,12 +31,14 @@ citysdk_linked_data_tool = StructuredTool.from_function(
 
 # --- Tourism Tool ---
 
+
 class CitySDKTourismPOIInput(BaseModel):
     bbox: Optional[str] = Field(
         None,
-        description="Bounding box (e.g., '24.9384,60.1695,24.9500,60.1750') to filter POIs geographically."
+        description="Bounding box (e.g., '24.9384,60.1695,24.9500,60.1750') to filter POIs geographically.",
     )
     city: Optional[str] = Field(None, description="Optional city to filter POIs.")
+
 
 def get_tourism_pois(bbox: Optional[str] = None, city: Optional[str] = None) -> dict:
     endpoint = "https://tourism-api.citysdk.cm-lisboa.pt/resources/pois"
@@ -43,6 +51,7 @@ def get_tourism_pois(bbox: Optional[str] = None, city: Optional[str] = None) -> 
     response.raise_for_status()
     return response.json()
 
+
 citysdk_tourism_poi_tool = StructuredTool.from_function(
     func=get_tourism_pois,
     name="citysdk_tourism_poi_query",
@@ -51,6 +60,7 @@ citysdk_tourism_poi_tool = StructuredTool.from_function(
 )
 
 # --- Toolkit ---
+
 
 class CitySDKToolkit(BaseToolkit):
     def get_tools(self) -> List[StructuredTool]:

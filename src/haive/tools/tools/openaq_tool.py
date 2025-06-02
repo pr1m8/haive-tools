@@ -1,14 +1,17 @@
 import os
-import requests
 from typing import List, Optional
-from langchain.tools import StructuredTool, BaseToolkit
+
+import requests
+from langchain_core.tools import BaseToolkit, StructuredTool
 
 
 def get_openaq_location(location_id: int, api_key: Optional[str] = None) -> dict:
     """Fetches OpenAQ location details by location ID."""
     api_key = api_key or os.getenv("OPENAQ_API_KEY")
     if not api_key:
-        raise ValueError("Missing OpenAQ API key. Set OPENAQ_API_KEY env variable or pass explicitly.")
+        raise ValueError(
+            "Missing OpenAQ API key. Set OPENAQ_API_KEY env variable or pass explicitly."
+        )
 
     url = f"https://api.openaq.org/v3/locations/{location_id}"
     headers = {"X-API-Key": api_key}

@@ -1,12 +1,16 @@
-import requests
 from typing import Optional
-from langchain.tools import StructuredTool, BaseToolkit
+
+import requests
+from langchain_core.tools import BaseToolkit, StructuredTool
 from pydantic import BaseModel, Field
 
 
 class GetGeekJokeInput(BaseModel):
     """No input required, but kept for LangChain compatibility."""
-    dummy: Optional[str] = Field(None, description="Unused input; the joke requires no input.")
+
+    dummy: Optional[str] = Field(
+        None, description="Unused input; the joke requires no input."
+    )
 
 
 def get_geek_joke(_: GetGeekJokeInput) -> str:
@@ -21,7 +25,5 @@ get_geek_joke_tool = StructuredTool.from_function(
     name="get_geek_joke",
     description="Fetch a random geek or programming-related joke from the Geek Jokes API",
     func=get_geek_joke,
-    args_schema=GetGeekJokeInput
+    args_schema=GetGeekJokeInput,
 )
-
-

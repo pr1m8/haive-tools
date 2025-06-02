@@ -1,8 +1,8 @@
-from langchain.tools import StructuredTool, BaseToolkit
-from typing import Optional
-import requests
 import os
+from typing import Optional
 
+import requests
+from langchain_core.tools import BaseToolkit, StructuredTool
 
 # Environment configuration
 FRED_API_KEY = os.getenv("FRED_API_KEY")
@@ -22,16 +22,22 @@ def fred_get(endpoint: str, params: dict) -> dict:
 def get_category(category_id: int) -> dict:
     return fred_get("category", {"category_id": category_id})
 
+
 def get_category_children(category_id: int) -> dict:
     return fred_get("category/children", {"category_id": category_id})
+
 
 def get_category_series(category_id: int) -> dict:
     return fred_get("category/series", {"category_id": category_id})
 
+
 def get_series(series_id: str) -> dict:
     return fred_get("series", {"series_id": series_id})
 
-def get_series_observations(series_id: str, start_date: Optional[str] = None, end_date: Optional[str] = None) -> dict:
+
+def get_series_observations(
+    series_id: str, start_date: Optional[str] = None, end_date: Optional[str] = None
+) -> dict:
     params = {"series_id": series_id}
     if start_date:
         params["observation_start"] = start_date
@@ -47,27 +53,27 @@ class FREDToolkit(BaseToolkit):
             StructuredTool.from_function(
                 func=get_category,
                 name="get_category",
-                description="Get a FRED category by ID"
+                description="Get a FRED category by ID",
             ),
             StructuredTool.from_function(
                 func=get_category_children,
                 name="get_category_children",
-                description="Get child categories for a FRED category"
+                description="Get child categories for a FRED category",
             ),
             StructuredTool.from_function(
                 func=get_category_series,
                 name="get_category_series",
-                description="List series in a FRED category"
+                description="List series in a FRED category",
             ),
             StructuredTool.from_function(
                 func=get_series,
                 name="get_series",
-                description="Retrieve metadata for a FRED series"
+                description="Retrieve metadata for a FRED series",
             ),
             StructuredTool.from_function(
                 func=get_series_observations,
                 name="get_series_observations",
-                description="Get FRED series observations. Optional start and end date (YYYY-MM-DD)."
+                description="Get FRED series observations. Optional start and end date (YYYY-MM-DD).",
             ),
         ]
 

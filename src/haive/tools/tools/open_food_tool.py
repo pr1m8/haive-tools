@@ -1,11 +1,13 @@
 from typing import Optional
-from pydantic import BaseModel, Field
+
 import requests
-from langchain.tools import StructuredTool
+from langchain_core.tools import StructuredTool
+from pydantic import BaseModel, Field
 
 
 class GetProductInfoInput(BaseModel):
     barcode: str = Field(..., description="The barcode of the product to look up.")
+
 
 def get_product_info(barcode: str) -> dict:
     url = f"https://world.openfoodfacts.org/api/v2/product/{barcode}.json"
@@ -16,6 +18,7 @@ def get_product_info(barcode: str) -> dict:
     if "product" not in data:
         raise ValueError("No product data found.")
     return data["product"]
+
 
 open_food_facts_tool = StructuredTool.from_function(
     func=get_product_info,

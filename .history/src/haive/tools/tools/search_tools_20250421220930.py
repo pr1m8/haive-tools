@@ -18,15 +18,15 @@ client = TavilyClient(api_key=TAVILY_API_KEY)
 @tool
 def tavily_qna(
     query: str,
-    max_results: int = 5,
-    include_answer: bool = True,
-    search_depth: Literal["basic", "advanced"] = "advanced",
-    verbose: bool = False,
-    topic: Literal["general", "news", "finance"] = "general",
-    days: int = 3,
-    include_domains: Sequence[str] = [],
-    exclude_domains: Sequence[str] = [],
-) -> str:
+    max_results: Optional[int] = 5,
+    include_answer: Optional[bool] = True,
+    search_depth: Optional[str] = "advanced",
+    verbose: Optional[bool] = False,
+    topic: Optional[str] = "general",
+    days: Optional[int] = 3,
+    include_domains: Optional[List[str]] = [],
+    exclude_domains: Optional[List[str]] = [],
+) -> Dict:
     """
     Search tool for getting a quick answer to a question.
     Args:
@@ -75,8 +75,8 @@ def tavily_search_context(
     topic: Literal["general", "news"] = "general",
     days: int = 3,
     max_results: int = 5,
-    include_domains: Sequence[str] = [],
-    exclude_domains: Sequence[str] = [],
+    include_domains: Sequence[str] = None,
+    exclude_domains: Sequence[str] = None,
     max_tokens: int = 4000,
     **kwargs,  # Accept custom arguments
 ) -> str:

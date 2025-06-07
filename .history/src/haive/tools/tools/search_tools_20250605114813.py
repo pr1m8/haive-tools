@@ -26,7 +26,7 @@ def tavily_qna(
     days: int = 3,
     include_domains: Sequence[str] = [],
     exclude_domains: Sequence[str] = [],
-) -> str:
+) -> Dict:
     """
     Search tool for getting a quick answer to a question.
     Args:

@@ -1,4 +1,17 @@
-from typing import Annotated, Dict, List, Optional
+"""
+Search Tools Module
+
+This module provides various search tools powered by the Tavily API and web scraping capabilities.
+It offers tools for question answering, web content extraction, context generation for RAG applications,
+and comprehensive search functionality with configurable parameters.
+
+Examples:
+    >>> from haive.tools.tools.search_tools import tavily_search_tool
+    >>> results = tavily_search_tool(query="What is quantum computing?")
+    >>> print(results)
+"""
+
+from typing import Annotated, Dict, List, Literal, Optional, Sequence
 
 from dotenv import load_dotenv
 from langchain_community.document_loaders import WebBaseLoader
@@ -10,7 +23,6 @@ load_dotenv(dotenv_path=".env")
 import os
 
 TAVILY_API_KEY = os.getenv("TAVILY_API_KEY")
-from typing import Literal, Sequence
 
 client = TavilyClient(api_key=TAVILY_API_KEY)
 
@@ -28,15 +40,29 @@ def tavily_qna(
     exclude_domains: Sequence[str] = [],
 ) -> str:
     """
-    Search tool for getting a quick answer to a question.
+    Search tool for getting a quick answer to a specific question using Tavily's QnA search.
+
+    This tool queries the Tavily API with a question and returns a direct answer along
+    with supporting information from web search results.
+
     Args:
-        query (str): The search query string.
-        max_results (Optional[int]): Maximum number of results to return. Default is 5.
-        include_answer (Optional[bool]): Include short answer in response. Default is True.
-        search_depth (Optional[str]): Search depth, either 'basic' or 'advanced'. Default is 'advanced'.
-        verbose (Optional[bool]): Log the tool’s progress. Default is False.
+        query (str): The search query or question to be answered.
+        max_results (int): Maximum number of results to return. Default is 5.
+        include_answer (bool): Include short answer in response. Default is True.
+        search_depth (Literal["basic", "advanced"]): Search depth, either 'basic' or 'advanced'.
+            Default is 'advanced'.
+        verbose (bool): Log the tool's progress. Default is False.
+        topic (Literal["general", "news", "finance"]): Topic category for search context.
+            Default is 'general'.
+        days (int): How recent the information should be in days. Default is 3.
+        include_domains (Sequence[str]): Specific domains to include in search. Default is empty list.
+        exclude_domains (Sequence[str]): Specific domains to exclude from search. Default is empty list.
+
     Returns:
-        Dict: The search results in a structured format.
+        str: The search results with a direct answer to the question.
+
+    Raises:
+        Exception: If the Tavily API request fails.
     """
     response = client.qna_search(
         query=query,
@@ -53,16 +79,21 @@ def tavily_qna(
 @tool
 def tavily_extract(urls: List[str], **kwargs) -> Dict:
     """
-    The Tavily Extract API allows you to effortlessly retrieve raw content from a list of websites,
-    making it ideal for data collection, content analysis, and research. You can also combine Tavily
-    Extract with our Search method: first, obtain a list of relevant documents,
-    then perform further processing on selected links to gather additional information and use it as
-    context for your research tasks.
+    Extract raw content from a list of websites using the Tavily Extract API.
+
+    This tool retrieves the content from specified URLs, which is useful for data collection,
+    content analysis, and research. It can be combined with search methods to first find
+    relevant documents and then extract detailed information from them.
+
     Args:
-        urls (List[str]): The list of URLs to search.
-        **kwargs: Accept custom arguments.
+        urls (List[str]): The list of URLs to extract content from.
+        **kwargs: Additional arguments to pass to the Tavily Extract API.
+
     Returns:
-        Dict: The search results in a structured format.
+        Dict: The extracted content from the specified URLs in a structured format.
+
+    Raises:
+        Exception: If the URL extraction fails or if the API request encounters an error.
     """
     response = client.extract(urls=urls, **kwargs)
     return response
@@ -81,19 +112,32 @@ def tavily_search_context(
     **kwargs,  # Accept custom arguments
 ) -> str:
     """
-    Generating context for a RAG Application.
+    Generate search context for Retrieval Augmented Generation (RAG) applications.
+
+    This tool retrieves relevant context information from the web based on a search query,
+    specifically formatted for use in RAG applications. It provides more comprehensive
+    context than standard search responses.
+
     Args:
         query (str): The search query string.
-        search_depth (Literal["basic", "advanced"]): Search depth, either 'basic' or 'advanced'. Default is 'basic'.
-        topic (Literal["general", "news"]): The topic of the search. Default is 'general'.
-        days (int): The number of days to search for. Default is 3.
+        search_depth (Literal["basic", "advanced"]): Search depth, either 'basic' or 'advanced'.
+            Default is 'basic'.
+        topic (Literal["general", "news"]): The topic category for search context.
+            Default is 'general'.
+        days (int): How recent the information should be in days. Default is 3.
         max_results (int): Maximum number of results to return. Default is 5.
-        include_domains (Sequence[str]): Specific domains to include in search. Default is None.
-        exclude_domains (Sequence[str]): Specific domains to exclude in search. Default is None.
-        max_tokens (int): Maximum number of tokens to return. Default is 4000.
-        **kwargs: Accept custom arguments.
+        include_domains (Sequence[str]): Specific domains to include in search.
+            Default is empty list.
+        exclude_domains (Sequence[str]): Specific domains to exclude from search.
+            Default is empty list.
+        max_tokens (int): Maximum number of tokens to return in the context. Default is 4000.
+        **kwargs: Additional arguments to pass to the Tavily API.
+
     Returns:
-        str: The search results in a structured format.
+        str: The search context formatted for RAG applications.
+
+    Raises:
+        Exception: If the API request fails.
     """
     response = client.get_search_context(
         query=query,
@@ -122,21 +166,32 @@ def tavily_search_tool(
     verbose: Optional[bool] = False,
 ) -> Dict:
     """
-    Query Tavily Search API with full configurability.
+    Query Tavily Search API with full configurability for comprehensive search results.
+
+    This tool provides complete access to all Tavily search options and returns structured
+    search results with customizable content types and filtering options.
 
     Args:
         query (str): The search query string.
         max_results (Optional[int]): Maximum number of results to return. Default is 5.
         include_answer (Optional[bool]): Include short answer in response. Default is True.
-        include_raw_content (Optional[bool]): Include raw content of the search results. Default is False.
+        include_raw_content (Optional[bool]): Include raw content of the search results.
+            Default is False.
         include_images (Optional[bool]): Include images in the response. Default is False.
-        search_depth (Optional[str]): Search depth, either 'basic' or 'advanced'. Default is 'advanced'.
-        include_domains (Optional[List[str]]): Specific domains to include in search. Default is None.
-        exclude_domains (Optional[List[str]]): Specific domains to exclude in search. Default is None.
-        verbose (Optional[bool]): Log the tool’s progress. Default is False.
+        search_depth (Optional[str]): Search depth, either 'basic' or 'advanced'.
+            Default is 'advanced'.
+        include_domains (Optional[List[str]]): Specific domains to include in search.
+            Default is empty list.
+        exclude_domains (Optional[List[str]]): Specific domains to exclude in search.
+            Default is empty list.
+        verbose (Optional[bool]): Log the tool's progress. Default is False.
 
     Returns:
-        Dict: The search results in a structured format.
+        Dict: The search results in a structured format including titles, URLs, and optionally
+            raw content, images, and direct answers.
+
+    Raises:
+        Exception: If the API request fails or if invalid parameters are provided.
     """
     # Initialize TavilySearchResults with provided parameters
     tavily_tool = TavilySearchResults(
@@ -157,11 +212,19 @@ def tavily_search_tool(
 @tool
 def scrape_webpages(urls: List[str]) -> str:
     """
-    Use requests and bs4 to scrape the provided web pages for detailed information.
+    Scrape web pages using WebBaseLoader to extract detailed content information.
+
+    This tool uses langchain's WebBaseLoader to fetch and parse content from specified URLs,
+    returning the extracted content in a formatted document structure.
+
     Args:
-        urls (List[str]): The list of URLs to scrape.
+        urls (List[str]): The list of URLs to scrape for content.
+
     Returns:
-        str: The scraped content in a structured format.
+        str: The scraped content from all URLs in a structured format with document titles.
+
+    Raises:
+        Exception: If URL scraping fails due to network issues, invalid URLs, or access restrictions.
     """
     loader = WebBaseLoader(urls)
     docs = loader.load()

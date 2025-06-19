@@ -1,115 +1,120 @@
-#https://python.langchain.com/docs/integrations/tools/financial_datasets/
-FinancialDatasets Toolkit
-The financial datasets stock market API provides REST endpoints that let you get financial data for 16,000+ tickers spanning 30+ years.
+"""
+Financial Datasets Toolkit Module
 
-Setup
-To use this toolkit, you need two API keys:
+This module provides a toolkit for accessing comprehensive financial data through the Financial Datasets API.
+It offers tools for retrieving financial statements, market data, and other financial information for
+approximately 16,000+ tickers spanning over 30 years of historical data.
 
-FINANCIAL_DATASETS_API_KEY: Get it from financialdatasets.ai. OPENAI_API_KEY: Get it from OpenAI.
+The toolkit provides access to:
+- Income statements
+- Balance sheets
+- Cash flow statements
+- Company financial metrics
+- Historical financial data
 
-import getpass
+Required Environment Variables:
+    - FINANCIAL_DATASETS_API_KEY: Your Financial Datasets API key from financialdatasets.ai
+    - OPENAI_API_KEY: An OpenAI API key for agent functionality
+
+Examples:
+    >>> from haive.tools.toolkits.financialdatasets_toolkit import get_financial_datasets_tools
+    >>> tools = get_financial_datasets_tools()
+    >>> # Use tools with an agent framework
+    >>> from langchain.agents import AgentExecutor, create_tool_calling_agent
+    >>> from langchain_openai import ChatOpenAI
+    >>> from langchain_core.prompts import ChatPromptTemplate
+    >>> model = ChatOpenAI(model="gpt-4o")
+    >>> prompt = ChatPromptTemplate.from_messages([
+    ...     ("system", system_prompt),
+    ...     ("human", "{input}"),
+    ...     ("placeholder", "{agent_scratchpad}"),
+    ... ])
+    >>> agent = create_tool_calling_agent(model, tools, prompt)
+    >>> agent_executor = AgentExecutor(agent=agent, tools=tools)
+    >>> agent_executor.invoke({"input": "What was AAPL's revenue in 2023?"})
+"""
+
 import os
-
-os.environ["FINANCIAL_DATASETS_API_KEY"] = getpass.getpass()
-
-os.environ["OPENAI_API_KEY"] = getpass.getpass()
-
-Installation
-This toolkit lives in the langchain-community package.
-
-%pip install -qU langchain-community
-
-Instantiation
-Now we can instantiate our toolkit:
+from typing import List, Optional
 
 from langchain_community.agent_toolkits.financial_datasets.toolkit import (
     FinancialDatasetsToolkit,
 )
 from langchain_community.utilities.financial_datasets import FinancialDatasetsAPIWrapper
-
-api_wrapper = FinancialDatasetsAPIWrapper(
-    financial_datasets_api_key=os.environ["FINANCIAL_DATASETS_API_KEY"]
-)
-toolkit = FinancialDatasetsToolkit(api_wrapper=api_wrapper)
+from langchain_core.tools import Tool
+from pydantic import BaseModel, Field
 
 
-API Reference:FinancialDatasetsToolkit | FinancialDatasetsAPIWrapper
-Tools
-View available tools:
+class FinancialDatasetsConfig(BaseModel):
+    """
+    Configuration for Financial Datasets API access.
 
-tools = toolkit.get_tools()
+    This model manages the API keys and client configuration for accessing
+    the Financial Datasets API.
 
-Use within an agent
-Let's equip our agent with the FinancialDatasetsToolkit and ask financial questions.
+    Attributes:
+        api_key (Optional[str]): Financial Datasets API key. If not provided, will use
+            the FINANCIAL_DATASETS_API_KEY environment variable.
+    """
 
-system_prompt = """
-You are an advanced financial analysis AI assistant equipped with specialized tools
-to access and analyze financial data. Your primary function is to help users with
-financial analysis by retrieving and interpreting income statements, balance sheets,
-and cash flow statements for publicly traded companies.
+    api_key: Optional[str] = Field(
+        default=os.getenv("FINANCIAL_DATASETS_API_KEY"),
+        description="Financial Datasets API key for accessing financial statement data",
+    )
 
-You have access to the following tools from the FinancialDatasetsToolkit:
+    def get_client(self) -> FinancialDatasetsAPIWrapper:
+        """
+        Initialize and return a Financial Datasets API client.
 
-1. Balance Sheets: Retrieves balance sheet data for a given ticker symbol.
-2. Income Statements: Fetches income statement data for a specified company.
-3. Cash Flow Statements: Accesses cash flow statement information for a particular ticker.
+        Returns:
+            FinancialDatasetsAPIWrapper: An initialized Financial Datasets API wrapper.
 
-Your capabilities include:
+        Raises:
+            ValueError: If no API key is available (neither provided nor in environment).
+        """
+        if not self.api_key:
+            raise ValueError(
+                "Financial Datasets API key is required. Set FINANCIAL_DATASETS_API_KEY environment variable or provide api_key parameter."
+            )
 
-1. Retrieving financial statements for any publicly traded company using its ticker symbol.
-2. Analyzing financial ratios and metrics based on the data from these statements.
-3. Comparing financial performance across different time periods (e.g., year-over-year or quarter-over-quarter).
-4. Identifying trends in a company's financial health and performance.
-5. Providing insights on a company's liquidity, solvency, profitability, and efficiency.
-6. Explaining complex financial concepts in simple terms.
-
-When responding to queries:
-
-1. Always specify which financial statement(s) you're using for your analysis.
-2. Provide context for the numbers you're referencing (e.g., fiscal year, quarter).
-3. Explain your reasoning and calculations clearly.
-4. If you need more information to provide a complete answer, ask for clarification.
-5. When appropriate, suggest additional analyses that might be helpful.
-
-Remember, your goal is to provide accurate, insightful financial analysis to
-help users make informed decisions. Always maintain a professional and objective tone in your responses.
-"""
+        return FinancialDatasetsAPIWrapper(financial_datasets_api_key=self.api_key)
 
 
-Instantiate the LLM.
+def get_financial_datasets_tools(
+    config: Optional[FinancialDatasetsConfig] = None,
+) -> List[Tool]:
+    """
+    Create a list of Financial Datasets tools.
 
-from langchain_core.tools import tool
-from langchain_openai import ChatOpenAI
+    This function creates a set of tools for accessing various financial data
+    endpoints from the Financial Datasets API, including income statements,
+    balance sheets, and cash flow statements.
 
-model = ChatOpenAI(model="gpt-4o")
+    Args:
+        config (Optional[FinancialDatasetsConfig]): Configuration with API key and settings.
+            If not provided, will create a default config using environment variables.
 
-API Reference:tool | ChatOpenAI
-Define a user query.
+    Returns:
+        List[Tool]: A list of tools for interacting with Financial Datasets API.
 
-query = "What was AAPL's revenue in 2023? What about it's total debt in Q1 2024?"
+    Raises:
+        ValueError: If the API client cannot be initialized due to missing credentials.
+    """
+    if config is None:
+        config = FinancialDatasetsConfig()
 
-
-Create the agent.
-
-from langchain.agents import AgentExecutor, create_tool_calling_agent
-from langchain_core.prompts import ChatPromptTemplate
-
-prompt = ChatPromptTemplate.from_messages(
-    [
-        ("system", system_prompt),
-        ("human", "{input}"),
-        # Placeholders fill up a **list** of messages
-        ("placeholder", "{agent_scratchpad}"),
-    ]
-)
+    api_wrapper = config.get_client()
+    toolkit = FinancialDatasetsToolkit(api_wrapper=api_wrapper)
+    return toolkit.get_tools()
 
 
-agent = create_tool_calling_agent(model, tools, prompt)
-agent_executor = AgentExecutor(agent=agent, tools=tools)
+# Create a default toolkit instance for easy importing
+try:
+    financial_datasets_toolkit = get_financial_datasets_tools()
+except ValueError as e:
+    import warnings
 
-API Reference:AgentExecutor | create_tool_calling_agent | ChatPromptTemplate
-Query the agent.
-
-agent_executor.invoke({"input": query})
-
-API reference
+    warnings.warn(
+        f"Financial Datasets toolkit initialization failed: {e}. Set FINANCIAL_DATASETS_API_KEY environment variable."
+    )
+    financial_datasets_toolkit = []

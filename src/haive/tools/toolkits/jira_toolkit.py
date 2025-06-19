@@ -1,73 +1,162 @@
-Jira Toolkit
-This notebook goes over how to use the Jira toolkit.
+"""
+Jira Integration Toolkit Module
 
-The Jira toolkit allows agents to interact with a given Jira instance, performing actions such as searching for issues and creating issues, the tool wraps the atlassian-python-api library, for more see: https://atlassian-python-api.readthedocs.io/jira.html
+This module provides a comprehensive toolkit for interacting with Jira instances via the
+atlassian-python-api library. It enables agents to perform operations such as searching for issues
+using JQL queries, creating new issues, retrieving project information, and making custom API
+calls to the Jira API.
 
-Installation and setup
-To use this tool, you must first set as environment variables: JIRA_API_TOKEN JIRA_USERNAME JIRA_INSTANCE_URL JIRA_CLOUD
+The toolkit includes tools for:
+- Searching issues with JQL (Jira Query Language)
+- Retrieving all accessible projects
+- Creating new issues with customizable fields
+- A "catch-all" tool for accessing any Jira API functionality
+- Creating Confluence pages
 
-%pip install --upgrade --quiet  atlassian-python-api
+Required Environment Variables:
+    - JIRA_API_TOKEN: Your Jira API token
+    - JIRA_USERNAME: Your Jira username (typically email)
+    - JIRA_INSTANCE_URL: URL of your Jira instance
+    - JIRA_CLOUD: Set to "True" for cloud instances
 
-%pip install -qU langchain-community langchain_openai
+Examples:
+    >>> from langchain_community.utilities.jira import JiraAPIWrapper
+    >>> from langchain_community.agent_toolkits.jira.toolkit import JiraToolkit
+    >>> jira = JiraAPIWrapper()
+    >>> toolkit = JiraToolkit.from_jira_api_wrapper(jira)
+    >>> tools = toolkit.get_tools()
+    >>> # Use tools with an agent framework
+    >>> from langchain.agents import initialize_agent, AgentType
+    >>> from langchain_openai import OpenAI
+    >>> llm = OpenAI(temperature=0)
+    >>> agent = initialize_agent(tools, llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=True)
+    >>> agent.run("Create a task in project XYZ to remind me about the quarterly report")
+"""
 
 import os
+from typing import Any, Dict, List, Optional
 
 from langchain.agents import AgentType, initialize_agent
 from langchain_community.agent_toolkits.jira.toolkit import JiraToolkit
 from langchain_community.utilities.jira import JiraAPIWrapper
 from langchain_openai import OpenAI
 
-API Reference:AgentType | initialize_agent | JiraToolkit | JiraAPIWrapper | OpenAI
-os.environ["JIRA_API_TOKEN"] = "abc"
-os.environ["JIRA_USERNAME"] = "123"
-os.environ["JIRA_INSTANCE_URL"] = "https://jira.atlassian.com"
-os.environ["OPENAI_API_KEY"] = "xyz"
-os.environ["JIRA_CLOUD"] = "True"
 
-llm = OpenAI(temperature=0)
-jira = JiraAPIWrapper()
-toolkit = JiraToolkit.from_jira_api_wrapper(jira)
+class JiraToolManager:
+    """
+    Manager class for Jira tools integration.
 
-Tool usage
-Let's see what individual tools are in the Jira toolkit:
+    This class provides a simplified interface for initializing and using the Jira toolkit
+    with LangChain agents.
 
-[(tool.name, tool.description) for tool in toolkit.get_tools()]
+    Attributes:
+        jira_api (JiraAPIWrapper): The wrapped Jira API client.
+        toolkit (JiraToolkit): The Jira toolkit containing all tools.
+        tools (List): The list of individual tools from the toolkit.
+    """
 
-[('JQL Query',
-  '\n    This tool is a wrapper around atlassian-python-api\'s Jira jql API, useful when you need to search for Jira issues.\n    The input to this tool is a JQL query string, and will be passed into atlassian-python-api\'s Jira `jql` function,\n    For example, to find all the issues in project "Test" assigned to the me, you would pass in the following string:\n    project = Test AND assignee = currentUser()\n    or to find issues with summaries that contain the word "test", you would pass in the following string:\n    summary ~ \'test\'\n    '),
- ('Get Projects',
-  "\n    This tool is a wrapper around atlassian-python-api's Jira project API, \n    useful when you need to fetch all the projects the user has access to, find out how many projects there are, or as an intermediary step that involv searching by projects. \n    there is no input to this tool.\n    "),
- ('Create Issue',
-  '\n    This tool is a wrapper around atlassian-python-api\'s Jira issue_create API, useful when you need to create a Jira issue. \n    The input to this tool is a dictionary specifying the fields of the Jira issue, and will be passed into atlassian-python-api\'s Jira `issue_create` function.\n    For example, to create a low priority task called "test issue" with description "test description", you would pass in the following dictionary: \n    {{"summary": "test issue", "description": "test description", "issuetype": {{"name": "Task"}}, "priority": {{"name": "Low"}}}}\n    '),
- ('Catch all Jira API call',
-  '\n    This tool is a wrapper around atlassian-python-api\'s Jira API.\n    There are other dedicated tools for fetching all projects, and creating and searching for issues, \n    use this tool if you need to perform any other actions allowed by the atlassian-python-api Jira API.\n    The input to this tool is a dictionary specifying a function from atlassian-python-api\'s Jira API, \n    as well as a list of arguments and dictionary of keyword arguments to pass into the function.\n    For example, to get all the users in a group, while increasing the max number of results to 100, you would\n    pass in the following dictionary: {{"function": "get_all_users_from_group", "args": ["group"], "kwargs": {{"limit":100}} }}\n    or to find out how many projects are in the Jira instance, you would pass in the following string:\n    {{"function": "projects"}}\n    For more information on the Jira API, refer to https://atlassian-python-api.readthedocs.io/jira.html\n    '),
- ('Create confluence page',
-  'This tool is a wrapper around atlassian-python-api\'s Confluence \natlassian-python-api API, useful when you need to create a Confluence page. The input to this tool is a dictionary \nspecifying the fields of the Confluence page, and will be passed into atlassian-python-api\'s Confluence `create_page` \nfunction. For example, to create a page in the DEMO space titled "This is the title" with body "This is the body. You can use \n<strong>HTML tags</strong>!", you would pass in the following dictionary: {{"space": "DEMO", "title":"This is the \ntitle","body":"This is the body. You can use <strong>HTML tags</strong>!"}} ')]
+    def __init__(
+        self,
+        api_token: Optional[str] = None,
+        username: Optional[str] = None,
+        instance_url: Optional[str] = None,
+        is_cloud: bool = True,
+    ):
+        """
+        Initialize the Jira Tool Manager.
+
+        Args:
+            api_token (Optional[str]): Jira API token. If not provided, will use JIRA_API_TOKEN env var.
+            username (Optional[str]): Jira username. If not provided, will use JIRA_USERNAME env var.
+            instance_url (Optional[str]): Jira instance URL. If not provided, will use JIRA_INSTANCE_URL env var.
+            is_cloud (bool): Whether the Jira instance is cloud-based. Defaults to True.
+        """
+        # Set environment variables if provided
+        if api_token:
+            os.environ["JIRA_API_TOKEN"] = api_token
+        if username:
+            os.environ["JIRA_USERNAME"] = username
+        if instance_url:
+            os.environ["JIRA_INSTANCE_URL"] = instance_url
+        os.environ["JIRA_CLOUD"] = str(is_cloud)
+
+        # Initialize the API wrapper and toolkit
+        self.jira_api = JiraAPIWrapper()
+        self.toolkit = JiraToolkit.from_jira_api_wrapper(self.jira_api)
+        self.tools = self.toolkit.get_tools()
+
+    def create_agent(self, llm=None, verbose: bool = False) -> Any:
+        """
+        Create an agent with the Jira toolkit.
+
+        Args:
+            llm: Language model to use. If None, initializes an OpenAI model.
+            verbose (bool): Whether to enable verbose output. Defaults to False.
+
+        Returns:
+            Any: The initialized agent that can be used with agent.run()
+        """
+        if llm is None:
+            llm = OpenAI(temperature=0)
+
+        return initialize_agent(
+            self.tools,
+            llm,
+            agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
+            verbose=verbose,
+        )
+
+    def get_projects(self) -> List[Dict[str, Any]]:
+        """
+        Get all projects the user has access to.
+
+        Returns:
+            List[Dict[str, Any]]: List of project dictionaries.
+        """
+        return self.jira_api.projects()
+
+    def create_issue(
+        self,
+        summary: str,
+        description: str,
+        project_key: str,
+        issue_type: str = "Task",
+        priority: str = "Medium",
+    ) -> Dict[str, Any]:
+        """
+        Create a new Jira issue directly.
+
+        Args:
+            summary (str): Issue summary/title.
+            description (str): Issue description.
+            project_key (str): Project key (e.g. "ABC").
+            issue_type (str): Issue type name. Defaults to "Task".
+            priority (str): Priority name. Defaults to "Medium".
+
+        Returns:
+            Dict[str, Any]: Response from Jira API containing the created issue details.
+        """
+        issue_dict = {
+            "summary": summary,
+            "description": description,
+            "issuetype": {"name": issue_type},
+            "priority": {"name": priority},
+            "project": {"key": project_key},
+        }
+        return self.jira_api.create_issue(issue_dict)
+
+    def jql_search(self, query: str) -> List[Dict[str, Any]]:
+        """
+        Search for issues using JQL (Jira Query Language).
+
+        Args:
+            query (str): JQL query string (e.g. "project = ABC AND status = 'In Progress'").
+
+        Returns:
+            List[Dict[str, Any]]: List of matching issues.
+        """
+        return self.jira_api.jql_query(query)
 
 
-agent = initialize_agent(
-    toolkit.get_tools(), llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=True
-)
-
-
-agent.run("make a new issue in project PW to remind me to make more fried rice")
-
-
-
-[1m> Entering new AgentExecutor chain...[0m
-[32;1m[1;3m I need to create an issue in project PW
-Action: Create Issue
-Action Input: {"summary": "Make more fried rice", "description": "Reminder to make more fried rice", "issuetype": {"name": "Task"}, "priority": {"name": "Low"}, "project": {"key": "PW"}}[0m
-Observation: [38;5;200m[1;3mNone[0m
-Thought:[32;1m[1;3m I now know the final answer
-Final Answer: A new issue has been created in project PW with the summary "Make more fried rice" and description "Reminder to make more fried rice".[0m
-
-[1m> Finished chain.[0m
-
-
-'A new issue has been created in project PW with the summary "Make more fried rice" and description "Reminder to make more fried rice".'
-
-
-Related
-Tool conceptual guide
-Tool how-to guides
+# Make the tools directly accessible
+JiraTools = JiraToolkit.from_jira_api_wrapper(JiraAPIWrapper()).get_tools()

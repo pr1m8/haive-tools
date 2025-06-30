@@ -78,15 +78,19 @@ Each tool includes:
 
 __version__ = "0.1.0"
 
-from haive.tools.tools.arxiv import ArxivTool
-from haive.tools.tools.duckduckgo_search import DuckDuckGoSearchTool
+from haive.tools.tools.arxiv import arxiv_query_tool
+from haive.tools.tools.duckduckgo_search import (
+    duckduckgo_search_results,
+    duckduckgo_search_tool,
+)
 
 # Import commonly used tools for convenience
-from haive.tools.tools.google import GoogleSearchTool
+from haive.tools.tools.google.google_search import google_search_tool
 
 __all__ = [
-    "GoogleSearchTool",
-    "DuckDuckGoSearchTool",
-    "ArxivTool",
+    "arxiv_query_tool",
+    "duckduckgo_search_tool",
+    "duckduckgo_search_results",
+    "google_search_tool",
     "__version__",
 ]

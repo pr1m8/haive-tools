@@ -16,14 +16,11 @@ Typical usage:
     agent.run("How do I parse JSON in Python?")
 """
 
-from typing import List, Optional
-
 from langchain.agents import load_tools
-from langchain_community.utilities import StackExchangeAPIWrapper
 from langchain_core.tools import BaseTool
 
 
-def get_stackexchange_tools() -> List[BaseTool]:
+def get_stackexchange_tools() -> list[BaseTool]:
     """Get Stack Exchange tools for querying Stack Exchange sites.
 
     This function loads and returns tools for querying Stack Exchange sites,

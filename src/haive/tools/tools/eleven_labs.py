@@ -1,5 +1,4 @@
-"""
-Eleven Labs text-to-speech tool integration.
+"""Eleven Labs text-to-speech tool integration.
 
 This module provides integration with Eleven Labs' text-to-speech API through the LangChain
 tools interface. It allows for converting text to speech using Eleven Labs' high-quality

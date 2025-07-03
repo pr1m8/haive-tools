@@ -1,5 +1,4 @@
-"""
-GitHub Toolkit Module
+"""GitHub Toolkit Module
 
 This module provides a toolkit for interacting with GitHub repositories and API.
 It wraps the GitHubToolkit from LangChain community tools, providing access to
@@ -16,7 +15,6 @@ Examples:
 """
 
 import getpass
-import os
 
 from haive.config.config import Config
 from langchain_community.agent_toolkits.github.toolkit import GitHubToolkit

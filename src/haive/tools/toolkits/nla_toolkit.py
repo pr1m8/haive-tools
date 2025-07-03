@@ -30,7 +30,6 @@ Typical usage:
 from __future__ import annotations
 
 import os
-from typing import List, Optional
 
 from dotenv import load_dotenv
 from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
@@ -63,11 +62,11 @@ class NLAToolkitConfig(BaseModel):
     """
 
     url: str = Field(..., description="URL of the OpenAPI spec or AI plugin manifest.")
-    llm_config: Optional[LLMConfig] = Field(
+    llm_config: LLMConfig | None = Field(
         default_factory=AzureLLMConfig, description="LLM configuration."
     )
 
-    def create_llm(self) -> Optional[BaseLanguageModel]:
+    def create_llm(self) -> BaseLanguageModel | None:
         """Create a language model instance from the configuration.
 
         Returns:
@@ -94,12 +93,12 @@ class StructuredNLAToolkit(BaseToolkit):
     """
 
     config: NLAToolkitConfig
-    llm: Optional[BaseLanguageModel] = None
+    llm: BaseLanguageModel | None = None
     url: str
 
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
-    def get_tools(self) -> List[BaseTool]:
+    def get_tools(self) -> list[BaseTool]:
         """Get the list of tools created from the OpenAPI specification.
 
         This method parses the OpenAPI specification and creates appropriate

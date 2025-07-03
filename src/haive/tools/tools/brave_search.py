@@ -1,5 +1,4 @@
-"""
-Brave Search Tool Module.
+"""Brave Search Tool Module.
 
 This module provides access to Brave Search functionality through langchain's
 BraveSearchWrapper utility. It creates a pre-configured tool for performing web
@@ -18,7 +17,6 @@ Note:
 """
 
 from langchain_community.agent_toolkits import load_tools
-from langchain_community.utilities.brave_search import BraveSearchWrapper
 
 # Initialize the Brave Search tool
 brave_search_tool = load_tools(["brave-search"])

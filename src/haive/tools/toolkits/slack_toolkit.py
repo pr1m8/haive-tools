@@ -24,14 +24,13 @@ Typical usage:
 
 import getpass
 import os
-from typing import List
 
 from haive.config.config import Config
 from langchain_community.agent_toolkits import SlackToolkit
 from langchain_core.tools import BaseTool
 
 
-def get_slack_tools() -> List[BaseTool]:
+def get_slack_tools() -> list[BaseTool]:
     """Get tools for interacting with Slack.
 
     This function creates and returns tools for interacting with Slack workspaces

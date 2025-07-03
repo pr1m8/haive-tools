@@ -1,5 +1,4 @@
-"""
-Wolfram Alpha Integration Tool Module
+"""Wolfram Alpha Integration Tool Module
 
 This module provides tools for accessing Wolfram Alpha's computational knowledge engine API.
 It enables solving complex mathematical, scientific, and general knowledge queries with
@@ -31,7 +30,6 @@ Examples:
 
 import getpass
 import os
-from typing import Any, List
 
 from dotenv import load_dotenv
 from haive.config.config import Config

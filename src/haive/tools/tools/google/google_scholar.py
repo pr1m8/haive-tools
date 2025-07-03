@@ -1,5 +1,4 @@
-"""
-Google Scholar Tool Module
+"""Google Scholar Tool Module
 
 This module provides a tool for searching academic papers using Google Scholar.
 It leverages LangChain's GoogleScholarAPIWrapper to perform searches and return relevant academic results.
@@ -16,30 +15,26 @@ Examples:
 """
 
 import os
-from typing import List
 
 from dotenv import load_dotenv
 from langchain_community.agent_toolkits.load_tools import load_tools
-from langchain_community.utilities.google_scholar import GoogleScholarAPIWrapper
 from pydantic import BaseModel, Field
 
 
 class GoogleScholarResult(BaseModel):
-    """
-    Response model for Google Scholar search results.
+    """Response model for Google Scholar search results.
 
     Attributes:
         results (List[str]): A list of academic paper snippets from Google Scholar.
     """
 
-    results: List[str] = Field(
+    results: list[str] = Field(
         ..., description="List of academic paper snippets from Google Scholar"
     )
 
 
 def initialize_google_scholar():
-    """
-    Initialize the Google Scholar API wrapper with credentials from environment variables.
+    """Initialize the Google Scholar API wrapper with credentials from environment variables.
 
     This function loads environment variables and configures the Google Scholar API client.
 

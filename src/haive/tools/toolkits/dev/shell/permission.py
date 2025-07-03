@@ -1,5 +1,4 @@
-"""
-Shell Permission Module
+"""Shell Permission Module
 
 This module provides a role-based access control (RBAC) system for managing
 permissions in shell environments. It uses Pydantic models to define permission
@@ -20,9 +19,7 @@ Examples:
 """
 
 import json
-import os
 from pathlib import Path
-from typing import Dict, List, Optional
 
 from pydantic import BaseModel, Field, ValidationError
 
@@ -40,13 +37,13 @@ class RolePermissions(BaseModel):
         execute: List of commands allowed for execution.
     """
 
-    read: List[Path] = Field(
+    read: list[Path] = Field(
         default_factory=lambda: [Path("/home")], description="Paths allowed for reading"
     )
-    write: List[Path] = Field(
+    write: list[Path] = Field(
         default_factory=list, description="Paths allowed for writing"
     )
-    execute: List[str] = Field(
+    execute: list[str] = Field(
         default_factory=list, description="Commands allowed for execution"
     )
 
@@ -62,7 +59,7 @@ class RBACConfig(BaseModel):
         roles: Dictionary mapping role names to RolePermissions objects.
     """
 
-    roles: Dict[str, RolePermissions] = Field(
+    roles: dict[str, RolePermissions] = Field(
         default_factory=lambda: {
             "admin": RolePermissions(
                 read=[Path("/")], write=[Path("/etc"), Path("/var")], execute=["*"]
@@ -185,7 +182,7 @@ class RBACConfig(BaseModel):
             with open(path, "w") as f:
                 json.dump({"roles": serializable_config}, f, indent=4)
         except (PermissionError, OSError) as e:
-            raise OSError(f"Failed to save RBAC config to {path}: {str(e)}")
+            raise OSError(f"Failed to save RBAC config to {path}: {e!s}")
 
     @classmethod
     def load_config(cls, path: str = ".rbac_config.json") -> "RBACConfig":
@@ -203,7 +200,7 @@ class RBACConfig(BaseModel):
             ValidationError: If the loaded data does not match the expected schema.
         """
         try:
-            with open(path, "r") as f:
+            with open(path) as f:
                 data = json.load(f)
 
             # Convert string paths back to Path objects
@@ -220,9 +217,7 @@ class RBACConfig(BaseModel):
             raise FileNotFoundError(f"RBAC config file not found: {path}")
         except json.JSONDecodeError as e:
             raise json.JSONDecodeError(
-                f"Invalid JSON in RBAC config file: {str(e)}", e.doc, e.pos
+                f"Invalid JSON in RBAC config file: {e!s}", e.doc, e.pos
             )
         except ValidationError as e:
-            raise ValidationError(
-                f"Invalid RBAC configuration format: {str(e)}", e.model
-            )
+            raise ValidationError(f"Invalid RBAC configuration format: {e!s}", e.model)

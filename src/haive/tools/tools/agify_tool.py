@@ -1,5 +1,4 @@
-"""
-Agify Name Age Estimation Tool Module
+"""Agify Name Age Estimation Tool Module
 
 This module provides a tool for estimating the average age of a person based on their first name
 using the Agify.io API. The tool can optionally filter age estimations by country.
@@ -19,16 +18,13 @@ Examples:
     The estimated age for John in the US is 69 years old
 """
 
-from typing import List, Optional
-
 import requests
 from langchain_core.tools import StructuredTool
 from pydantic import BaseModel, Field
 
 
 class AgifyResponse(BaseModel):
-    """
-    Response model from the Agify API containing age estimation details.
+    """Response model from the Agify API containing age estimation details.
 
     This model represents the structured response from the Agify.io API,
     including the estimated age for a name and additional metadata.
@@ -43,12 +39,11 @@ class AgifyResponse(BaseModel):
     name: str = Field(description="The name to estimate age for")
     age: int = Field(description="The estimated age of the name")
     count: int = Field(description="The number of people with the name in the country")
-    country_id: Optional[str] = Field(None, description="The country code of the name")
+    country_id: str | None = Field(None, description="The country code of the name")
 
 
-def estimate_age(name: str, country_id: Optional[str] = None) -> AgifyResponse:
-    """
-    Estimate the average age of a person based on their first name.
+def estimate_age(name: str, country_id: str | None = None) -> AgifyResponse:
+    """Estimate the average age of a person based on their first name.
 
     This function queries the Agify.io API to get an age estimation based on the provided
     first name. The estimation can be optionally filtered by country.

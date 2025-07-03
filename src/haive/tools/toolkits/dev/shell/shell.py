@@ -1,5 +1,4 @@
-"""
-Secure Shell Command Execution Module
+"""Secure Shell Command Execution Module
 
 This module provides a secure way to execute shell commands with enforced security restrictions.
 It includes path permission checking, command validation, and structured result handling.
@@ -23,7 +22,6 @@ Examples:
 import shlex
 import subprocess
 from pathlib import Path
-from typing import Any, Dict, List
 
 from pydantic import BaseModel, Field
 
@@ -31,8 +29,7 @@ from haive.tools.toolkits.dev.permission import PermissionsManager
 
 
 class CommandExecutionResult(BaseModel):
-    """
-    Represents the result of a shell command execution.
+    """Represents the result of a shell command execution.
 
     This model provides a structured way to capture and access the results of shell
     command execution, including success status, outputs, and any error information.
@@ -57,8 +54,7 @@ class CommandExecutionResult(BaseModel):
 
 
 class SecureShellExecutor:
-    """
-    Shell command executor with enforced security restrictions.
+    """Shell command executor with enforced security restrictions.
 
     This class provides a secure way to execute shell commands with path-based
     permission checking, command validation, and structured result handling.
@@ -69,17 +65,15 @@ class SecureShellExecutor:
     """
 
     def __init__(self):
-        """
-        Initialize a new SecureShellExecutor with default permissions.
+        """Initialize a new SecureShellExecutor with default permissions.
 
         Creates a new shell executor with a default PermissionsManager instance
         to handle security restrictions.
         """
         self.permissions_manager = PermissionsManager()
 
-    def _extract_paths(self, command: str) -> List[str]:
-        """
-        Extract file paths from the command arguments.
+    def _extract_paths(self, command: str) -> list[str]:
+        """Extract file paths from the command arguments.
 
         Parses the command string, splits it into arguments, and identifies
         which arguments are existing file paths that need permission checking.
@@ -94,8 +88,7 @@ class SecureShellExecutor:
         return [arg for arg in args if Path(arg).exists()]
 
     def run(self, command: str, timeout: int = 30) -> CommandExecutionResult:
-        """
-        Execute a command with security enforcement.
+        """Execute a command with security enforcement.
 
         Runs the provided shell command with security checks for file access permissions
         and command timeouts. Command execution is handled safely with proper error capture.

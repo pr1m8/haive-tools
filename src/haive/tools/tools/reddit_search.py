@@ -1,5 +1,4 @@
-"""
-Reddit Search Tool Module.
+"""Reddit Search Tool Module.
 
 This module provides a structured tool for searching Reddit posts based on
 specified parameters like subreddit, query, sort method, and time filter.
@@ -68,8 +67,7 @@ def search_reddit(
     ],
     limit: Annotated[int, Field(description="Max number of results to return")],
 ) -> str:
-    """
-    Search for posts on Reddit with specified parameters.
+    """Search for posts on Reddit with specified parameters.
 
     Args:
         query: Query string to search post titles for

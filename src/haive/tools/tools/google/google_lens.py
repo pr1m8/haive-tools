@@ -1,5 +1,4 @@
-"""
-Google Lens Tool Module
+"""Google Lens Tool Module
 
 This module provides a tool for visual search and image recognition using Google Lens API.
 It leverages LangChain's GoogleLensAPIWrapper to analyze images, identify objects, text,
@@ -18,30 +17,26 @@ Examples:
 """
 
 import os
-from typing import Any, Dict, List
 
 from dotenv import load_dotenv
 from langchain_community.agent_toolkits.load_tools import load_tools
-from langchain_community.utilities.google_lens import GoogleLensAPIWrapper
 from pydantic import BaseModel, Field
 
 
 class GoogleLensResult(BaseModel):
-    """
-    Response model for Google Lens image analysis results.
+    """Response model for Google Lens image analysis results.
 
     Attributes:
         results (List[str]): A list of image analysis information from Google Lens.
     """
 
-    results: List[str] = Field(
+    results: list[str] = Field(
         ..., description="List of image analysis information from Google Lens"
     )
 
 
 class GoogleLensInput(BaseModel):
-    """
-    Input model for Google Lens image analysis.
+    """Input model for Google Lens image analysis.
 
     Attributes:
         image_url (str): URL of the image to analyze.
@@ -53,8 +48,7 @@ class GoogleLensInput(BaseModel):
 
 
 def initialize_google_lens():
-    """
-    Initialize the Google Lens API wrapper with credentials from environment variables.
+    """Initialize the Google Lens API wrapper with credentials from environment variables.
 
     This function loads environment variables and configures the Google Lens API client.
 

@@ -1,5 +1,4 @@
-"""
-Google Calendar Toolkit Module
+"""Google Calendar Toolkit Module
 
 This module provides a toolkit for interacting with Google Calendar services.
 It leverages LangChain's CalendarToolkit to provide tools for creating, reading,
@@ -19,17 +18,14 @@ Examples:
 """
 
 import os
-import sys
-from typing import Any, Dict, List, Optional
+from typing import Any
 
-from haive.config.config import Config
 from langchain_google_community.calendar.toolkit import CalendarToolkit
 from pydantic import BaseModel, Field
 
 
 class CalendarEvent(BaseModel):
-    """
-    Model representing a Google Calendar event.
+    """Model representing a Google Calendar event.
 
     Attributes:
         summary (str): The title/summary of the calendar event.
@@ -47,18 +43,17 @@ class CalendarEvent(BaseModel):
     end: str = Field(
         ..., description="The end time in ISO format (YYYY-MM-DDTHH:MM:SS)"
     )
-    description: Optional[str] = Field(
+    description: str | None = Field(
         None, description="Optional description for the event"
     )
-    location: Optional[str] = Field(None, description="Optional location for the event")
-    attendees: Optional[List[str]] = Field(
+    location: str | None = Field(None, description="Optional location for the event")
+    attendees: list[str] | None = Field(
         None, description="Optional list of attendee email addresses"
     )
 
 
 class CalendarResponse(BaseModel):
-    """
-    Response model for Google Calendar operations.
+    """Response model for Google Calendar operations.
 
     Attributes:
         success (bool): Whether the operation was successful.
@@ -67,17 +62,16 @@ class CalendarResponse(BaseModel):
     """
 
     success: bool = Field(..., description="Whether the operation was successful")
-    data: Optional[Dict[str, Any]] = Field(
+    data: dict[str, Any] | None = Field(
         None, description="Optional data returned from the operation"
     )
-    message: Optional[str] = Field(
+    message: str | None = Field(
         None, description="Optional message about the operation result"
     )
 
 
 def initialize_google_calendar_toolkit():
-    """
-    Initialize the Google Calendar toolkit with OAuth2 credentials.
+    """Initialize the Google Calendar toolkit with OAuth2 credentials.
 
     This function checks for the existence of the credentials file and initializes
     the Google Calendar toolkit if the file exists.
@@ -115,7 +109,7 @@ def initialize_google_calendar_toolkit():
 # Initialize the Google Calendar toolkit
 try:
     google_calendar_toolkit = initialize_google_calendar_toolkit()
-except Exception as e:
+except Exception:
     # Set to empty list if initialization fails, allowing the application to continue
     # but with calendar functionality disabled
     google_calendar_toolkit = []

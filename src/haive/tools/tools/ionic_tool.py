@@ -15,14 +15,13 @@ Attributes:
     tools: List containing the Ionic tool for easy integration
 """
 
-from ionic_langchain.tool import Ionic, IonicTool
+from ionic_langchain.tool import IonicTool
 
 # Initialize the Ionic Commerce shopping tool
 ionic_tool = IonicTool().tool()
 
 # Configure the tool description to provide detailed usage instructions
-ionic_tool.description = str(
-    """
+ionic_tool.description = """
 Ionic is an e-commerce shopping tool. Assistant uses the Ionic Commerce Shopping Tool to find, discover, and compare products from thousands of online retailers. Assistant should use the tool when the user is looking for a product recommendation or trying to find a specific product.
 
 The user may specify the number of results, minimum price, and maximum price for which they want to see results.
@@ -40,7 +39,6 @@ Return them as a markdown formatted list with each recommendation from tool resu
 3. Product 3: [Price] -- link
 4. Product 4: [Price] -- link
 """
-)
 
 # List of tools for easy integration with agents
 tools = [ionic_tool]

@@ -1,5 +1,4 @@
-"""
-OpenAQ API Tool Module
+"""OpenAQ API Tool Module
 
 This module provides tools for accessing air quality data from the OpenAQ API.
 It currently supports retrieving detailed information about specific air quality
@@ -16,15 +15,13 @@ Examples:
 """
 
 import os
-from typing import List, Optional
 
 import requests
-from langchain_core.tools import BaseToolkit, StructuredTool
+from langchain_core.tools import StructuredTool
 
 
-def get_openaq_location(location_id: int, api_key: Optional[str] = None) -> dict:
-    """
-    Fetch detailed information about an air quality monitoring location from OpenAQ.
+def get_openaq_location(location_id: int, api_key: str | None = None) -> dict:
+    """Fetch detailed information about an air quality monitoring location from OpenAQ.
 
     This function retrieves comprehensive metadata about a specific air quality
     monitoring station identified by its location ID, including its coordinates,

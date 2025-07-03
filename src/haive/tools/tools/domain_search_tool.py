@@ -1,5 +1,4 @@
-"""
-Domain search tool for querying registered domain names.
+"""Domain search tool for querying registered domain names.
 
 This module provides a tool for searching registered domain names based on keywords
 using the domainsdb.info API. It allows users to find existing domains containing
@@ -26,16 +25,13 @@ Note:
     - No authentication is required for basic lookups
 """
 
-from typing import Optional
-
 import requests
 from langchain_core.tools import StructuredTool
 from pydantic import AnyUrl, BaseModel, Field
 
 
 class DomainSearchInput(BaseModel):
-    """
-    Input model for the domain search tool.
+    """Input model for the domain search tool.
 
     Attributes:
         domain: A domain keyword to search for. This can be any term that might appear
@@ -49,8 +45,7 @@ class DomainSearchInput(BaseModel):
 
 
 def search_registered_domains(domain: str) -> str:
-    """
-    Search for registered domain names using a keyword.
+    """Search for registered domain names using a keyword.
 
     Queries the domainsdb.info API to find registered domain names containing the
     specified keyword. Returns up to 10 matching domain names.

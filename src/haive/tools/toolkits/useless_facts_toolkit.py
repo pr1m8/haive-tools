@@ -1,5 +1,4 @@
-"""
-Useless Facts Toolkit Module.
+"""Useless Facts Toolkit Module.
 
 This module provides a toolkit for retrieving random and daily useless facts.
 It leverages the Useless Facts API (https://uselessfacts.jsph.pl/) to provide
@@ -22,8 +21,6 @@ Note:
     No API key is required for the Useless Facts API, though rate limits may apply.
 """
 
-from typing import Optional
-
 import requests
 from langchain_core.tools import StructuredTool
 from pydantic import BaseModel, Field
@@ -39,14 +36,13 @@ class FactInput(BaseModel):
         language: Language code for the fact (en or de)
     """
 
-    language: Optional[str] = Field(
+    language: str | None = Field(
         default="en", description="Language of the fact. Supports 'en' or 'de'."
     )
 
 
-def get_random_fact(language: Optional[str] = "en") -> str:
-    """
-    Retrieve a random useless fact from the API.
+def get_random_fact(language: str | None = "en") -> str:
+    """Retrieve a random useless fact from the API.
 
     Args:
         language: Language code, either 'en' for English or 'de' for German
@@ -66,9 +62,8 @@ def get_random_fact(language: Optional[str] = "en") -> str:
     return res.json().get("text", "No fact found.")
 
 
-def get_todays_fact(language: Optional[str] = "en") -> str:
-    """
-    Retrieve today's useless fact from the API.
+def get_todays_fact(language: str | None = "en") -> str:
+    """Retrieve today's useless fact from the API.
 
     Args:
         language: Language code, either 'en' for English or 'de' for German

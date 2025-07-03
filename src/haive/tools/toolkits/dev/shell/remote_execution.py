@@ -1,5 +1,6 @@
 import paramiko
 
+
 class RemoteExecutor:
     """Securely execute commands on a remote machine via SSH."""
 
@@ -12,19 +13,22 @@ class RemoteExecutor:
 
     def connect(self):
         """Establish SSH connection."""
-        self.client.connect(self.hostname, username=self.username, key_filename=self.key_path)
+        self.client.connect(
+            self.hostname, username=self.username, key_filename=self.key_path
+        )
 
     def run_remote(self, command: str):
         """Execute a command remotely."""
         stdin, stdout, stderr = self.client.exec_command(command)
         return {
             "stdout": stdout.read().decode().strip(),
-            "stderr": stderr.read().decode().strip()
+            "stderr": stderr.read().decode().strip(),
         }
 
     def close(self):
         """Close SSH connection."""
         self.client.close()
+
 
 # Example Usage:
 remote_executor = RemoteExecutor("192.168.1.100", "user", "~/.ssh/id_rsa")

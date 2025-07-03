@@ -1,5 +1,4 @@
-"""
-Alpha Vantage Toolkit Module
+"""Alpha Vantage Toolkit Module
 
 This module provides a toolkit for accessing financial market data through the Alpha Vantage API.
 It offers tools for retrieving stock market data, currency exchange rates, market sentiment analysis,
@@ -30,7 +29,6 @@ Examples:
 """
 
 import os
-from typing import Dict, List, Optional
 
 from dotenv import load_dotenv
 from langchain_community.utilities.alpha_vantage import AlphaVantageAPIWrapper
@@ -41,8 +39,7 @@ load_dotenv(".env")
 
 
 class AlphaVantageConfig(BaseModel):
-    """
-    Configuration for Alpha Vantage API access.
+    """Configuration for Alpha Vantage API access.
 
     This model manages the API key and client configuration for accessing
     the Alpha Vantage financial data API.
@@ -52,14 +49,13 @@ class AlphaVantageConfig(BaseModel):
             the ALPHAVANTAGE_API_KEY environment variable.
     """
 
-    api_key: Optional[str] = Field(
+    api_key: str | None = Field(
         default=os.getenv("ALPHAVANTAGE_API_KEY"),
         description="Alpha Vantage API key for accessing financial data services",
     )
 
     def get_client(self) -> AlphaVantageAPIWrapper:
-        """
-        Initialize and return an Alpha Vantage API client.
+        """Initialize and return an Alpha Vantage API client.
 
         Returns:
             AlphaVantageAPIWrapper: An initialized Alpha Vantage API wrapper.
@@ -70,9 +66,8 @@ class AlphaVantageConfig(BaseModel):
         return AlphaVantageAPIWrapper()
 
 
-def get_alpha_vantage_tools(config: AlphaVantageConfig) -> List[Tool]:
-    """
-    Create a list of Alpha Vantage financial data tools.
+def get_alpha_vantage_tools(config: AlphaVantageConfig) -> list[Tool]:
+    """Create a list of Alpha Vantage financial data tools.
 
     This function creates a set of tools for accessing various financial data
     endpoints from the Alpha Vantage API, including stock data, exchange rates,

@@ -1,5 +1,4 @@
-"""
-Google Trends Tool Module
+"""Google Trends Tool Module
 
 This module provides a tool for retrieving trend data from Google Trends.
 It leverages LangChain's GoogleTrendsQueryRun to fetch information about trending search terms,
@@ -16,9 +15,6 @@ Examples:
     ['The interest in blockchain technology has increased by 120% over the past year...']
 """
 
-import os
-from typing import Any, Dict, List
-
 from dotenv import load_dotenv
 from langchain_community.tools.google_trends import GoogleTrendsQueryRun
 from langchain_community.utilities.google_trends import GoogleTrendsAPIWrapper
@@ -26,21 +22,19 @@ from pydantic import BaseModel, Field
 
 
 class GoogleTrendsResult(BaseModel):
-    """
-    Response model for Google Trends search results.
+    """Response model for Google Trends search results.
 
     Attributes:
         results (List[str]): A list of trend information from Google Trends.
     """
 
-    results: List[str] = Field(
+    results: list[str] = Field(
         ..., description="List of trend information from Google Trends"
     )
 
 
 def initialize_google_trends():
-    """
-    Initialize the Google Trends API wrapper.
+    """Initialize the Google Trends API wrapper.
 
     This function loads environment variables and configures the Google Trends API client.
 

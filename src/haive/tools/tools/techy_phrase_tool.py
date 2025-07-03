@@ -1,5 +1,4 @@
-"""
-Techy Phrase Generator Tool Module
+"""Techy Phrase Generator Tool Module
 
 This module provides tools for generating random technology-related phrases using the Techy API.
 It offers functionality to retrieve phrases in both plain text and structured JSON formats,
@@ -22,8 +21,7 @@ from langchain_core.tools import Tool
 
 
 def get_techy_phrase_text() -> str:
-    """
-    Fetch a random technology-related phrase in plain text format.
+    """Fetch a random technology-related phrase in plain text format.
 
     This function retrieves a randomly generated tech-sounding phrase from the
     Techy API in simple text format.
@@ -38,8 +36,7 @@ def get_techy_phrase_text() -> str:
 
 
 def get_techy_phrase_json() -> dict:
-    """
-    Fetch a random technology-related phrase in structured JSON format.
+    """Fetch a random technology-related phrase in structured JSON format.
 
     This function retrieves a randomly generated tech-sounding phrase from the
     Techy API in JSON format, which includes additional metadata.

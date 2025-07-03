@@ -21,7 +21,6 @@ Attributes:
 from __future__ import annotations
 
 import os
-from typing import List, Optional
 
 from amadeus import Client
 from dotenv import load_dotenv
@@ -61,7 +60,7 @@ class AmadeusToolkitConfig(BaseModel):
         default_factory=lambda: os.getenv("AMADEUS_CLIENT_SECRET", ""),
         description="Amadeus API client secret.",
     )
-    llm_config: Optional[LLMConfig] = Field(
+    llm_config: LLMConfig | None = Field(
         default=AzureLLMConfig(),
         description="LLM configuration dict, passed to LLMConfig",
     )
@@ -77,7 +76,7 @@ class AmadeusToolkitConfig(BaseModel):
         """
         return Client(client_id=self.client_id, client_secret=self.client_secret)
 
-    def create_llm(self) -> Optional[BaseLanguageModel]:
+    def create_llm(self) -> BaseLanguageModel | None:
         """Creates a language model instance from the config if provided.
 
         Returns:
@@ -105,11 +104,11 @@ class AmadeusToolkit(BaseToolkit):
 
     config: AmadeusToolkitConfig
     client: Client
-    llm: Optional[BaseLanguageModel] = None
+    llm: BaseLanguageModel | None = None
 
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
-    def get_tools(self) -> List[BaseTool]:
+    def get_tools(self) -> list[BaseTool]:
         """Gets the list of available Amadeus API tools.
 
         Returns:
@@ -125,7 +124,7 @@ class AmadeusToolkit(BaseToolkit):
         ]
 
     @classmethod
-    def from_config(cls, config: AmadeusToolkitConfig) -> "AmadeusToolkit":
+    def from_config(cls, config: AmadeusToolkitConfig) -> AmadeusToolkit:
         """Creates a toolkit instance from a configuration object.
 
         Args:

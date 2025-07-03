@@ -1,5 +1,4 @@
-"""
-DALL-E Image Generator Tool Module.
+"""DALL-E Image Generator Tool Module.
 
 This module provides a tool for generating images using OpenAI's DALL-E model
 through the LangChain interface. It loads the DALL-E image generator tool from

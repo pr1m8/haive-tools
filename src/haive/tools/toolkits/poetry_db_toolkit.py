@@ -14,8 +14,6 @@ Attributes:
     BASE_URL: The base URL for the PoetryDB API
 """
 
-from typing import List, Optional
-
 import requests
 from langchain_core.tools import StructuredTool
 from pydantic import BaseModel, Field
@@ -34,7 +32,7 @@ class AuthorSearchInput(BaseModel):
     author: str = Field(..., description="Name of the poet to search for")
 
 
-def search_poems_by_author(author: str) -> List[dict]:
+def search_poems_by_author(author: str) -> list[dict]:
     """Searches for poems by a specific author or poet.
 
     Args:
@@ -110,7 +108,7 @@ class RandomPoemInput(BaseModel):
     count: int = Field(..., description="Number of random poems to fetch")
 
 
-def get_random_poems(count: int) -> List[dict]:
+def get_random_poems(count: int) -> list[dict]:
     """Fetches a specified number of random poems.
 
     Args:
@@ -147,7 +145,7 @@ class LineSearchInput(BaseModel):
     phrase: str = Field(..., description="Line or phrase to search for in poems")
 
 
-def search_by_line_fragment(phrase: str) -> List[dict]:
+def search_by_line_fragment(phrase: str) -> list[dict]:
     """Searches for poems containing a specific line or text fragment.
 
     Args:
@@ -174,7 +172,7 @@ search_by_line_tool = StructuredTool.from_function(
 
 
 ### --- Toolkit Wrapper --- ###
-def get_poetry_toolkit() -> List[StructuredTool]:
+def get_poetry_toolkit() -> list[StructuredTool]:
     """Gets a list of tools for interacting with the PoetryDB API.
 
     Returns:

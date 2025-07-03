@@ -1,5 +1,4 @@
-"""
-Merriam-Webster dictionary API integration tools.
+"""Merriam-Webster dictionary API integration tools.
 
 This module provides integration with Merriam-Webster's dictionary APIs through
 the LangChain tools interface. It allows for querying word definitions, synonyms,
@@ -29,12 +28,6 @@ Note:
     - Documentation for the Merriam-Webster API is available at:
       https://dictionaryapi.com/products/api-collegiate-dictionary
 """
-
-import os
-from typing import Any, Dict, List, Optional
-
-from langchain_core.tools import BaseTool, StructuredTool
-from pydantic import BaseModel, Field
 
 # This file is currently a placeholder for the Merriam-Webster dictionary API integration.
 # Actual implementation will include:

@@ -1,5 +1,4 @@
-"""
-DuckDuckGo Search Tools Module
+"""DuckDuckGo Search Tools Module
 
 This module provides tools for performing web searches using the DuckDuckGo search engine.
 It includes tools for both getting formatted text results and structured search results.
@@ -23,8 +22,6 @@ Examples:
     >>> for result in structured_results:
     ...     print(f"Title: {result['title']}\nURL: {result['link']}")
 """
-
-from typing import Any, Dict, List
 
 from langchain_community.tools import DuckDuckGoSearchResults, DuckDuckGoSearchRun
 

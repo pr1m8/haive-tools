@@ -1,5 +1,4 @@
-"""
-Google Places Tool Module
+"""Google Places Tool Module
 
 This module provides a tool for searching and retrieving information about places using Google Places API.
 It leverages LangChain's GooglePlacesTool to search for locations, businesses, points of interest,
@@ -18,7 +17,7 @@ Examples:
 """
 
 import os
-from typing import Any, Dict, List
+from typing import Any
 
 from dotenv import load_dotenv
 from langchain_google_community import GooglePlacesTool
@@ -26,21 +25,19 @@ from pydantic import BaseModel, Field
 
 
 class GooglePlacesResult(BaseModel):
-    """
-    Response model for Google Places search results.
+    """Response model for Google Places search results.
 
     Attributes:
         results (List[Dict[str, Any]]): A list of place information from Google Places API.
     """
 
-    results: List[Dict[str, Any]] = Field(
+    results: list[dict[str, Any]] = Field(
         ..., description="List of place information from Google Places API"
     )
 
 
 def initialize_google_places():
-    """
-    Initialize the Google Places API wrapper with credentials from environment variables.
+    """Initialize the Google Places API wrapper with credentials from environment variables.
 
     This function loads environment variables and configures the Google Places API client.
 

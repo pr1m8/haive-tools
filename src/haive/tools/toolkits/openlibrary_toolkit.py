@@ -17,8 +17,6 @@ Typical usage:
     agent.run("Find books by J.K. Rowling")
 """
 
-from typing import List, Optional
-
 import requests
 from langchain_core.tools import StructuredTool
 from pydantic import BaseModel, Field

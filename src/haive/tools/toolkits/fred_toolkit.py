@@ -1,5 +1,4 @@
-"""
-Federal Reserve Economic Data (FRED) Toolkit Module
+"""Federal Reserve Economic Data (FRED) Toolkit Module
 
 This toolkit provides tools for accessing economic data from the Federal Reserve Bank of St. Louis
 FRED API. It allows retrieval of economic time series data, categories, and related metadata.
@@ -26,7 +25,7 @@ Examples:
 """
 
 import os
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 import requests
 from langchain_core.tools import BaseToolkit, StructuredTool
@@ -37,9 +36,8 @@ FRED_API_KEY = os.getenv("FRED_API_KEY")
 BASE_URL = "https://api.stlouisfed.org/fred"
 
 
-def fred_get(endpoint: str, params: Dict[str, Any]) -> Dict[str, Any]:
-    """
-    Helper function to call the FRED API with proper authentication and formatting.
+def fred_get(endpoint: str, params: dict[str, Any]) -> dict[str, Any]:
+    """Helper function to call the FRED API with proper authentication and formatting.
 
     This function adds the API key and sets the response format to JSON before
     making the request to the specified FRED API endpoint.
@@ -88,16 +86,13 @@ class SeriesObservationsInput(BaseModel):
     series_id: str = Field(
         ..., description="The FRED series ID to fetch observations for"
     )
-    start_date: Optional[str] = Field(
-        None, description="Start date in YYYY-MM-DD format"
-    )
-    end_date: Optional[str] = Field(None, description="End date in YYYY-MM-DD format")
+    start_date: str | None = Field(None, description="Start date in YYYY-MM-DD format")
+    end_date: str | None = Field(None, description="End date in YYYY-MM-DD format")
 
 
 # Core endpoint functions
-def get_category(category_id: int) -> Dict[str, Any]:
-    """
-    Get information about a FRED category by its ID.
+def get_category(category_id: int) -> dict[str, Any]:
+    """Get information about a FRED category by its ID.
 
     Categories in FRED organize data series into groups like 'Money, Banking, & Finance',
     'Population, Employment, & Labor Markets', etc.
@@ -114,9 +109,8 @@ def get_category(category_id: int) -> Dict[str, Any]:
     return fred_get("category", {"category_id": category_id})
 
 
-def get_category_children(category_id: int) -> Dict[str, Any]:
-    """
-    Get the child categories of a specified FRED category.
+def get_category_children(category_id: int) -> dict[str, Any]:
+    """Get the child categories of a specified FRED category.
 
     This function retrieves subcategories for a given parent category,
     allowing exploration of the FRED category hierarchy.
@@ -133,9 +127,8 @@ def get_category_children(category_id: int) -> Dict[str, Any]:
     return fred_get("category/children", {"category_id": category_id})
 
 
-def get_category_series(category_id: int) -> Dict[str, Any]:
-    """
-    Get all series belonging to a specified FRED category.
+def get_category_series(category_id: int) -> dict[str, Any]:
+    """Get all series belonging to a specified FRED category.
 
     This function retrieves the economic data series that are classified under
     the specified category.
@@ -152,9 +145,8 @@ def get_category_series(category_id: int) -> Dict[str, Any]:
     return fred_get("category/series", {"category_id": category_id})
 
 
-def get_series(series_id: str) -> Dict[str, Any]:
-    """
-    Get metadata about a specific FRED data series.
+def get_series(series_id: str) -> dict[str, Any]:
+    """Get metadata about a specific FRED data series.
 
     This function retrieves detailed information about an economic data series,
     including its title, units, frequency, seasonal adjustment, and more.
@@ -172,10 +164,9 @@ def get_series(series_id: str) -> Dict[str, Any]:
 
 
 def get_series_observations(
-    series_id: str, start_date: Optional[str] = None, end_date: Optional[str] = None
-) -> Dict[str, Any]:
-    """
-    Get the actual data values (observations) for a FRED time series.
+    series_id: str, start_date: str | None = None, end_date: str | None = None
+) -> dict[str, Any]:
+    """Get the actual data values (observations) for a FRED time series.
 
     This function retrieves the time series data points for a specified economic indicator,
     with optional date range filtering.
@@ -200,8 +191,7 @@ def get_series_observations(
 
 
 class FREDToolkit(BaseToolkit):
-    """
-    Toolkit for accessing Federal Reserve Economic Data (FRED).
+    """Toolkit for accessing Federal Reserve Economic Data (FRED).
 
     This toolkit provides a collection of tools for interacting with the FRED API
     to retrieve economic data series, categories, and related information.
@@ -210,9 +200,8 @@ class FREDToolkit(BaseToolkit):
     of economic time series from dozens of national, international, public, and private sources.
     """
 
-    def get_tools(self) -> List[StructuredTool]:
-        """
-        Get all tools in the FRED toolkit.
+    def get_tools(self) -> list[StructuredTool]:
+        """Get all tools in the FRED toolkit.
 
         Returns:
             List[StructuredTool]: A list of tools for interacting with the FRED API.

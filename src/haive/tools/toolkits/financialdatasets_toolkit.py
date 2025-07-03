@@ -1,5 +1,4 @@
-"""
-Financial Datasets Toolkit Module
+"""Financial Datasets Toolkit Module
 
 This module provides a toolkit for accessing comprehensive financial data through the Financial Datasets API.
 It offers tools for retrieving financial statements, market data, and other financial information for
@@ -35,7 +34,6 @@ Examples:
 """
 
 import os
-from typing import List, Optional
 
 from langchain_community.agent_toolkits.financial_datasets.toolkit import (
     FinancialDatasetsToolkit,
@@ -46,8 +44,7 @@ from pydantic import BaseModel, Field
 
 
 class FinancialDatasetsConfig(BaseModel):
-    """
-    Configuration for Financial Datasets API access.
+    """Configuration for Financial Datasets API access.
 
     This model manages the API keys and client configuration for accessing
     the Financial Datasets API.
@@ -57,14 +54,13 @@ class FinancialDatasetsConfig(BaseModel):
             the FINANCIAL_DATASETS_API_KEY environment variable.
     """
 
-    api_key: Optional[str] = Field(
+    api_key: str | None = Field(
         default=os.getenv("FINANCIAL_DATASETS_API_KEY"),
         description="Financial Datasets API key for accessing financial statement data",
     )
 
     def get_client(self) -> FinancialDatasetsAPIWrapper:
-        """
-        Initialize and return a Financial Datasets API client.
+        """Initialize and return a Financial Datasets API client.
 
         Returns:
             FinancialDatasetsAPIWrapper: An initialized Financial Datasets API wrapper.
@@ -81,10 +77,9 @@ class FinancialDatasetsConfig(BaseModel):
 
 
 def get_financial_datasets_tools(
-    config: Optional[FinancialDatasetsConfig] = None,
-) -> List[Tool]:
-    """
-    Create a list of Financial Datasets tools.
+    config: FinancialDatasetsConfig | None = None,
+) -> list[Tool]:
+    """Create a list of Financial Datasets tools.
 
     This function creates a set of tools for accessing various financial data
     endpoints from the Financial Datasets API, including income statements,

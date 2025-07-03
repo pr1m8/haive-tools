@@ -1,5 +1,4 @@
-"""
-Pokebase Tool Module
+"""Pokebase Tool Module
 
 This module provides a tool for accessing Pokémon data from the PokéAPI using the pokebase
 library. It allows querying various Pokémon resources including Pokémon species, moves,
@@ -15,7 +14,7 @@ Examples:
     >>> print(result["name"])  # Outputs: pikachu
 """
 
-from typing import Literal, Optional
+from typing import Literal
 
 import pokebase as pb
 from langchain_core.tools import StructuredTool
@@ -23,8 +22,7 @@ from pydantic import BaseModel, Field
 
 
 class PokeBaseQueryInput(BaseModel):
-    """
-    Input model for querying PokéAPI resources via the Pokebase library.
+    """Input model for querying PokéAPI resources via the Pokebase library.
 
     This model defines the parameters needed to query different types of
     Pokémon-related resources from the PokéAPI.
@@ -47,8 +45,7 @@ class PokeBaseQueryInput(BaseModel):
 
 
 def query_pokebase_resource(input: PokeBaseQueryInput) -> dict:
-    """
-    Query a PokéAPI resource using the pokebase library.
+    """Query a PokéAPI resource using the pokebase library.
 
     This function retrieves data for a specified Pokémon-related resource
     from the PokéAPI using the pokebase library and returns the data as

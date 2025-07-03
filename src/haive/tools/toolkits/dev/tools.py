@@ -1,5 +1,4 @@
-"""
-Development toolkit for code editing, quality assurance, and Git operations.
+"""Development toolkit for code editing, quality assurance, and Git operations.
 
 This module provides a set of tools for automated code manipulation, including:
 - AST-based code transformations (renaming, docstring addition, etc.)
@@ -24,23 +23,14 @@ Examples:
 """
 
 import difflib
-import json
 import logging
 import os
-import re
-import subprocess
-import tempfile
 from dataclasses import dataclass
 from enum import Enum
-from pathlib import Path
-from typing import Any, Callable, Dict, List, Optional, Tuple, Type, Union
+from typing import Any
 
 import libcst as cst
-from haive.core.engine.aug_llm import AugLLMConfig, compose_runnable
-from haive.core.models.llm.base import AzureLLMConfig, LLMProvider
-from langchain_core.tools import BaseTool, StructuredTool
-from libcst import matchers as m
-from libcst.metadata import MetadataWrapper, PositionProvider
+from libcst.metadata import MetadataWrapper
 from pydantic import BaseModel, Field
 
 # Configure logging
@@ -53,8 +43,7 @@ logger = logging.getLogger(__name__)
 
 
 class EditType(str, Enum):
-    """
-    Types of AST edits that can be performed.
+    """Types of AST edits that can be performed.
 
     Defines the supported code transformation operations for the AST-based
     code editor tools.
@@ -91,8 +80,7 @@ class EditType(str, Enum):
 
 
 class GitOperation(str, Enum):
-    """
-    Types of Git operations.
+    """Types of Git operations.
 
     Defines the supported Git operations that can be performed
     through the Git operation tools.
@@ -119,8 +107,7 @@ class GitOperation(str, Enum):
 
 
 class CodeQualityTool(str, Enum):
-    """
-    Code quality tools that can be used.
+    """Code quality tools that can be used.
 
     Defines the supported code quality and formatting tools
     that can be executed on Python code.
@@ -148,8 +135,7 @@ class CodeQualityTool(str, Enum):
 
 
 class ASTEditConfig(BaseModel):
-    """
-    Configuration for AST-based code edits.
+    """Configuration for AST-based code edits.
 
     Defines the parameters needed to perform Abstract Syntax Tree
     transformations on Python code, including the edit type and
@@ -189,79 +175,79 @@ class ASTEditConfig(BaseModel):
     )
 
     # Common parameters (used by multiple edit types)
-    target_name: Optional[str] = Field(
+    target_name: str | None = Field(
         None, description="Name of the function, class, or variable to modify"
     )
-    new_name: Optional[str] = Field(
+    new_name: str | None = Field(
         None, description="New name for the function, class, or variable being renamed"
     )
-    docstring: Optional[str] = Field(
+    docstring: str | None = Field(
         None, description="Content of the docstring to add or replace"
     )
 
     # Rename parameters
-    scope: Optional[str] = Field(
+    scope: str | None = Field(
         None, description="Scope for variable renaming (function or class name)"
     )
 
     # Function extraction parameters
-    start_line: Optional[int] = Field(
+    start_line: int | None = Field(
         None, description="Starting line number for code to be extracted"
     )
-    end_line: Optional[int] = Field(
+    end_line: int | None = Field(
         None, description="Ending line number for code to be extracted"
     )
-    extracted_function_name: Optional[str] = Field(
+    extracted_function_name: str | None = Field(
         None, description="Name to give to the newly extracted function"
     )
-    parameters: Optional[List[Dict[str, Any]]] = Field(
+    parameters: list[dict[str, Any]] | None = Field(
         None,
         description="Parameters for the extracted function, including name, type, and default value",
     )
 
     # Type hint parameters
-    type_annotations: Optional[Dict[str, str]] = Field(
+    type_annotations: dict[str, str] | None = Field(
         None, description="Dictionary mapping parameter names to their type annotations"
     )
-    infer_types: Optional[bool] = Field(
+    infer_types: bool | None = Field(
         False, description="Whether to attempt automatic type inference for parameters"
     )
 
     # Error handling parameters
-    exception_type: Optional[str] = Field(
+    exception_type: str | None = Field(
         None, description="Exception type to catch in added error handling blocks"
     )
-    error_message: Optional[str] = Field(
+    error_message: str | None = Field(
         None, description="Error message to log when exceptions are caught"
     )
 
     # Logging parameters
-    log_points: Optional[List[Dict[str, Any]]] = Field(
+    log_points: list[dict[str, Any]] | None = Field(
         None,
         description="Points in the code to add logging statements, with position and message",
     )
-    log_level: Optional[str] = Field(
+    log_level: str | None = Field(
         "info",
         description="Logging level to use for added logging statements (info, debug, warning, error)",
     )
 
     # Parameter modifications
-    param_name: Optional[str] = Field(
+    param_name: str | None = Field(
         None, description="Name of the parameter to add, remove, or rename"
     )
-    param_type: Optional[str] = Field(
+    param_type: str | None = Field(
         None, description="Type annotation for the parameter being added or modified"
     )
-    param_default: Optional[str] = Field(
+    param_default: str | None = Field(
         None, description="Default value for the parameter being added or modified"
     )
 
     # Custom transformation
-    transform_code: Optional[str] = Field(
+    transform_code: str | None = Field(
         None,
         description="Python code defining a custom transformer class for specialized edits",
     )
-    transform_args: Optional[Dict[str, Any]] = Field(
+    transform_args: dict[str, Any] | None = Field(
         None, description="Arguments to pass to the custom transformer"
     )
 
@@ -275,8 +261,7 @@ class ASTEditConfig(BaseModel):
 
 
 class CodeQualityConfig(BaseModel):
-    """
-    Configuration for code quality checks.
+    """Configuration for code quality checks.
 
     Defines the parameters for running code quality tools on Python files,
     including which tools to run and their configuration options.
@@ -296,28 +281,28 @@ class CodeQualityConfig(BaseModel):
     file_path: str = Field(
         ..., description="Absolute path to the Python file to check for quality issues"
     )
-    tools: List[CodeQualityTool] = Field(
+    tools: list[CodeQualityTool] = Field(
         default=[CodeQualityTool.BLACK, CodeQualityTool.FLAKE8],
         description="List of code quality tools to run on the file",
     )
     fix: bool = Field(
         True, description="Whether to automatically fix issues when possible"
     )
-    ignore_errors: List[str] = Field(
+    ignore_errors: list[str] = Field(
         default_factory=list,
         description="List of error codes to ignore during quality checks",
     )
-    config_path: Optional[str] = Field(
+    config_path: str | None = Field(
         None, description="Path to a configuration file for the quality tools"
     )
-    line_length: Optional[int] = Field(
+    line_length: int | None = Field(
         None, description="Maximum line length for formatting tools"
     )
-    aggressive: Optional[int] = Field(
+    aggressive: int | None = Field(
         None,
         description="Aggression level for autoflake (0-3, higher means more aggressive)",
     )
-    mypy_options: Optional[List[str]] = Field(
+    mypy_options: list[str] | None = Field(
         None, description="Additional command-line options to pass to mypy"
     )
     show_diff: bool = Field(
@@ -326,8 +311,7 @@ class CodeQualityConfig(BaseModel):
 
 
 class GitOperationConfig(BaseModel):
-    """
-    Configuration for Git operations.
+    """Configuration for Git operations.
 
     Defines the parameters needed to perform Git operations on files,
     including the operation type and various operation-specific options.
@@ -346,26 +330,26 @@ class GitOperationConfig(BaseModel):
         log_format (Optional[str]): Format string for Git log output
     """
 
-    file_paths: Union[str, List[str]] = Field(
+    file_paths: str | list[str] = Field(
         ..., description="Absolute path(s) to the file(s) for the Git operation"
     )
     operation: GitOperation = Field(..., description="Type of Git operation to perform")
 
     # Commit options
-    commit_message: Optional[str] = Field(
+    commit_message: str | None = Field(
         None, description="Message to use for Git commit operations"
     )
     generate_message: bool = Field(
         False,
         description="Whether to automatically generate a commit message based on changes",
     )
-    commit_author: Optional[str] = Field(
+    commit_author: str | None = Field(
         None,
         description="Author name and email for the commit in 'Name <email>' format",
     )
 
     # Branch options
-    branch_name: Optional[str] = Field(
+    branch_name: str | None = Field(
         None,
         description="Branch name for branch creation, checkout, or deletion operations",
     )
@@ -379,23 +363,20 @@ class GitOperationConfig(BaseModel):
     )
 
     # Reset options
-    reset_mode: Optional[str] = Field(
+    reset_mode: str | None = Field(
         "mixed",
         description="Reset mode to use: soft (keep changes staged), mixed (default, unstage changes), or hard (discard changes)",
     )
 
     # Log options
-    log_count: Optional[int] = Field(
+    log_count: int | None = Field(
         5, description="Number of recent commits to show in log operations"
     )
-    log_format: Optional[str] = Field(
-        None, description="Format string for Git log output"
-    )
+    log_format: str | None = Field(None, description="Format string for Git log output")
 
 
 class CodeSummarizeConfig(BaseModel):
-    """
-    Configuration for code summarization.
+    """Configuration for code summarization.
 
     Defines the parameters for summarizing a Python file, including
     which elements to include in the summary.
@@ -440,8 +421,7 @@ class CodeSummarizeConfig(BaseModel):
 
 
 class EditResult(BaseModel):
-    """
-    Result of a code edit operation.
+    """Result of a code edit operation.
 
     Contains information about the result of an AST-based code edit,
     including whether it was successful and details of the changes made.
@@ -465,24 +445,21 @@ class EditResult(BaseModel):
     message: str = Field(
         ..., description="Human-readable message describing the result"
     )
-    changes: List[Dict[str, Any]] = Field(
+    changes: list[dict[str, Any]] = Field(
         default_factory=list,
         description="List of detailed changes made during the edit",
     )
-    error: Optional[str] = Field(
-        None, description="Error message if the operation failed"
-    )
-    diff: Optional[str] = Field(
+    error: str | None = Field(None, description="Error message if the operation failed")
+    diff: str | None = Field(
         None, description="Unified diff showing the changes made to the file"
     )
-    backup_path: Optional[str] = Field(
+    backup_path: str | None = Field(
         None, description="Path to the backup file if one was created"
     )
 
 
 class QualityResult(BaseModel):
-    """
-    Result of code quality checks.
+    """Result of code quality checks.
 
     Contains information about the result of running code quality tools,
     including any issues found and fixes applied.
@@ -499,7 +476,7 @@ class QualityResult(BaseModel):
 
     success: bool = Field(..., description="Whether all quality checks passed")
     file_path: str = Field(..., description="Path to the file that was checked")
-    tool_results: Dict[str, Dict[str, Any]] = Field(
+    tool_results: dict[str, dict[str, Any]] = Field(
         ..., description="Detailed results from each quality tool that was run"
     )
     issues_count: int = Field(
@@ -508,17 +485,16 @@ class QualityResult(BaseModel):
     fixed_count: int = Field(
         0, description="Number of issues that were automatically fixed"
     )
-    diff: Optional[str] = Field(
+    diff: str | None = Field(
         None, description="Unified diff showing any changes made by formatting tools"
     )
-    error: Optional[str] = Field(
+    error: str | None = Field(
         None, description="Error message if any of the quality checks failed"
     )
 
 
 class GitResult(BaseModel):
-    """
-    Result of a Git operation.
+    """Result of a Git operation.
 
     Contains information about the result of a Git operation,
     including the command output and any errors.
@@ -537,26 +513,23 @@ class GitResult(BaseModel):
         ..., description="Whether the Git operation completed successfully"
     )
     operation: str = Field(..., description="Type of Git operation that was performed")
-    file_paths: List[str] = Field(
+    file_paths: list[str] = Field(
         ..., description="Paths to the files affected by the operation"
     )
     output: str = Field(
         ..., description="Output from the Git command that was executed"
     )
-    error: Optional[str] = Field(
-        None, description="Error message if the operation failed"
-    )
-    commit_id: Optional[str] = Field(
+    error: str | None = Field(None, description="Error message if the operation failed")
+    commit_id: str | None = Field(
         None, description="ID of the commit if a commit operation was performed"
     )
-    diff: Optional[str] = Field(
+    diff: str | None = Field(
         None, description="Diff output if a diff operation was performed"
     )
 
 
 class CodeSummary(BaseModel):
-    """
-    Summary of a Python file.
+    """Summary of a Python file.
 
     Contains a structured summary of a Python file's contents,
     including classes, functions, imports, and global variables.
@@ -573,23 +546,21 @@ class CodeSummary(BaseModel):
     """
 
     file_path: str = Field(..., description="Path to the file that was summarized")
-    classes: List[Dict[str, Any]] = Field(
+    classes: list[dict[str, Any]] = Field(
         default_factory=list,
         description="Information about classes defined in the file",
     )
-    functions: List[Dict[str, Any]] = Field(
+    functions: list[dict[str, Any]] = Field(
         default_factory=list,
         description="Information about functions defined in the file",
     )
-    imports: List[str] = Field(
+    imports: list[str] = Field(
         default_factory=list, description="Import statements found in the file"
     )
-    global_vars: List[Dict[str, Any]] = Field(
+    global_vars: list[dict[str, Any]] = Field(
         default_factory=list, description="Global variables defined in the file"
     )
-    docstring: Optional[str] = Field(
-        None, description="Module-level docstring if present"
-    )
+    docstring: str | None = Field(None, description="Module-level docstring if present")
     loc: int = Field(..., description="Total lines of code in the file")
     summary: str = Field(
         ..., description="High-level summary of the file's purpose and contents"
@@ -603,8 +574,7 @@ class CodeSummary(BaseModel):
 
 @dataclass
 class TransformerContext:
-    """
-    Context for AST transformers with metadata.
+    """Context for AST transformers with metadata.
 
     Holds the AST tree, metadata, file path, and a record of changes
     made during AST transformations.
@@ -617,9 +587,9 @@ class TransformerContext:
     """
 
     tree: cst.Module
-    metadata: Optional[MetadataWrapper] = None
-    file_path: Optional[str] = None
-    changes: List[Dict[str, Any]] = None
+    metadata: MetadataWrapper | None = None
+    file_path: str | None = None
+    changes: list[dict[str, Any]] = None
 
     def __post_init__(self):
         """Initialize default values and metadata if not provided."""
@@ -630,8 +600,7 @@ class TransformerContext:
 
 
 class BaseTransformer(cst.CSTTransformer):
-    """
-    Base class for all AST transformers.
+    """Base class for all AST transformers.
 
     Provides common functionality for AST transformers, including
     access to the transformation context and change tracking.
@@ -642,8 +611,7 @@ class BaseTransformer(cst.CSTTransformer):
     """
 
     def __init__(self, context: TransformerContext):
-        """
-        Initialize the transformer with a context.
+        """Initialize the transformer with a context.
 
         Args:
             context (TransformerContext): The transformation context
@@ -653,8 +621,7 @@ class BaseTransformer(cst.CSTTransformer):
         self.changes = context.changes
 
     def add_change(self, change_type: str, **kwargs):
-        """
-        Add a change record to the context.
+        """Add a change record to the context.
 
         Args:
             change_type (str): Type of change being made
@@ -665,8 +632,7 @@ class BaseTransformer(cst.CSTTransformer):
 
 
 class RenameFunctionTransformer(BaseTransformer):
-    """
-    Transformer to rename a function in the AST.
+    """Transformer to rename a function in the AST.
 
     Finds and renames a function with the specified name.
 
@@ -676,8 +642,7 @@ class RenameFunctionTransformer(BaseTransformer):
     """
 
     def __init__(self, context: TransformerContext, old_name: str, new_name: str):
-        """
-        Initialize the function renaming transformer.
+        """Initialize the function renaming transformer.
 
         Args:
             context (TransformerContext): The transformation context
@@ -691,8 +656,7 @@ class RenameFunctionTransformer(BaseTransformer):
     def leave_FunctionDef(
         self, original_node: cst.FunctionDef, updated_node: cst.FunctionDef
     ) -> cst.FunctionDef:
-        """
-        Process a function definition node.
+        """Process a function definition node.
 
         Args:
             original_node (cst.FunctionDef): The original function definition node
@@ -717,8 +681,7 @@ class RenameFunctionTransformer(BaseTransformer):
 
 
 class RenameClassTransformer(BaseTransformer):
-    """
-    Transformer to rename a class in the AST.
+    """Transformer to rename a class in the AST.
 
     Finds and renames a class with the specified name.
 
@@ -728,8 +691,7 @@ class RenameClassTransformer(BaseTransformer):
     """
 
     def __init__(self, context: TransformerContext, old_name: str, new_name: str):
-        """
-        Initialize the class renaming transformer.
+        """Initialize the class renaming transformer.
 
         Args:
             context (TransformerContext): The transformation context
@@ -743,8 +705,7 @@ class RenameClassTransformer(BaseTransformer):
     def leave_ClassDef(
         self, original_node: cst.ClassDef, updated_node: cst.ClassDef
     ) -> cst.ClassDef:
-        """
-        Process a class definition node.
+        """Process a class definition node.
 
         Args:
             original_node (cst.ClassDef): The original class definition node
@@ -769,8 +730,7 @@ class RenameClassTransformer(BaseTransformer):
 
 
 class AddDocstringTransformer(BaseTransformer):
-    """
-    Transformer to add or modify a docstring.
+    """Transformer to add or modify a docstring.
 
     Adds a new docstring or updates an existing one for a function or class.
 
@@ -781,8 +741,7 @@ class AddDocstringTransformer(BaseTransformer):
     """
 
     def __init__(self, context: TransformerContext, target_name: str, docstring: str):
-        """
-        Initialize the docstring transformer.
+        """Initialize the docstring transformer.
 
         Args:
             context (TransformerContext): The transformation context
@@ -797,8 +756,7 @@ class AddDocstringTransformer(BaseTransformer):
     def leave_FunctionDef(
         self, original_node: cst.FunctionDef, updated_node: cst.FunctionDef
     ) -> cst.FunctionDef:
-        """
-        Process a function definition node.
+        """Process a function definition node.
 
         Args:
             original_node (cst.FunctionDef): The original function definition node
@@ -873,8 +831,7 @@ class AddDocstringTransformer(BaseTransformer):
     def leave_ClassDef(
         self, original_node: cst.ClassDef, updated_node: cst.ClassDef
     ) -> cst.ClassDef:
-        """
-        Process a class definition node.
+        """Process a class definition node.
 
         Args:
             original_node (cst.ClassDef): The original class definition node
@@ -948,8 +905,7 @@ class AddDocstringTransformer(BaseTransformer):
 
 
 class AddTypeHintsTransformer(BaseTransformer):
-    """
-    Transformer to add type hints to functions.
+    """Transformer to add type hints to functions.
 
     Adds or updates type annotations for function parameters and return values.
 
@@ -962,11 +918,10 @@ class AddTypeHintsTransformer(BaseTransformer):
     def __init__(
         self,
         context: TransformerContext,
-        target_name: Optional[str] = None,
-        type_annotations: Optional[Dict[str, str]] = None,
+        target_name: str | None = None,
+        type_annotations: dict[str, str] | None = None,
     ):
-        """
-        Initialize the type hints transformer.
+        """Initialize the type hints transformer.
 
         Args:
             context (TransformerContext): The transformation context
@@ -981,8 +936,7 @@ class AddTypeHintsTransformer(BaseTransformer):
     def leave_FunctionDef(
         self, original_node: cst.FunctionDef, updated_node: cst.FunctionDef
     ) -> cst.FunctionDef:
-        """
-        Process a function definition node.
+        """Process a function definition node.
 
         Args:
             original_node (cst.FunctionDef): The original function definition node
@@ -1054,8 +1008,7 @@ class AddTypeHintsTransformer(BaseTransformer):
 
 
 class AddLoggingTransformer(BaseTransformer):
-    """
-    Transformer to add logging statements.
+    """Transformer to add logging statements.
 
     Adds logging statements to functions at specified points.
 
@@ -1071,10 +1024,9 @@ class AddLoggingTransformer(BaseTransformer):
         context: TransformerContext,
         target_name: str,
         log_level: str = "info",
-        log_points: Optional[List[Dict[str, Any]]] = None,
+        log_points: list[dict[str, Any]] | None = None,
     ):
-        """
-        Initialize the logging transformer.
+        """Initialize the logging transformer.
 
         Args:
             context (TransformerContext): The transformation context
@@ -1093,8 +1045,7 @@ class AddLoggingTransformer(BaseTransformer):
     def leave_FunctionDef(
         self, original_node: cst.FunctionDef, updated_node: cst.FunctionDef
     ) -> cst.FunctionDef:
-        """
-        Process a function definition node.
+        """Process a function definition node.
 
         Args:
             original_node (cst.FunctionDef): The original function definition node
@@ -1170,8 +1121,7 @@ class AddLoggingTransformer(BaseTransformer):
 
 
 class AddErrorHandlingTransformer(BaseTransformer):
-    """
-    Transformer to add try-except blocks.
+    """Transformer to add try-except blocks.
 
     Wraps a function's body in a try-except block for error handling.
 
@@ -1187,10 +1137,9 @@ class AddErrorHandlingTransformer(BaseTransformer):
         context: TransformerContext,
         target_name: str,
         exception_type: str = "Exception",
-        error_message: Optional[str] = None,
+        error_message: str | None = None,
     ):
-        """
-        Initialize the error handling transformer.
+        """Initialize the error handling transformer.
 
         Args:
             context (TransformerContext): The transformation context
@@ -1207,8 +1156,7 @@ class AddErrorHandlingTransformer(BaseTransformer):
     def leave_FunctionDef(
         self, original_node: cst.FunctionDef, updated_node: cst.FunctionDef
     ) -> cst.FunctionDef:
-        """
-        Process a function definition node.
+        """Process a function definition node.
 
         Args:
             original_node (cst.FunctionDef): The original function definition node
@@ -1226,7 +1174,7 @@ class AddErrorHandlingTransformer(BaseTransformer):
         # Create the except handler
         except_body = [
             cst.parse_statement(f'logger.error(f"{self.error_message}: {{e}}")'),
-            cst.parse_statement(f"raise"),
+            cst.parse_statement("raise"),
         ]
 
         except_handler = cst.ExceptHandler(
@@ -1260,8 +1208,7 @@ class AddErrorHandlingTransformer(BaseTransformer):
 
 
 class AddParameterTransformer(BaseTransformer):
-    """
-    Transformer to add a parameter to a function.
+    """Transformer to add a parameter to a function.
 
     Adds a new parameter to a function definition.
 
@@ -1278,11 +1225,10 @@ class AddParameterTransformer(BaseTransformer):
         context: TransformerContext,
         target_name: str,
         param_name: str,
-        param_type: Optional[str] = None,
-        param_default: Optional[str] = None,
+        param_type: str | None = None,
+        param_default: str | None = None,
     ):
-        """
-        Initialize the parameter transformer.
+        """Initialize the parameter transformer.
 
         Args:
             context (TransformerContext): The transformation context
@@ -1301,8 +1247,7 @@ class AddParameterTransformer(BaseTransformer):
     def leave_FunctionDef(
         self, original_node: cst.FunctionDef, updated_node: cst.FunctionDef
     ) -> cst.FunctionDef:
-        """
-        Process a function definition node.
+        """Process a function definition node.
 
         Args:
             original_node (cst.FunctionDef): The original function definition node
@@ -1361,8 +1306,7 @@ class AddParameterTransformer(BaseTransformer):
 
 
 class CodeStyleConfig(BaseModel):
-    """
-    Configuration for code formatting and style enforcement.
+    """Configuration for code formatting and style enforcement.
 
     Defines settings for code formatting tools like Black, isort, and autoflake.
 
@@ -1394,8 +1338,7 @@ class CodeStyleConfig(BaseModel):
 
 
 class CodeEditorTool:
-    """
-    Advanced tool for AST-based code editing with debugging and logging.
+    """Advanced tool for AST-based code editing with debugging and logging.
 
     Provides high-level functionality for code editing, including AST-based
     transformations, backup creation, and diff generation.
@@ -1406,10 +1349,9 @@ class CodeEditorTool:
     """
 
     def __init__(
-        self, debug: bool = False, style_config: Optional[CodeStyleConfig] = None
+        self, debug: bool = False, style_config: CodeStyleConfig | None = None
     ):
-        """
-        Initialize the Code Editor Tool with debugging and code style settings.
+        """Initialize the Code Editor Tool with debugging and code style settings.
 
         Args:
             debug (bool): Enable detailed debug logging
@@ -1424,8 +1366,7 @@ class CodeEditorTool:
 
     @staticmethod
     def create_backup(file_path: str, suffix: str = ".bak") -> str:
-        """
-        Create a backup of the file.
+        """Create a backup of the file.
 
         Args:
             file_path (str): Path to the file to back up
@@ -1435,15 +1376,14 @@ class CodeEditorTool:
             str: Path to the created backup file
         """
         backup_path = f"{file_path}{suffix}"
-        with open(file_path, "r") as src, open(backup_path, "w") as dst:
+        with open(file_path) as src, open(backup_path, "w") as dst:
             dst.write(src.read())
         logger.info(f"Backup created at {backup_path}")
         return backup_path
 
     @staticmethod
     def generate_diff(original: str, modified: str) -> str:
-        """
-        Generate a diff between original and modified code.
+        """Generate a diff between original and modified code.
 
         Args:
             original (str): Original code content
@@ -1464,8 +1404,7 @@ class CodeEditorTool:
         return diff
 
     def perform_ast_edit(self, config: "ASTEditConfig") -> "EditResult":
-        """
-        Perform an AST-based edit on a Python file.
+        """Perform an AST-based edit on a Python file.
 
         Uses the LibCST library to safely parse and transform Python code
         based on the provided configuration.
@@ -1488,7 +1427,7 @@ class CodeEditorTool:
         if config.create_backup:
             backup_path = self.create_backup(config.file_path, config.backup_suffix)
 
-        with open(config.file_path, "r") as f:
+        with open(config.file_path) as f:
             original_code = f.read()
 
         tree = cst.parse_module(original_code)

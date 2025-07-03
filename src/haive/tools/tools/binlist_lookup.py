@@ -1,5 +1,4 @@
-"""
-Bank Identification Number (BIN) lookup tool using the Binlist.net API.
+"""Bank Identification Number (BIN) lookup tool using the Binlist.net API.
 
 This module provides a tool for looking up information about payment cards based on their
 Bank Identification Number (BIN) or Issuer Identification Number (IIN), which is the first
@@ -26,16 +25,13 @@ Note:
     - No authentication is required for basic lookups
 """
 
-from typing import List
-
 import requests
-from langchain_core.tools import BaseToolkit, StructuredTool
+from langchain_core.tools import StructuredTool
 from pydantic import BaseModel, Field
 
 
 class BinLookupInput(BaseModel):
-    """
-    Input model for the BIN lookup tool.
+    """Input model for the BIN lookup tool.
 
     Attributes:
         bin_number: The first 6 to 8 digits of a payment card number, also known as
@@ -47,8 +43,7 @@ class BinLookupInput(BaseModel):
 
 
 def lookup_bin(input: BinLookupInput) -> dict:
-    """
-    Look up information about a payment card based on its BIN/IIN using the Binlist.net API.
+    """Look up information about a payment card based on its BIN/IIN using the Binlist.net API.
 
     Args:
         input: A BinLookupInput object containing the bin_number to look up.

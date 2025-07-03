@@ -1,5 +1,4 @@
-"""
-Multi-File Rename Module
+"""Multi-File Rename Module
 
 This module provides functionality to rename functions across multiple Python files
 using LibCST. It identifies both function definitions and function calls and renames
@@ -17,8 +16,7 @@ from libcst import Call, MetadataWrapper, Name
 
 
 class MultiFileRenameTransformer(cst.CSTTransformer):
-    """
-    Renames a function across multiple files.
+    """Renames a function across multiple files.
 
     This transformer identifies and renames both function definitions and
     function calls to maintain consistency throughout a codebase.
@@ -29,8 +27,7 @@ class MultiFileRenameTransformer(cst.CSTTransformer):
     """
 
     def __init__(self, old_name: str, new_name: str):
-        """
-        Initialize the multi-file rename transformer.
+        """Initialize the multi-file rename transformer.
 
         Args:
             old_name (str): The current name of the function to rename
@@ -42,8 +39,7 @@ class MultiFileRenameTransformer(cst.CSTTransformer):
     def leave_FunctionDef(
         self, original_node: cst.FunctionDef, updated_node: cst.FunctionDef
     ):
-        """
-        Rename function definitions during the AST traversal.
+        """Rename function definitions during the AST traversal.
 
         Args:
             original_node (cst.FunctionDef): The original function definition node
@@ -58,8 +54,7 @@ class MultiFileRenameTransformer(cst.CSTTransformer):
         return updated_node
 
     def leave_Call(self, original_node: Call, updated_node: Call):
-        """
-        Rename function calls during the AST traversal.
+        """Rename function calls during the AST traversal.
 
         Args:
             original_node (cst.Call): The original function call node
@@ -78,8 +73,7 @@ class MultiFileRenameTransformer(cst.CSTTransformer):
 
 
 def rename_function_in_files(directory: str, old_name: str, new_name: str):
-    """
-    Renames a function across all `.py` files in a directory recursively.
+    """Renames a function across all `.py` files in a directory recursively.
 
     This function walks through all Python files in a directory and its subdirectories,
     renames both function definitions and function calls, and writes the updated code
@@ -98,7 +92,7 @@ def rename_function_in_files(directory: str, old_name: str, new_name: str):
         for file in files:
             if file.endswith(".py"):
                 path = os.path.join(root, file)
-                with open(path, "r") as f:
+                with open(path) as f:
                     tree = cst.parse_module(f.read())
 
                 wrapper = MetadataWrapper(tree)

@@ -1,5 +1,4 @@
-"""
-Search Tools Module
+"""Search Tools Module
 
 This module provides various search tools powered by the Tavily API and web scraping capabilities.
 It offers tools for question answering, web content extraction, context generation for RAG applications,
@@ -11,7 +10,8 @@ Examples:
     >>> print(results)
 """
 
-from typing import Annotated, Dict, List, Literal, Optional, Sequence
+from collections.abc import Sequence
+from typing import Literal
 
 from dotenv import load_dotenv
 from langchain_community.document_loaders import WebBaseLoader
@@ -39,8 +39,7 @@ def tavily_qna(
     include_domains: Sequence[str] = [],
     exclude_domains: Sequence[str] = [],
 ) -> str:
-    """
-    Search tool for getting a quick answer to a specific question using Tavily's QnA search.
+    """Search tool for getting a quick answer to a specific question using Tavily's QnA search.
 
     This tool queries the Tavily API with a question and returns a direct answer along
     with supporting information from web search results.
@@ -77,9 +76,8 @@ def tavily_qna(
 
 
 @tool
-def tavily_extract(urls: List[str], **kwargs) -> Dict:
-    """
-    Extract raw content from a list of websites using the Tavily Extract API.
+def tavily_extract(urls: list[str], **kwargs) -> dict:
+    """Extract raw content from a list of websites using the Tavily Extract API.
 
     This tool retrieves the content from specified URLs, which is useful for data collection,
     content analysis, and research. It can be combined with search methods to first find
@@ -111,8 +109,7 @@ def tavily_search_context(
     max_tokens: int = 4000,
     **kwargs,  # Accept custom arguments
 ) -> str:
-    """
-    Generate search context for Retrieval Augmented Generation (RAG) applications.
+    """Generate search context for Retrieval Augmented Generation (RAG) applications.
 
     This tool retrieves relevant context information from the web based on a search query,
     specifically formatted for use in RAG applications. It provides more comprehensive
@@ -156,17 +153,16 @@ def tavily_search_context(
 @tool
 def tavily_search_tool(
     query: str,
-    max_results: Optional[int] = 5,
-    include_answer: Optional[bool] = True,
-    include_raw_content: Optional[bool] = False,
-    include_images: Optional[bool] = False,
-    search_depth: Optional[str] = "advanced",
-    include_domains: Optional[List[str]] = [],
-    exclude_domains: Optional[List[str]] = [],
-    verbose: Optional[bool] = False,
-) -> Dict:
-    """
-    Query Tavily Search API with full configurability for comprehensive search results.
+    max_results: int | None = 5,
+    include_answer: bool | None = True,
+    include_raw_content: bool | None = False,
+    include_images: bool | None = False,
+    search_depth: str | None = "advanced",
+    include_domains: list[str] | None = [],
+    exclude_domains: list[str] | None = [],
+    verbose: bool | None = False,
+) -> dict:
+    """Query Tavily Search API with full configurability for comprehensive search results.
 
     This tool provides complete access to all Tavily search options and returns structured
     search results with customizable content types and filtering options.
@@ -210,9 +206,8 @@ def tavily_search_tool(
 
 
 @tool
-def scrape_webpages(urls: List[str]) -> str:
-    """
-    Scrape web pages using WebBaseLoader to extract detailed content information.
+def scrape_webpages(urls: list[str]) -> str:
+    """Scrape web pages using WebBaseLoader to extract detailed content information.
 
     This tool uses langchain's WebBaseLoader to fetch and parse content from specified URLs,
     returning the extracted content in a formatted document structure.

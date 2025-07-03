@@ -1,5 +1,4 @@
-"""
-Translation Tools Module.
+"""Translation Tools Module.
 
 This module provides a tool for translating text between languages using the
 DeepL API. It creates a LangChain-compatible structured tool that can be
@@ -25,7 +24,7 @@ Note:
 """
 
 import os
-from typing import Literal, Optional, Type
+from typing import Literal
 
 import dotenv
 from langchain_core.tools import BaseTool
@@ -114,8 +113,7 @@ class DeepLInput(BaseModel):
 
 # DeepL Translation Tool
 class DeepLTranslateTool(BaseTool):
-    """
-    LangChain-compatible structured tool for translating text using the DeepL API.
+    """LangChain-compatible structured tool for translating text using the DeepL API.
 
     This tool provides high-quality translation between multiple languages by
     leveraging DeepL's translation service. It supports both free and pro API tiers
@@ -141,7 +139,7 @@ class DeepLTranslateTool(BaseTool):
     target_lang: DEEPL_TARGET_LANGUAGES = Field(
         ..., description="Target language (e.g., 'EN-US')"
     )
-    source_lang: Optional[DEEPL_SOURCE_LANGUAGES] = Field(
+    source_lang: DEEPL_SOURCE_LANGUAGES | None = Field(
         default=None, description="Optional source language (e.g., 'FR')"
     )
     mode: Literal["free", "pro"] = Field(
@@ -152,11 +150,10 @@ class DeepLTranslateTool(BaseTool):
         description="Your DeepL API key",
     )
 
-    args_schema: Type[BaseModel] = DeepLInput
+    args_schema: type[BaseModel] = DeepLInput
 
     def _run(self, text: str) -> str:
-        """
-        Run translation on the provided text.
+        """Run translation on the provided text.
 
         Args:
             text: The text to translate
@@ -187,8 +184,7 @@ class DeepLTranslateTool(BaseTool):
             return f"❌ DeepL error: {e}"
 
     def _arun(self, text: str) -> str:
-        """
-        Async version of the run method (not implemented).
+        """Async version of the run method (not implemented).
 
         Args:
             text: The text to translate

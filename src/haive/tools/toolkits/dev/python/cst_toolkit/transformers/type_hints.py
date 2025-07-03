@@ -1,5 +1,4 @@
-"""
-Type Hints Transformer Module
+"""Type Hints Transformer Module
 
 This module provides functionality to add type hints to function parameters and
 return types in Python code using LibCST. It allows for automated type annotation
@@ -32,8 +31,7 @@ import libcst as cst
 
 
 class TypeHintTransformer(cst.CSTTransformer):
-    """
-    Adds type hints to function parameters and return types.
+    """Adds type hints to function parameters and return types.
 
     This transformer identifies function parameters and adds appropriate
     type annotations based on a provided mapping. It can also add a return
@@ -44,8 +42,7 @@ class TypeHintTransformer(cst.CSTTransformer):
     """
 
     def __init__(self, type_map):
-        """
-        Initialize the type hint transformer with a mapping of types.
+        """Initialize the type hint transformer with a mapping of types.
 
         Args:
             type_map (dict): A dictionary mapping parameter names and 'return' to their
@@ -55,8 +52,7 @@ class TypeHintTransformer(cst.CSTTransformer):
         self.type_map = type_map  # {"param_name": "int", "return": "str"}
 
     def leave_FunctionDef(self, original_node, updated_node):
-        """
-        Add type hints to function definitions during the AST traversal.
+        """Add type hints to function definitions during the AST traversal.
 
         This method adds type annotations to function parameters and return types
         based on the provided type_map.

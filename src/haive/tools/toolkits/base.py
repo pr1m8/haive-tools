@@ -16,7 +16,6 @@ Typical usage:
 """
 
 from abc import ABC, abstractmethod
-from typing import Any, Dict, List, Optional
 
 from langchain_core.tools import BaseTool, BaseToolkit
 from pydantic import BaseModel, ConfigDict, Field
@@ -55,13 +54,12 @@ class HaiveToolkit(BaseToolkit, ABC):
     model_config = ConfigDict(arbitrary_types_allowed=True)
 
     @abstractmethod
-    def get_tools(self) -> List[BaseTool]:
+    def get_tools(self) -> list[BaseTool]:
         """Get the list of tools in this toolkit.
 
         Returns:
             A list of BaseTool instances that make up this toolkit.
         """
-        pass
 
     @classmethod
     @abstractmethod
@@ -74,4 +72,3 @@ class HaiveToolkit(BaseToolkit, ABC):
         Returns:
             A new instance of the toolkit.
         """
-        pass

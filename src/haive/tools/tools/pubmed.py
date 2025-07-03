@@ -1,5 +1,4 @@
-"""
-PubMed research tool for medical and scientific literature.
+"""PubMed research tool for medical and scientific literature.
 
 This module provides integration with the PubMed database through the LangChain
 tools interface. PubMed is a free search engine accessing primarily the MEDLINE
@@ -32,7 +31,6 @@ Note:
 """
 
 from langchain_community.agent_toolkits.load_tools import load_tools
-from langchain_community.tools.pubmed.tool import PubmedQueryRun
 
 # Load PubMed tools from LangChain's available tools
 pubmed_tools = load_tools(["pubmed"])

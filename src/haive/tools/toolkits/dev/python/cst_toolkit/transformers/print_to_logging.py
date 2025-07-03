@@ -1,5 +1,4 @@
-"""
-Print to Logging Transformer Module
+"""Print to Logging Transformer Module
 
 This module provides functionality to convert print statements to logging calls
 in Python files using LibCST. It automatically transforms print() calls to
@@ -20,8 +19,7 @@ import libcst as cst
 
 
 class PrintToLoggingTransformer(cst.CSTTransformer):
-    """
-    Replaces print statements with logging.info calls.
+    """Replaces print statements with logging.info calls.
 
     This transformer identifies print() function calls in Python code and
     replaces them with equivalent logging.info() calls for better production-ready code.
@@ -31,8 +29,7 @@ class PrintToLoggingTransformer(cst.CSTTransformer):
     """
 
     def leave_Expr(self, original_node: cst.Expr, updated_node: cst.Expr):
-        """
-        Replace print calls with logging.info() during the AST traversal.
+        """Replace print calls with logging.info() during the AST traversal.
 
         Args:
             original_node (cst.Expr): The original expression node
@@ -56,8 +53,7 @@ class PrintToLoggingTransformer(cst.CSTTransformer):
 
 
 def replace_print_with_logging(filepath: str):
-    """
-    Replaces all print() calls with logging.info() calls in a Python file.
+    """Replaces all print() calls with logging.info() calls in a Python file.
 
     This function reads a Python file, converts all print() function calls to
     logging.info() calls, and writes the updated code back to the file. It does not
@@ -70,7 +66,7 @@ def replace_print_with_logging(filepath: str):
         FileNotFoundError: If the specified file does not exist
         IOError: If there are issues reading from or writing to the file
     """
-    with open(filepath, "r") as f:
+    with open(filepath) as f:
         tree = cst.parse_module(f.read())
 
     modified_tree = tree.visit(PrintToLoggingTransformer())

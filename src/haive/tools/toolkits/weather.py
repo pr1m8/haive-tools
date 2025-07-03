@@ -1,5 +1,4 @@
-"""
-Weather Information Toolkit Module
+"""Weather Information Toolkit Module
 
 This toolkit provides tools for retrieving current weather information using the OpenWeatherMap API.
 It supports structured data parsing and temperature unit conversion between Celsius and Fahrenheit.
@@ -29,7 +28,7 @@ Examples:
 import getpass
 import os
 import re
-from typing import Literal, Optional
+from typing import Literal
 
 from haive.config.config import Config
 from langchain_community.agent_toolkits.load_tools import load_tools
@@ -38,8 +37,7 @@ from pydantic import BaseModel, Field
 
 
 class CityCountryWeatherInput(BaseModel):
-    """
-    Input schema for weather query by city and country.
+    """Input schema for weather query by city and country.
 
     This model defines the parameters needed to request weather information
     from the OpenWeatherMap API, including location and formatting options.
@@ -64,8 +62,7 @@ class CityCountryWeatherInput(BaseModel):
 
 
 class WeatherData(BaseModel):
-    """
-    Structured weather data model.
+    """Structured weather data model.
 
     This model represents parsed weather information from the OpenWeatherMap API,
     with fields for various weather metrics including temperature, wind, humidity,
@@ -85,47 +82,46 @@ class WeatherData(BaseModel):
         cloud_cover_percent (Optional[int]): Cloud coverage percentage.
     """
 
-    location: Optional[str] = Field(
+    location: str | None = Field(
         None, description="Location name in City, Country format"
     )
-    status: Optional[str] = Field(None, description="Weather condition description")
-    wind_speed_mps: Optional[float] = Field(
+    status: str | None = Field(None, description="Weather condition description")
+    wind_speed_mps: float | None = Field(
         None, description="Wind speed in meters per second"
     )
-    wind_direction_deg: Optional[int] = Field(
+    wind_direction_deg: int | None = Field(
         None, description="Wind direction in degrees"
     )
-    humidity_percent: Optional[int] = Field(
+    humidity_percent: int | None = Field(
         None, description="Relative humidity percentage"
     )
-    temp_current_c: Optional[float] = Field(
+    temp_current_c: float | None = Field(
         None, description="Current temperature in Celsius/Fahrenheit"
     )
-    temp_high_c: Optional[float] = Field(
+    temp_high_c: float | None = Field(
         None, description="Maximum temperature in Celsius/Fahrenheit"
     )
-    temp_low_c: Optional[float] = Field(
+    temp_low_c: float | None = Field(
         None, description="Minimum temperature in Celsius/Fahrenheit"
     )
-    temp_feels_like_c: Optional[float] = Field(
+    temp_feels_like_c: float | None = Field(
         None, description="'Feels like' temperature in Celsius/Fahrenheit"
     )
-    rain_mm_last_hour: Optional[float] = Field(
+    rain_mm_last_hour: float | None = Field(
         None, description="Rainfall in millimeters over the last hour"
     )
-    cloud_cover_percent: Optional[int] = Field(
+    cloud_cover_percent: int | None = Field(
         None, description="Cloud coverage percentage"
     )
 
     def convert_to_fahrenheit(self) -> "WeatherData":
-        """
-        Convert all temperature values from Celsius to Fahrenheit.
+        """Convert all temperature values from Celsius to Fahrenheit.
 
         Returns:
             WeatherData: A new WeatherData instance with temperatures in Fahrenheit.
         """
 
-        def c_to_f(c: Optional[float]) -> Optional[float]:
+        def c_to_f(c: float | None) -> float | None:
             return round(c * 9 / 5 + 32, 2) if c is not None else None
 
         return WeatherData(
@@ -145,8 +141,7 @@ class WeatherData(BaseModel):
 
     @classmethod
     def from_openweather_response(cls, response: str) -> "WeatherData":
-        """
-        Parse the text response from OpenWeatherMap API into structured data.
+        """Parse the text response from OpenWeatherMap API into structured data.
 
         This method uses regular expressions to extract weather information from
         the text-based API response and creates a structured WeatherData object.
@@ -199,8 +194,7 @@ def get_weather_by_city_country(
     parse: bool = True,
     temperature_unit: Literal["celsius", "fahrenheit"] = "celsius",
 ):
-    """
-    Fetch current weather information for a specific city and country.
+    """Fetch current weather information for a specific city and country.
 
     This function retrieves weather data from the OpenWeatherMap API for the
     specified location. It can return either raw API response or structured
@@ -222,7 +216,6 @@ def get_weather_by_city_country(
         ValueError: If the API key is not provided and the user cancels the prompt.
         Exception: If the weather API request fails.
     """
-
     if not Config.OPENWEATHERMAP_API_KEY:
         os.environ["OPENWEATHERMAP_API_KEY"] = getpass.getpass(
             "Enter your OpenWeatherMap API Key: "

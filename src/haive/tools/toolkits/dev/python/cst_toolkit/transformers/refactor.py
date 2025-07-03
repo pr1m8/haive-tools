@@ -1,5 +1,4 @@
-"""
-Refactoring Transformers Module
+"""Refactoring Transformers Module
 
 This module provides transformers for refactoring Python code using LibCST.
 It includes functionality to rename functions, classes, and variables
@@ -28,8 +27,7 @@ import libcst as cst
 
 
 class RenameTransformer(cst.CSTTransformer):
-    """
-    Renames functions, classes, and variables in Python code.
+    """Renames functions, classes, and variables in Python code.
 
     This transformer finds and renames identifiers throughout the code
     based on a provided mapping, maintaining the structure and semantics
@@ -40,8 +38,7 @@ class RenameTransformer(cst.CSTTransformer):
     """
 
     def __init__(self, rename_map):
-        """
-        Initialize the rename transformer with a mapping of names.
+        """Initialize the rename transformer with a mapping of names.
 
         Args:
             rename_map (dict): A dictionary mapping old names to new names
@@ -51,8 +48,7 @@ class RenameTransformer(cst.CSTTransformer):
         self.rename_map = rename_map  # {old_name: new_name}
 
     def leave_FunctionDef(self, original_node, updated_node):
-        """
-        Rename function definitions during the AST traversal.
+        """Rename function definitions during the AST traversal.
 
         Args:
             original_node (cst.FunctionDef): The original function definition node
@@ -69,8 +65,7 @@ class RenameTransformer(cst.CSTTransformer):
         return updated_node
 
     def leave_ClassDef(self, original_node, updated_node):
-        """
-        Rename class definitions during the AST traversal.
+        """Rename class definitions during the AST traversal.
 
         Args:
             original_node (cst.ClassDef): The original class definition node
@@ -87,8 +82,7 @@ class RenameTransformer(cst.CSTTransformer):
         return updated_node
 
     def leave_Name(self, original_node, updated_node):
-        """
-        Rename variable and reference names during the AST traversal.
+        """Rename variable and reference names during the AST traversal.
 
         Args:
             original_node (cst.Name): The original name node

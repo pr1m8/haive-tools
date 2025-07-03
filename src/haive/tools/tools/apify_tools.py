@@ -1,5 +1,4 @@
-"""
-Apify integration tools for web scraping and automation.
+"""Apify integration tools for web scraping and automation.
 
 This module is intended to provide integration with Apify's web scraping and automation
 platform through the LangChain tools interface. Apify offers various actors for web scraping,

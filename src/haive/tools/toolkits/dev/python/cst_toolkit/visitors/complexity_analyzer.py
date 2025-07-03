@@ -1,5 +1,4 @@
-"""
-Complexity Analyzer Module
+"""Complexity Analyzer Module
 
 This module provides a LibCST visitor that analyzes the cyclomatic complexity
 of functions in Python code. Cyclomatic complexity is a quantitative measure of
@@ -18,7 +17,6 @@ Examples:
 
 import os
 from collections import defaultdict
-from typing import Any, Dict, List, Optional, Union
 
 import libcst as cst
 
@@ -137,7 +135,7 @@ class ComplexityAnalyzer(cst.CSTVisitor):
             # Add 1 for each except handler
             self.complexity[self.current_function] += len(node.handlers)
 
-    def report_complexity(self) -> Dict[str, int]:
+    def report_complexity(self) -> dict[str, int]:
         """Generate a report of function complexity scores.
 
         Returns:
@@ -147,7 +145,7 @@ class ComplexityAnalyzer(cst.CSTVisitor):
             print(f"🔍 {func} complexity score: {score}")
         return dict(self.complexity)
 
-    def get_high_complexity_functions(self, threshold: int = 10) -> Dict[str, int]:
+    def get_high_complexity_functions(self, threshold: int = 10) -> dict[str, int]:
         """Identify functions with complexity above a threshold.
 
         Args:
@@ -161,7 +159,7 @@ class ComplexityAnalyzer(cst.CSTVisitor):
         }
 
 
-def analyze_complexity(filepath: str, threshold: int = None) -> Dict[str, int]:
+def analyze_complexity(filepath: str, threshold: int = None) -> dict[str, int]:
     """Analyze the cyclomatic complexity of functions in a Python file.
 
     Args:
@@ -181,14 +179,14 @@ def analyze_complexity(filepath: str, threshold: int = None) -> Dict[str, int]:
         raise FileNotFoundError(f"File not found: {filepath}")
 
     # Read the file
-    with open(filepath, "r") as f:
+    with open(filepath) as f:
         source_code = f.read()
 
     # Parse the code
     try:
         tree = cst.parse_module(source_code)
     except Exception as e:
-        raise SyntaxError(f"Failed to parse {filepath}: {str(e)}")
+        raise SyntaxError(f"Failed to parse {filepath}: {e!s}")
 
     # Analyze complexity
     analyzer = ComplexityAnalyzer()

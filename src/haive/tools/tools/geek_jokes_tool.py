@@ -1,5 +1,4 @@
-"""
-Geek Jokes API Tool Module
+"""Geek Jokes API Tool Module
 
 This module provides a tool for fetching random geek and programming-related jokes from
 the Geek Jokes API. These jokes are oriented toward programmers, computer enthusiasts,
@@ -12,16 +11,13 @@ Examples:
     'Why do programmers always mix up Christmas and Halloween? Because Oct 31 == Dec 25'
 """
 
-from typing import Optional
-
 import requests
-from langchain_core.tools import BaseToolkit, StructuredTool
+from langchain_core.tools import StructuredTool
 from pydantic import BaseModel, Field
 
 
 class GetGeekJokeInput(BaseModel):
-    """
-    Input model for the get_geek_joke function.
+    """Input model for the get_geek_joke function.
 
     This is an empty input model that exists for compatibility with the LangChain
     structured tool interface. The Geek Jokes API doesn't require any parameters.
@@ -31,14 +27,13 @@ class GetGeekJokeInput(BaseModel):
             LangChain's requirement for an input schema.
     """
 
-    dummy: Optional[str] = Field(
+    dummy: str | None = Field(
         None, description="Unused input; the joke requires no input."
     )
 
 
 def get_geek_joke(_: GetGeekJokeInput) -> str:
-    """
-    Fetch a random geek or programming-related joke from the Geek Jokes API.
+    """Fetch a random geek or programming-related joke from the Geek Jokes API.
 
     This function makes a request to the Geek Jokes API and returns a random
     joke related to geek culture, programming, or technology.

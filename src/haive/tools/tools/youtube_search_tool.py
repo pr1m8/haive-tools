@@ -1,5 +1,4 @@
-"""
-YouTube Search Tool Module
+"""YouTube Search Tool Module
 
 This module provides a tool for searching YouTube for videos using the
 langchain_community.tools.YouTubeSearchTool implementation. It allows searching

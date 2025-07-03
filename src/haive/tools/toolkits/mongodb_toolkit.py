@@ -22,8 +22,6 @@ Typical usage:
     ```
 """
 
-from typing import Optional
-
 from langchain_mongodb.agent_toolkit.database import MongoDBDatabase
 from langchain_mongodb.agent_toolkit.toolkit import MongoDBDatabaseToolkit
 from langchain_openai import ChatOpenAI
@@ -32,7 +30,7 @@ from langchain_openai import ChatOpenAI
 def get_mongodb_toolkit(
     connection_string: str = "mongodb://localhost:27017/chinook",
     temperature: float = 0,
-    llm: Optional[ChatOpenAI] = None,
+    llm: ChatOpenAI | None = None,
 ) -> MongoDBDatabaseToolkit:
     """Create a MongoDB Database toolkit for querying and analyzing MongoDB data.
 

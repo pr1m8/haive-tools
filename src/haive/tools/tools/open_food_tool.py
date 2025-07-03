@@ -1,5 +1,4 @@
-"""
-Open Food Facts Tool Module.
+"""Open Food Facts Tool Module.
 
 This module provides a tool for retrieving product information from the
 Open Food Facts database using barcodes. It creates a structured tool that
@@ -19,8 +18,6 @@ Note:
     See https://world.openfoodfacts.org/api/v2/ for API details.
 """
 
-from typing import Optional
-
 import requests
 from langchain_core.tools import StructuredTool
 from pydantic import BaseModel, Field
@@ -37,8 +34,7 @@ class GetProductInfoInput(BaseModel):
 
 
 def get_product_info(barcode: str) -> dict:
-    """
-    Retrieve product information from Open Food Facts by barcode.
+    """Retrieve product information from Open Food Facts by barcode.
 
     Args:
         barcode: The barcode of the product to look up (EAN, UPC, etc.)

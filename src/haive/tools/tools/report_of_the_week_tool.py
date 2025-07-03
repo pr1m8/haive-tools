@@ -1,5 +1,4 @@
-"""
-Report Of The Week API Tools Module
+"""Report Of The Week API Tools Module
 
 This module provides tools for accessing food and drink review data from "The Report Of The Week"
 API, which contains reviews by the popular YouTube food reviewer known as "Reviewbrah". The tools
@@ -18,8 +17,6 @@ Examples:
     >>> print(f"Found {len(energy_reviews)} energy drink reviews")
 """
 
-from typing import Optional
-
 import requests
 from langchain_core.tools import StructuredTool
 from pydantic import BaseModel, Field
@@ -29,19 +26,15 @@ BASE_URL = "https://thereportoftheweek-api.herokuapp.com"
 
 # --- Tool: Get All Reports ---
 class GetAllReportsInput(BaseModel):
-    """
-    Input model for retrieving all reports from The Report Of The Week API.
+    """Input model for retrieving all reports from The Report Of The Week API.
 
     This empty model is used as a placeholder for the get_all_reports function
     to maintain a consistent API pattern across tools.
     """
 
-    pass
-
 
 def get_all_reports(_: GetAllReportsInput) -> list:
-    """
-    Retrieve all food and drink reviews from The Report Of The Week API.
+    """Retrieve all food and drink reviews from The Report Of The Week API.
 
     This function fetches the complete collection of reviews from the API
     without any filtering.
@@ -71,8 +64,7 @@ get_all_reports_tool = StructuredTool.from_function(
 
 # --- Tool: Filter by Category ---
 class GetReportsByCategoryInput(BaseModel):
-    """
-    Input model for retrieving reports filtered by category.
+    """Input model for retrieving reports filtered by category.
 
     This model defines the parameters needed to filter reviews by their
     category designation.
@@ -89,8 +81,7 @@ class GetReportsByCategoryInput(BaseModel):
 
 
 def get_reports_by_category(input: GetReportsByCategoryInput) -> list:
-    """
-    Retrieve reviews filtered by a specific category.
+    """Retrieve reviews filtered by a specific category.
 
     This function fetches reviews from The Report Of The Week API that match
     the specified category.
@@ -120,8 +111,7 @@ get_reports_by_category_tool = StructuredTool.from_function(
 
 # --- Tool: Filter by Date Range ---
 class GetReportsByDateRangeInput(BaseModel):
-    """
-    Input model for retrieving reports within a specific date range.
+    """Input model for retrieving reports within a specific date range.
 
     This model defines the parameters needed to filter reviews by their
     publication date.
@@ -136,8 +126,7 @@ class GetReportsByDateRangeInput(BaseModel):
 
 
 def get_reports_by_date_range(input: GetReportsByDateRangeInput) -> list:
-    """
-    Retrieve reviews published within a specific date range.
+    """Retrieve reviews published within a specific date range.
 
     This function fetches reviews from The Report Of The Week API that were
     published between the specified start and end dates.

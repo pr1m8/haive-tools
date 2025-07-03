@@ -14,12 +14,9 @@ Attributes:
     tools: The list of available Office 365 tools
 """
 
-import os
-
 from haive.config.config import Config
 from langchain_community.agent_toolkits import O365Toolkit
 from langchain_community.tools.office365.events_search import O365SearchEvents
-from O365 import Account
 
 # 🔧 Required by Pydantic v2
 O365SearchEvents.model_rebuild()

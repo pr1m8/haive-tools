@@ -1,5 +1,4 @@
-"""
-Type Checking Visitor Module
+"""Type Checking Visitor Module
 
 This module provides functionality to analyze Python code for type annotation issues
 using LibCST. It identifies functions missing type hints and incorrect return type
@@ -12,14 +11,11 @@ Example:
     ❌ Incorrect return type in `format_result`: Expected str, got int
 """
 
-from typing import Dict, List, Tuple
-
 import libcst as cst
 
 
 class TypeChecker(cst.CSTVisitor):
-    """
-    Checks for missing or incorrect type hints in functions.
+    """Checks for missing or incorrect type hints in functions.
 
     This visitor analyzes function definitions in Python code to identify
     missing parameter type annotations and incorrect return type annotations.
@@ -34,13 +30,12 @@ class TypeChecker(cst.CSTVisitor):
     def __init__(self):
         """Initialize the type checker visitor."""
         super().__init__()
-        self.missing_annotations: List[str] = []
-        self.incorrect_annotations: List[Tuple[str, str, str]] = []
-        self.function_types: Dict[str, str] = {}
+        self.missing_annotations: list[str] = []
+        self.incorrect_annotations: list[tuple[str, str, str]] = []
+        self.function_types: dict[str, str] = {}
 
     def visit_FunctionDef(self, node: cst.FunctionDef) -> None:
-        """
-        Check if a function has proper type hints during the AST traversal.
+        """Check if a function has proper type hints during the AST traversal.
 
         This method analyzes a function definition to determine if it has parameter
         type annotations and if the return type annotation is correct.
@@ -68,8 +63,7 @@ class TypeChecker(cst.CSTVisitor):
                 )
 
     def report_issues(self) -> None:
-        """
-        Print a report of all type checking issues found.
+        """Print a report of all type checking issues found.
 
         This method generates a human-readable report of functions missing type hints
         and functions with incorrect return type annotations.
@@ -84,8 +78,7 @@ class TypeChecker(cst.CSTVisitor):
 
 
 def check_types(filepath: str) -> None:
-    """
-    Check a Python file for type annotation issues.
+    """Check a Python file for type annotation issues.
 
     This function analyzes a Python file to identify functions missing type annotations
     and functions with incorrect return type annotations, and prints a report of the issues.
@@ -97,7 +90,7 @@ def check_types(filepath: str) -> None:
         FileNotFoundError: If the specified file does not exist
         IOError: If there are issues reading from the file
     """
-    with open(filepath, "r") as f:
+    with open(filepath) as f:
         tree = cst.parse_module(f.read())
 
     checker = TypeChecker()

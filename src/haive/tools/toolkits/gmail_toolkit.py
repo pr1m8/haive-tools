@@ -1,5 +1,4 @@
-"""
-Gmail Toolkit Module
+"""Gmail Toolkit Module
 
 This toolkit provides a collection of tools to interact with the Gmail API,
 allowing agents to read, send, and manage emails through a Google account.

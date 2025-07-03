@@ -1,5 +1,4 @@
-"""
-Fruityvice API Tool Module
+"""Fruityvice API Tool Module
 
 This module provides a tool for accessing the Fruityvice API, which offers comprehensive
 nutritional information and details about various fruits. It allows users to query
@@ -13,16 +12,15 @@ Examples:
     'Banana'
 """
 
-from typing import Any, Dict, List
+from typing import Any
 
 import requests
-from langchain_core.tools import BaseToolkit, StructuredTool
+from langchain_core.tools import StructuredTool
 from pydantic import BaseModel, Field
 
 
 class FruitNameInput(BaseModel):
-    """
-    Input model for fruit lookup requests.
+    """Input model for fruit lookup requests.
 
     Attributes:
         name (str): The name of the fruit to retrieve data for.
@@ -31,9 +29,8 @@ class FruitNameInput(BaseModel):
     name: str = Field(..., description="Name of the fruit to retrieve data for")
 
 
-def get_fruit_info(input: FruitNameInput) -> Dict[str, Any]:
-    """
-    Fetch detailed information about a specific fruit from the Fruityvice API.
+def get_fruit_info(input: FruitNameInput) -> dict[str, Any]:
+    """Fetch detailed information about a specific fruit from the Fruityvice API.
 
     The information returned typically includes nutritional data (calories, fat, sugar, etc.),
     family, genus, and other taxonomic details.

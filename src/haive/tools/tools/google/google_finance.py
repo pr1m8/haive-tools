@@ -1,5 +1,4 @@
-"""
-Google Finance Tool Module
+"""Google Finance Tool Module
 
 This module provides a tool for retrieving financial information from Google Finance.
 It leverages LangChain's GoogleFinanceQueryRun to query financial data like stock prices,
@@ -17,31 +16,26 @@ Examples:
 """
 
 import os
-from typing import List
 
 from dotenv import load_dotenv
 from langchain_community.agent_toolkits.load_tools import load_tools
-from langchain_community.tools.google_finance import GoogleFinanceQueryRun
-from langchain_community.utilities.google_finance import GoogleFinanceAPIWrapper
 from pydantic import BaseModel, Field
 
 
 class GoogleFinanceResult(BaseModel):
-    """
-    Response model for Google Finance search results.
+    """Response model for Google Finance search results.
 
     Attributes:
         results (List[str]): A list of financial information snippets from Google Finance.
     """
 
-    results: List[str] = Field(
+    results: list[str] = Field(
         ..., description="List of financial information snippets from Google Finance"
     )
 
 
 def initialize_google_finance():
-    """
-    Initialize the Google Finance API wrapper with credentials from environment variables.
+    """Initialize the Google Finance API wrapper with credentials from environment variables.
 
     This function loads environment variables and configures the Google Finance API client.
 

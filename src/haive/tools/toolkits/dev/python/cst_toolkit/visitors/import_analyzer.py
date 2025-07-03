@@ -1,5 +1,4 @@
-"""
-Import Analyzer Module
+"""Import Analyzer Module
 
 This module provides functionality to analyze import statements in Python code
 using LibCST. It helps identify unused imports, import conflicts, and other import-related
@@ -15,14 +14,12 @@ Example:
 """
 
 from collections import defaultdict
-from typing import Dict, List, Set, Tuple
 
 import libcst as cst
 
 
 class ImportAnalyzer(cst.CSTVisitor):
-    """
-    Analyzes and detects issues in Python imports.
+    """Analyzes and detects issues in Python imports.
 
     This visitor analyzes import statements in Python code to identify issues
     such as unused imports, import conflicts, and other import-related problems
@@ -38,14 +35,13 @@ class ImportAnalyzer(cst.CSTVisitor):
     def __init__(self):
         """Initialize the import analyzer visitor."""
         super().__init__()
-        self.imports: Set[str] = set()
-        self.import_conflicts: Dict[str, Set[str]] = defaultdict(set)
-        self.unused_imports: Set[str] = set()
-        self.used_identifiers: Set[str] = set()
+        self.imports: set[str] = set()
+        self.import_conflicts: dict[str, set[str]] = defaultdict(set)
+        self.unused_imports: set[str] = set()
+        self.used_identifiers: set[str] = set()
 
     def visit_Import(self, node: cst.Import) -> None:
-        """
-        Track imported modules during the AST traversal.
+        """Track imported modules during the AST traversal.
 
         This method processes 'import module' statements and records information
         about imported modules, potential conflicts, and usage tracking.
@@ -61,8 +57,7 @@ class ImportAnalyzer(cst.CSTVisitor):
             self.unused_imports.add(module_name)
 
     def visit_ImportFrom(self, node: cst.ImportFrom) -> None:
-        """
-        Track 'from module import x' statements during the AST traversal.
+        """Track 'from module import x' statements during the AST traversal.
 
         This method processes import-from statements and records information
         about imported names, their source modules, and usage tracking.
@@ -79,8 +74,7 @@ class ImportAnalyzer(cst.CSTVisitor):
                 self.unused_imports.add(imported_name)
 
     def visit_Name(self, node: cst.Name) -> None:
-        """
-        Detect used symbols in the script during the AST traversal.
+        """Detect used symbols in the script during the AST traversal.
 
         This method tracks which imported names are actually used in the code
         to identify unused imports.
@@ -92,9 +86,8 @@ class ImportAnalyzer(cst.CSTVisitor):
             self.unused_imports.discard(node.value)
         self.used_identifiers.add(node.value)
 
-    def report_issues(self) -> Dict[str, List]:
-        """
-        Generate a report on import-related issues.
+    def report_issues(self) -> dict[str, list]:
+        """Generate a report on import-related issues.
 
         This method prints a human-readable report of import issues and returns
         a structured representation of the findings.
@@ -123,9 +116,8 @@ class ImportAnalyzer(cst.CSTVisitor):
         }
 
 
-def analyze_imports(filepath: str) -> Dict[str, List]:
-    """
-    Analyze import statements in a Python file.
+def analyze_imports(filepath: str) -> dict[str, list]:
+    """Analyze import statements in a Python file.
 
     This function parses a Python file and analyzes its import statements to identify
     unused imports, import conflicts, and other import-related issues.
@@ -141,7 +133,7 @@ def analyze_imports(filepath: str) -> Dict[str, List]:
         FileNotFoundError: If the specified file does not exist
         IOError: If there are issues reading from the file
     """
-    with open(filepath, "r") as f:
+    with open(filepath) as f:
         tree = cst.parse_module(f.read())
 
     analyzer = ImportAnalyzer()

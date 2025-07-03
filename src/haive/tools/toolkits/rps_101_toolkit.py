@@ -25,8 +25,6 @@ Examples:
     'paper covers rock'
 """
 
-from typing import List, Optional
-
 import requests
 from langchain_core.tools import BaseToolkit, StructuredTool
 from pydantic import BaseModel, Field
@@ -35,9 +33,8 @@ BASE_URL = "https://rps101.pythonanywhere.com/api/v1"
 
 
 # Tool 1: Get All RPS-101 Objects
-def _get_all_rps101_objects() -> List[str]:
-    """
-    Get a list of all 101 objects in the RPS-101 game.
+def _get_all_rps101_objects() -> list[str]:
+    """Get a list of all 101 objects in the RPS-101 game.
 
     Returns:
         List[str]: A list of all object names in the RPS-101 game.
@@ -59,8 +56,7 @@ get_all_rps101_objects = StructuredTool.from_function(
 
 # Tool 2: Get Outcomes for an Object
 class ObjectNameInput(BaseModel):
-    """
-    Input model for retrieving outcome information about a specific RPS-101 object.
+    """Input model for retrieving outcome information about a specific RPS-101 object.
 
     Attributes:
         object_name (str): The name of the RPS-101 object to get information about.
@@ -73,8 +69,7 @@ class ObjectNameInput(BaseModel):
 
 
 def _get_rps101_object_outcomes(object_name: str) -> dict:
-    """
-    Get detailed information about a specific RPS-101 object, including what it defeats.
+    """Get detailed information about a specific RPS-101 object, including what it defeats.
 
     Args:
         object_name (str): The name of the RPS-101 object to get information about.
@@ -101,8 +96,7 @@ get_rps101_object_outcomes = StructuredTool.from_function(
 
 # Tool 3: Match Two RPS-101 Objects
 class RPSMatchInput(BaseModel):
-    """
-    Input model for simulating a match between two RPS-101 objects.
+    """Input model for simulating a match between two RPS-101 objects.
 
     Attributes:
         object_one (str): The name of the first object in the match.
@@ -118,8 +112,7 @@ class RPSMatchInput(BaseModel):
 
 
 def _get_rps101_match_result(object_one: str, object_two: str) -> dict:
-    """
-    Get the result of a match between two RPS-101 objects.
+    """Get the result of a match between two RPS-101 objects.
 
     Args:
         object_one (str): The name of the first object in the match.
@@ -149,8 +142,7 @@ get_rps101_match_result = StructuredTool.from_function(
 
 # Toolkit
 class RPS101Toolkit(BaseToolkit):
-    """
-    LangChain toolkit for the RPS-101 API (Rock-Paper-Scissors with 101 objects).
+    """LangChain toolkit for the RPS-101 API (Rock-Paper-Scissors with 101 objects).
 
     This toolkit provides structured tools for interacting with the RPS-101 API,
     allowing agents to explore the 101 objects, understand their relationships,
@@ -160,9 +152,8 @@ class RPS101Toolkit(BaseToolkit):
         None
     """
 
-    def get_tools(self) -> List[StructuredTool]:
-        """
-        Get the list of tools provided by this toolkit.
+    def get_tools(self) -> list[StructuredTool]:
+        """Get the list of tools provided by this toolkit.
 
         Returns:
             List[StructuredTool]: A list of structured tools for working with the RPS-101 API.

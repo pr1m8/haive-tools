@@ -1,5 +1,4 @@
-"""
-Genderize Tool Module.
+"""Genderize Tool Module.
 
 This module provides a tool for predicting gender from first names using the
 Genderize.io API. It creates a structured tool that can be integrated into
@@ -19,8 +18,6 @@ Note:
     See https://genderize.io/ for more information.
 """
 
-from typing import List, Optional, Union
-
 import requests
 from langchain_core.tools import StructuredTool
 from pydantic import BaseModel, Field
@@ -38,17 +35,16 @@ class GenderizeResponse(BaseModel):
     """
 
     name: str = Field(description="The name to predict gender for")
-    gender: Optional[str] = Field(description="The predicted gender of the name")
-    probability: Optional[float] = Field(
+    gender: str | None = Field(description="The predicted gender of the name")
+    probability: float | None = Field(
         description="The probability of the predicted gender"
     )
     count: int = Field(description="The number of people with the name in the country")
-    country_id: Optional[str] = Field(description="The country code of the name")
+    country_id: str | None = Field(description="The country code of the name")
 
 
-def predict_gender(name: str, country_id: Optional[str] = None) -> GenderizeResponse:
-    """
-    Predict gender from a first name using the Genderize.io API.
+def predict_gender(name: str, country_id: str | None = None) -> GenderizeResponse:
+    """Predict gender from a first name using the Genderize.io API.
 
     Args:
         name: The first name to predict gender for

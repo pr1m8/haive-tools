@@ -1,5 +1,4 @@
-"""
-GitHub Project Creation Module
+"""GitHub Project Creation Module
 
 This module provides utilities for creating and initializing GitHub repositories
 programmatically. It offers functionality to create repositories, set up branch
@@ -16,11 +15,10 @@ Examples:
     >>> creator.create_repository("my-new-project", private=True, team_access=["engineering"])
 """
 
-import os
-from typing import Any, Dict, List, Optional, Union
+from typing import Any
 
 import requests
-from pydantic import BaseModel, Field, SecretStr
+from pydantic import BaseModel, Field
 
 
 class RepositorySettings(BaseModel):
@@ -46,13 +44,13 @@ class RepositorySettings(BaseModel):
         True, description="Whether the repository should be private or public"
     )
     auto_init: bool = Field(True, description="Whether to initialize with a README")
-    gitignore_template: Optional[str] = Field(
+    gitignore_template: str | None = Field(
         None, description="Which gitignore template to apply"
     )
-    license_template: Optional[str] = Field(
+    license_template: str | None = Field(
         None, description="Which license template to apply"
     )
-    team_access: List[str] = Field(
+    team_access: list[str] = Field(
         default_factory=list, description="List of team names to grant access to"
     )
     branch_protection: bool = Field(
@@ -81,7 +79,7 @@ class BranchProtectionRule(BaseModel):
     require_code_owner_reviews: bool = Field(
         False, description="Whether to require review from code owners"
     )
-    required_status_checks: List[str] = Field(
+    required_status_checks: list[str] = Field(
         default_factory=list,
         description="List of status checks that must pass before merging",
     )
@@ -126,7 +124,7 @@ class GitHubProjectCreator:
 
     def create_repository(
         self, name: str, description: str = "", private: bool = True, **kwargs
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Create a new GitHub repository.
 
         Args:
@@ -174,8 +172,8 @@ class GitHubProjectCreator:
         owner: str,
         repo: str,
         branch: str,
-        rules: Optional[BranchProtectionRule] = None,
-    ) -> Dict[str, Any]:
+        rules: BranchProtectionRule | None = None,
+    ) -> dict[str, Any]:
         """Set up branch protection rules for a repository.
 
         Args:
@@ -219,7 +217,7 @@ class GitHubProjectCreator:
 
     def add_team_access(
         self, owner: str, repo: str, team: str, permission: str = "push"
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Add team access to a repository.
 
         Args:
@@ -247,7 +245,7 @@ class GitHubProjectCreator:
 
     def create_workflow(
         self, owner: str, repo: str, workflow_file: str, workflow_content: str
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         """Create a GitHub Actions workflow file.
 
         Args:

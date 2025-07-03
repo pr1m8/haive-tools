@@ -1,5 +1,4 @@
-"""
-Function Logging Transformer Module
+"""Function Logging Transformer Module
 
 This module provides a LibCST transformer that automatically adds logging statements
 to functions in Python code. It can be used to instrument code for debugging,
@@ -17,7 +16,6 @@ Examples:
 """
 
 import os
-from typing import List, Union
 
 import libcst as cst
 from libcst import MetadataWrapper
@@ -36,7 +34,7 @@ class FunctionLoggingTransformer(cst.CSTTransformer):
     """
 
     def __init__(
-        self, log_format: str = "Executing {name}", exclude_methods: List[str] = None
+        self, log_format: str = "Executing {name}", exclude_methods: list[str] = None
     ):
         """Initialize the function logging transformer.
 
@@ -81,7 +79,7 @@ class FunctionLoggingTransformer(cst.CSTTransformer):
 def add_logging(
     filepath: str,
     log_format: str = "Executing {name}",
-    exclude_methods: List[str] = None,
+    exclude_methods: list[str] = None,
 ) -> None:
     """Inject logging into functions in a Python file.
 
@@ -103,14 +101,14 @@ def add_logging(
         raise FileNotFoundError(f"File not found: {filepath}")
 
     # Read the file
-    with open(filepath, "r") as f:
+    with open(filepath) as f:
         source_code = f.read()
 
     # Parse the code
     try:
         tree = cst.parse_module(source_code)
     except Exception as e:
-        raise SyntaxError(f"Failed to parse {filepath}: {str(e)}")
+        raise SyntaxError(f"Failed to parse {filepath}: {e!s}")
 
     # Apply the transformer
     wrapper = MetadataWrapper(tree)

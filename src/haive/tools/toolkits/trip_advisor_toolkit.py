@@ -1,5 +1,4 @@
-"""
-TripAdvisor Toolkit.
+"""TripAdvisor Toolkit.
 
 This module provides tools to interact with the TripAdvisor Content API.
 It allows querying for location details, photos, reviews, and searching
@@ -10,7 +9,6 @@ variables or .env file.
 """
 
 import os
-from typing import Optional
 
 import requests
 from dotenv import load_dotenv
@@ -23,8 +21,7 @@ BASE_URL = "https://api.content.tripadvisor.com/api/v1"
 
 
 def tripadvisor_get(endpoint: str, params: dict):
-    """
-    Make a GET request to the TripAdvisor API.
+    """Make a GET request to the TripAdvisor API.
 
     Args:
         endpoint: The API endpoint to call.
@@ -49,18 +46,17 @@ class LocationDetailsInput(BaseModel):
     location_id: int = Field(
         ..., description="The unique identifier for a TripAdvisor location."
     )
-    language: Optional[str] = Field(
+    language: str | None = Field(
         "en", description="The language code for the response content (ISO 639-1)."
     )
-    currency: Optional[str] = Field(
+    currency: str | None = Field(
         "USD", description="The currency code for price values (ISO 4217)."
     )
 
 
 @tool(args_schema=LocationDetailsInput)
 def get_location_details(location_id: int, language: str = "en", currency: str = "USD"):
-    """
-    Get details about a location by ID.
+    """Get details about a location by ID.
 
     Retrieves comprehensive information about a specific TripAdvisor location
     such as a hotel, restaurant, or attraction.
@@ -88,16 +84,16 @@ class LocationPhotosInput(BaseModel):
     location_id: int = Field(
         ..., description="The unique identifier for a TripAdvisor location."
     )
-    language: Optional[str] = Field(
+    language: str | None = Field(
         "en", description="The language code for the response content (ISO 639-1)."
     )
-    limit: Optional[int] = Field(
+    limit: int | None = Field(
         5, description="Maximum number of photos to return (1-100)."
     )
-    offset: Optional[int] = Field(
+    offset: int | None = Field(
         0, description="Number of photos to skip for pagination."
     )
-    source: Optional[str] = Field(
+    source: str | None = Field(
         None, description="Filter photos by source (tripadvisor, management)."
     )
 
@@ -108,10 +104,9 @@ def get_location_photos(
     language: str = "en",
     limit: int = 5,
     offset: int = 0,
-    source: Optional[str] = None,
+    source: str | None = None,
 ):
-    """
-    Get high-quality photos for a location.
+    """Get high-quality photos for a location.
 
     Retrieves photos from TripAdvisor for a specific location.
 
@@ -137,13 +132,13 @@ class LocationReviewsInput(BaseModel):
     location_id: int = Field(
         ..., description="The unique identifier for a TripAdvisor location."
     )
-    language: Optional[str] = Field(
+    language: str | None = Field(
         "en", description="The language code for the response content (ISO 639-1)."
     )
-    limit: Optional[int] = Field(
+    limit: int | None = Field(
         5, description="Maximum number of reviews to return (1-50)."
     )
-    offset: Optional[int] = Field(
+    offset: int | None = Field(
         0, description="Number of reviews to skip for pagination."
     )
 
@@ -152,8 +147,7 @@ class LocationReviewsInput(BaseModel):
 def get_location_reviews(
     location_id: int, language: str = "en", limit: int = 5, offset: int = 0
 ):
-    """
-    Get recent reviews for a location.
+    """Get recent reviews for a location.
 
     Retrieves user reviews for a specific TripAdvisor location.
 
@@ -180,29 +174,28 @@ class LocationSearchInput(BaseModel):
         alias="searchQuery",
         description="Text to search for (e.g., hotel name, restaurant name).",
     )
-    category: Optional[str] = Field(
+    category: str | None = Field(
         None, description="Filter by category (hotels, attractions, restaurants)."
     )
-    phone: Optional[str] = Field(None, description="Search by phone number.")
-    address: Optional[str] = Field(None, description="Search by street address.")
-    lat_long: Optional[str] = Field(
+    phone: str | None = Field(None, description="Search by phone number.")
+    address: str | None = Field(None, description="Search by street address.")
+    lat_long: str | None = Field(
         None,
         alias="latLong",
         description="Latitude,longitude pair (e.g., '42.3455,-71.0983').",
     )
-    radius: Optional[int] = Field(
+    radius: int | None = Field(
         None, description="Search radius from the specified coordinates."
     )
-    radius_unit: Optional[str] = Field(None, description="Unit for radius (km, mi, m).")
-    language: Optional[str] = Field(
+    radius_unit: str | None = Field(None, description="Unit for radius (km, mi, m).")
+    language: str | None = Field(
         "en", description="The language code for the response content (ISO 639-1)."
     )
 
 
 @tool(args_schema=LocationSearchInput)
 def search_locations(**kwargs):
-    """
-    Search for TripAdvisor locations by name, address, lat/long, etc.
+    """Search for TripAdvisor locations by name, address, lat/long, etc.
 
     Performs a general search for TripAdvisor locations using various filters.
 
@@ -232,24 +225,23 @@ class NearbySearchInput(BaseModel):
         alias="latLong",
         description="Latitude,longitude pair (e.g., '42.3455,-71.0983').",
     )
-    category: Optional[str] = Field(
+    category: str | None = Field(
         None, description="Filter by category (hotels, attractions, restaurants)."
     )
-    phone: Optional[str] = Field(None, description="Filter by phone number.")
-    address: Optional[str] = Field(None, description="Filter by street address.")
-    radius: Optional[int] = Field(
+    phone: str | None = Field(None, description="Filter by phone number.")
+    address: str | None = Field(None, description="Filter by street address.")
+    radius: int | None = Field(
         None, description="Search radius from the specified coordinates."
     )
-    radius_unit: Optional[str] = Field(None, description="Unit for radius (km, mi, m).")
-    language: Optional[str] = Field(
+    radius_unit: str | None = Field(None, description="Unit for radius (km, mi, m).")
+    language: str | None = Field(
         "en", description="The language code for the response content (ISO 639-1)."
     )
 
 
 @tool(args_schema=NearbySearchInput)
 def nearby_search(**kwargs):
-    """
-    Search for nearby locations using a lat/long pair.
+    """Search for nearby locations using a lat/long pair.
 
     Finds TripAdvisor locations near a specific geographical point.
 

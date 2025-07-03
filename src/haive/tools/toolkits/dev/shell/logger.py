@@ -1,5 +1,6 @@
 import datetime
 
+
 class ExecutionLogger:
     """Logs command execution details for audit trail."""
 
@@ -21,12 +22,13 @@ class ExecutionLogger:
 
         existing_logs = []
         if cls.LOG_FILE.exists():
-            with open(cls.LOG_FILE, "r") as f:
+            with open(cls.LOG_FILE) as f:
                 existing_logs = json.load(f)
 
         existing_logs.append(log_entry)
         with open(cls.LOG_FILE, "w") as f:
             json.dump(existing_logs, f, indent=4)
+
 
 # Example Usage:
 executor = SecureShellExecutor(role="admin")

@@ -19,15 +19,13 @@ Typical usage:
     agent.run("Send a text message to +1234567890 with the message 'Hello!'")
 """
 
-from typing import List
-
 from haive.config.config import Config
 from langchain_community.agent_toolkits.load_tools import load_tools
 from langchain_community.utilities.twilio import TwilioAPIWrapper
 from langchain_core.tools import BaseTool
 
 
-def get_twilio_tools() -> List[BaseTool]:
+def get_twilio_tools() -> list[BaseTool]:
     """Get tools for interacting with the Twilio API.
 
     This function creates and returns tools for sending SMS messages and making

@@ -1,5 +1,4 @@
-"""
-SQL Database Toolkit Module.
+"""SQL Database Toolkit Module.
 
 This module provides a toolkit for interacting with SQL databases through LangChain's
 SQL Database Toolkit. It initializes a connection to a SQLite database and creates

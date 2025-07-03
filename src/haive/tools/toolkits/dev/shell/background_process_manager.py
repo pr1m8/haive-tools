@@ -1,5 +1,4 @@
-"""
-Background Process Manager Module
+"""Background Process Manager Module
 
 This module provides a utility for managing long-running background processes
 in a shell environment. It handles process spawning, monitoring, and termination,
@@ -20,11 +19,9 @@ Examples:
     {'success': True, 'message': '✅ Process 12345 stopped'}
 """
 
-import os
 import shlex
-import signal
 import subprocess
-from typing import Any, Dict, List, Optional, Union
+from typing import Any
 
 import psutil
 
@@ -49,9 +46,9 @@ class BackgroundProcessManager:
     def run_background(
         self,
         command: str,
-        cwd: Optional[str] = None,
-        env: Optional[Dict[str, str]] = None,
-    ) -> Dict[str, Any]:
+        cwd: str | None = None,
+        env: dict[str, str] | None = None,
+    ) -> dict[str, Any]:
         """Start a long-running command in the background.
 
         Args:
@@ -94,7 +91,7 @@ class BackgroundProcessManager:
         except Exception as e:
             return {"success": False, "error": str(e)}
 
-    def list_running(self) -> List[Dict[str, Any]]:
+    def list_running(self) -> list[dict[str, Any]]:
         """List currently running background processes.
 
         Returns:
@@ -138,7 +135,7 @@ class BackgroundProcessManager:
 
         return active_processes
 
-    def stop_process(self, pid: int, force: bool = False) -> Dict[str, Any]:
+    def stop_process(self, pid: int, force: bool = False) -> dict[str, Any]:
         """Stop a specific background process.
 
         Args:
@@ -174,15 +171,14 @@ class BackgroundProcessManager:
                 # Remove from tracked processes
                 del self.processes[pid]
                 return {"success": True, "message": f"✅ Process {pid} stopped"}
-            else:
-                return {
-                    "success": False,
-                    "error": f"❌ Process {pid} not found in managed processes",
-                }
+            return {
+                "success": False,
+                "error": f"❌ Process {pid} not found in managed processes",
+            }
         except Exception as e:
             return {"success": False, "error": str(e)}
 
-    def list_network_listeners(self) -> List[Dict[str, Any]]:
+    def list_network_listeners(self) -> list[dict[str, Any]]:
         """List all processes listening on network ports.
 
         Returns:
@@ -218,7 +214,7 @@ class BackgroundProcessManager:
 
         return listeners
 
-    def get_process_logs(self, pid: int, max_lines: int = 100) -> Dict[str, Any]:
+    def get_process_logs(self, pid: int, max_lines: int = 100) -> dict[str, Any]:
         """Get stdout and stderr output from a running process.
 
         Args:
@@ -266,7 +262,7 @@ class BackgroundProcessManager:
         except Exception as e:
             return {"success": False, "error": str(e)}
 
-    def cleanup(self) -> Dict[str, Any]:
+    def cleanup(self) -> dict[str, Any]:
         """Stop all managed processes and clean up resources.
 
         Returns:
@@ -288,6 +284,6 @@ class BackgroundProcessManager:
                         f"Failed to stop PID {pid}: {result.get('error', 'Unknown error')}"
                     )
             except Exception as e:
-                errors.append(f"Error stopping PID {pid}: {str(e)}")
+                errors.append(f"Error stopping PID {pid}: {e!s}")
 
         return {"success": len(errors) == 0, "stopped": stopped_count, "errors": errors}

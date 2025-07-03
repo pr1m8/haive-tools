@@ -22,8 +22,6 @@ Examples:
     'Blue-Eyes White Dragon'
 """
 
-from typing import List, Optional
-
 import requests
 from langchain.agents import Tool
 from langchain_core.tools import StructuredTool
@@ -32,8 +30,7 @@ from pydantic.v1 import BaseModel, Field
 
 # Schema for querying card info
 class GetCardInfoInput(BaseModel):
-    """
-    Input model for querying Yu-Gi-Oh! card information with various filters.
+    """Input model for querying Yu-Gi-Oh! card information with various filters.
 
     Attributes:
         name (Optional[str]): Filter by exact card name.
@@ -47,26 +44,21 @@ class GetCardInfoInput(BaseModel):
         misc (Optional[bool]): Include additional metadata in the response.
     """
 
-    name: Optional[str] = Field(None, description="Exact card name")
-    fname: Optional[str] = Field(None, description="Fuzzy search by name fragment")
-    archetype: Optional[str] = Field(None, description="Card archetype, e.g. Blue-Eyes")
-    attribute: Optional[str] = Field(
-        None, description="Card attribute, e.g. DARK, LIGHT"
-    )
-    race: Optional[str] = Field(
-        None, description="Card race/type, e.g. Warrior, Dragon"
-    )
-    level: Optional[int] = Field(None, description="Level or rank of the card")
-    cardset: Optional[str] = Field(None, description="Card set, e.g. Metal Raiders")
-    format: Optional[str] = Field(None, description="Card format, e.g. TCG, Speed Duel")
-    misc: Optional[bool] = Field(
+    name: str | None = Field(None, description="Exact card name")
+    fname: str | None = Field(None, description="Fuzzy search by name fragment")
+    archetype: str | None = Field(None, description="Card archetype, e.g. Blue-Eyes")
+    attribute: str | None = Field(None, description="Card attribute, e.g. DARK, LIGHT")
+    race: str | None = Field(None, description="Card race/type, e.g. Warrior, Dragon")
+    level: int | None = Field(None, description="Level or rank of the card")
+    cardset: str | None = Field(None, description="Card set, e.g. Metal Raiders")
+    format: str | None = Field(None, description="Card format, e.g. TCG, Speed Duel")
+    misc: bool | None = Field(
         False, description="Whether to include additional metadata"
     )
 
 
 def get_card_info(input_data: GetCardInfoInput) -> dict:
-    """
-    Retrieve Yu-Gi-Oh! card information based on the provided filters.
+    """Retrieve Yu-Gi-Oh! card information based on the provided filters.
 
     Args:
         input_data (GetCardInfoInput): Input parameters for filtering card results.
@@ -96,9 +88,8 @@ card_info_tool = StructuredTool.from_function(
 
 
 # Simple REST endpoints
-def get_card_sets() -> List[dict]:
-    """
-    Get a list of all Yu-Gi-Oh! card sets.
+def get_card_sets() -> list[dict]:
+    """Get a list of all Yu-Gi-Oh! card sets.
 
     Returns:
         List[dict]: A list of card set objects containing set information.
@@ -109,9 +100,8 @@ def get_card_sets() -> List[dict]:
     return requests.get("https://db.ygoprodeck.com/api/v7/cardsets.php").json()
 
 
-def get_archetypes() -> List[dict]:
-    """
-    Get a list of all Yu-Gi-Oh! archetypes.
+def get_archetypes() -> list[dict]:
+    """Get a list of all Yu-Gi-Oh! archetypes.
 
     Returns:
         List[dict]: A list of archetype objects.
@@ -123,8 +113,7 @@ def get_archetypes() -> List[dict]:
 
 
 def get_random_card() -> dict:
-    """
-    Get information about a random Yu-Gi-Oh! card.
+    """Get information about a random Yu-Gi-Oh! card.
 
     Returns:
         dict: Detailed information about a randomly selected card.
@@ -136,8 +125,7 @@ def get_random_card() -> dict:
 
 
 def get_database_version() -> dict:
-    """
-    Check the current version of the Yu-Gi-Oh! database.
+    """Check the current version of the Yu-Gi-Oh! database.
 
     Returns:
         dict: Information about the current database version.

@@ -1,5 +1,4 @@
-"""
-Chuck Norris Jokes Toolkit Module
+"""Chuck Norris Jokes Toolkit Module
 
 This toolkit provides a collection of tools to interact with the Chuck Norris Jokes API,
 allowing users to retrieve, search, and filter Chuck Norris jokes across different categories.
@@ -17,16 +16,13 @@ Examples:
     ['animal', 'career', 'celebrity', ...]
 """
 
-from typing import List, Optional
-
 import requests
 from langchain_core.tools import StructuredTool
 from pydantic import BaseModel, Field
 
 
 class Joke(BaseModel):
-    """
-    Response model for Chuck Norris Jokes API.
+    """Response model for Chuck Norris Jokes API.
 
     Attributes:
         id (str): Unique identifier for the joke.
@@ -38,14 +34,11 @@ class Joke(BaseModel):
     id: str = Field(..., description="Unique identifier for the joke")
     icon_url: str = Field(..., description="URL to the Chuck Norris icon image")
     value: str = Field(..., description="The actual joke text content")
-    url: Optional[str] = Field(
-        None, description="Optional URL to the joke on the website"
-    )
+    url: str | None = Field(None, description="Optional URL to the joke on the website")
 
 
 def get_random_joke() -> Joke:
-    """
-    Fetch a random Chuck Norris joke from the API.
+    """Fetch a random Chuck Norris joke from the API.
 
     Returns:
         Joke: A random Chuck Norris joke object.
@@ -59,8 +52,7 @@ def get_random_joke() -> Joke:
 
 
 def get_random_joke_by_category(category: str) -> Joke:
-    """
-    Fetch a random Chuck Norris joke from a specific category.
+    """Fetch a random Chuck Norris joke from a specific category.
 
     Args:
         category (str): The joke category to filter by (use get_available_categories
@@ -77,9 +69,8 @@ def get_random_joke_by_category(category: str) -> Joke:
     return Joke(**res.json())
 
 
-def get_available_categories() -> List[str]:
-    """
-    Get a list of all available joke categories from the Chuck Norris API.
+def get_available_categories() -> list[str]:
+    """Get a list of all available joke categories from the Chuck Norris API.
 
     Returns:
         List[str]: A list of category names as strings.
@@ -92,9 +83,8 @@ def get_available_categories() -> List[str]:
     return res.json()
 
 
-def search_jokes(query: str) -> List[Joke]:
-    """
-    Search for Chuck Norris jokes containing the specified query string.
+def search_jokes(query: str) -> list[Joke]:
+    """Search for Chuck Norris jokes containing the specified query string.
 
     Args:
         query (str): The search term to look for in jokes.

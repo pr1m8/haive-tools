@@ -14,8 +14,6 @@ Attributes:
     None
 """
 
-from typing import List, Optional
-
 import requests
 from langchain_core.tools import BaseToolkit, StructuredTool
 from pydantic import BaseModel, Field
@@ -69,8 +67,8 @@ class SearchLCBOProductsInput(BaseModel):
     """
 
     query: str = Field(..., description="Search query string")
-    page: Optional[int] = Field(1, description="Page number of results")
-    per_page: Optional[int] = Field(10, description="Number of results per page")
+    page: int | None = Field(1, description="Page number of results")
+    per_page: int | None = Field(10, description="Number of results per page")
 
 
 def search_lcbo_products(query: str, page: int = 1, per_page: int = 10) -> dict:
@@ -110,7 +108,7 @@ class LCBOApiToolkit(BaseToolkit):
     and retrieving detailed information about specific products.
     """
 
-    def get_tools(self) -> List[StructuredTool]:
+    def get_tools(self) -> list[StructuredTool]:
         """Gets the list of available LCBO API tools.
 
         Returns:

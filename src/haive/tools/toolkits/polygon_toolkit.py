@@ -1,5 +1,4 @@
-"""
-Polygon.io Toolkit Module
+"""Polygon.io Toolkit Module
 
 This module provides a toolkit for accessing financial market data through the Polygon.io API.
 It offers tools for retrieving stock market data, options data, crypto data, forex data,
@@ -33,7 +32,6 @@ Examples:
 """
 
 import os
-from typing import Optional
 
 from dotenv import load_dotenv
 from langchain_community.agent_toolkits.polygon.toolkit import PolygonToolkit
@@ -43,9 +41,8 @@ from langchain_community.utilities.polygon import PolygonAPIWrapper
 load_dotenv(".env")
 
 
-def create_polygon_toolkit(api_key: Optional[str] = None) -> PolygonToolkit:
-    """
-    Create a Polygon.io toolkit instance with the provided or environment API key.
+def create_polygon_toolkit(api_key: str | None = None) -> PolygonToolkit:
+    """Create a Polygon.io toolkit instance with the provided or environment API key.
 
     This function initializes a Polygon.io API wrapper and creates a toolkit with
     tools for accessing various financial data endpoints from the Polygon.io API.

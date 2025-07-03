@@ -1,5 +1,4 @@
-"""
-ClickUp Toolkit Module.
+"""ClickUp Toolkit Module.
 
 This module provides a toolkit for interacting with ClickUp's API through LangChain's
 agent toolkit interface. It creates a wrapper around the ClickUp API that can be used
@@ -25,17 +24,13 @@ Note:
     You'll need a valid API key, client ID, client secret, and redirect URI.
 """
 
-from datetime import datetime
-
 from haive.config.config import Config
-from langchain.agents import AgentType, initialize_agent
 from langchain_community.agent_toolkits.clickup.toolkit import ClickupToolkit
 from langchain_community.utilities.clickup import ClickupAPIWrapper
 
 
 def get_clickup_toolkit() -> ClickupToolkit:
-    """
-    Initialize and return a ClickUp toolkit with configured API credentials.
+    """Initialize and return a ClickUp toolkit with configured API credentials.
 
     This function creates a ClickupAPIWrapper using credentials from the
     application configuration, then uses that wrapper to initialize a

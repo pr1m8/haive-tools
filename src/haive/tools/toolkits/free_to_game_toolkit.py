@@ -24,8 +24,6 @@ Examples:
     'World of Warcraft'
 """
 
-from typing import List, Optional
-
 import requests
 from langchain_core.tools import BaseToolkit, StructuredTool
 from pydantic import BaseModel, Field
@@ -34,8 +32,7 @@ BASE_URL = "https://www.freetogame.com/api"
 
 
 class GetAllGamesInput(BaseModel):
-    """
-    Input model for retrieving all free-to-play games with optional filtering parameters.
+    """Input model for retrieving all free-to-play games with optional filtering parameters.
 
     Attributes:
         platform (Optional[str]): Filter games by platform (pc or browser).
@@ -43,21 +40,20 @@ class GetAllGamesInput(BaseModel):
         sort_by (Optional[str]): Sort results by specified criteria.
     """
 
-    platform: Optional[str] = Field(
+    platform: str | None = Field(
         None, description="Platform name, e.g. 'pc', 'browser'"
     )
-    category: Optional[str] = Field(
+    category: str | None = Field(
         None, description="Category/tag, e.g. 'shooter', 'mmorpg', 'racing', 'social'"
     )
-    sort_by: Optional[str] = Field(
+    sort_by: str | None = Field(
         None,
         description="Sort by one of: 'release-date', 'popularity', 'alphabetical', 'relevance'",
     )
 
 
-def get_all_games(input: GetAllGamesInput) -> List[dict]:
-    """
-    Retrieve all free-to-play games with optional filtering by platform, category, and sort order.
+def get_all_games(input: GetAllGamesInput) -> list[dict]:
+    """Retrieve all free-to-play games with optional filtering by platform, category, and sort order.
 
     Args:
         input (GetAllGamesInput): Input parameters for filtering and sorting games.
@@ -81,8 +77,7 @@ def get_all_games(input: GetAllGamesInput) -> List[dict]:
 
 
 class GetGameDetailsInput(BaseModel):
-    """
-    Input model for retrieving detailed information about a specific game.
+    """Input model for retrieving detailed information about a specific game.
 
     Attributes:
         game_id (int): The unique identifier for the game to retrieve details for.
@@ -92,8 +87,7 @@ class GetGameDetailsInput(BaseModel):
 
 
 def get_game_details(input: GetGameDetailsInput) -> dict:
-    """
-    Get detailed information about a specific game by its ID.
+    """Get detailed information about a specific game by its ID.
 
     Args:
         input (GetGameDetailsInput): Input parameters containing the game ID.
@@ -110,8 +104,7 @@ def get_game_details(input: GetGameDetailsInput) -> dict:
 
 
 class FilterGamesByTagsInput(BaseModel):
-    """
-    Input model for filtering games by multiple tags and optional platform.
+    """Input model for filtering games by multiple tags and optional platform.
 
     Attributes:
         tag (str): Dot-separated tag filter to match games with specific features.
@@ -121,14 +114,13 @@ class FilterGamesByTagsInput(BaseModel):
     tag: str = Field(
         ..., description="Dot-separated tag filter, e.g. '3d.mmorpg.fantasy.pvp'"
     )
-    platform: Optional[str] = Field(
+    platform: str | None = Field(
         None, description="Platform name, e.g. 'pc', 'browser'"
     )
 
 
-def filter_games_by_tags(input: FilterGamesByTagsInput) -> List[dict]:
-    """
-    Filter games by multiple tags (dot-separated) and optional platform.
+def filter_games_by_tags(input: FilterGamesByTagsInput) -> list[dict]:
+    """Filter games by multiple tags (dot-separated) and optional platform.
 
     Args:
         input (FilterGamesByTagsInput): Input parameters containing tags and optional platform.
@@ -148,8 +140,7 @@ def filter_games_by_tags(input: FilterGamesByTagsInput) -> List[dict]:
 
 
 class FreeToGameToolkit(BaseToolkit):
-    """
-    LangChain toolkit for the FreeToGame API (Free-To-Play Games Database).
+    """LangChain toolkit for the FreeToGame API (Free-To-Play Games Database).
 
     This toolkit provides structured tools for interacting with the FreeToGame API,
     allowing agents to search, filter, and retrieve information about free-to-play games.
@@ -158,9 +149,8 @@ class FreeToGameToolkit(BaseToolkit):
         None
     """
 
-    def get_tools(self) -> List[StructuredTool]:
-        """
-        Get the list of tools provided by this toolkit.
+    def get_tools(self) -> list[StructuredTool]:
+        """Get the list of tools provided by this toolkit.
 
         Returns:
             List[StructuredTool]: A list of structured tools for working with the FreeToGame API.

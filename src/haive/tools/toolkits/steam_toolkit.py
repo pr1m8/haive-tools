@@ -22,11 +22,7 @@ Examples:
     'Dota 2 Update - June 15, 2023'
 """
 
-import getpass
-import os
-
 from dotenv import load_dotenv
-from haive.config.config import Config
 from langchain_community.agent_toolkits.steam.toolkit import SteamToolkit
 from langchain_community.utilities.steam import SteamWebAPIWrapper
 

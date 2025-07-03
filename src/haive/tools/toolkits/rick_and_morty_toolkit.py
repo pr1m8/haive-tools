@@ -1,5 +1,4 @@
-"""
-Rick and Morty API Toolkit Module
+"""Rick and Morty API Toolkit Module
 
 This toolkit provides tools for accessing data from the Rick and Morty TV show via
 the official Rick and Morty API. It offers both REST and GraphQL endpoints for retrieving
@@ -27,7 +26,7 @@ Examples:
     >>> print(f"Found {aliens['info']['count']} living aliens")
 """
 
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 import requests
 from langchain_core.tools import BaseToolkit, StructuredTool
@@ -42,8 +41,7 @@ REST_BASE_URL = "https://rickandmortyapi.com/api"
 
 
 class GetCharacterByIDInput(BaseModel):
-    """
-    Input schema for getting a Rick and Morty character by ID.
+    """Input schema for getting a Rick and Morty character by ID.
 
     Attributes:
         id (int): The unique identifier of the character to retrieve.
@@ -52,9 +50,8 @@ class GetCharacterByIDInput(BaseModel):
     id: int = Field(..., description="The ID of the character.")
 
 
-def get_character_by_id(id: int) -> Dict[str, Any]:
-    """
-    Get detailed information about a specific Rick and Morty character by ID.
+def get_character_by_id(id: int) -> dict[str, Any]:
+    """Get detailed information about a specific Rick and Morty character by ID.
 
     This function retrieves a character's complete information including their
     status, species, gender, origin, location, and episode appearances.
@@ -84,8 +81,7 @@ get_character_tool = StructuredTool.from_function(
 
 
 class FilterCharactersInput(BaseModel):
-    """
-    Input schema for filtering Rick and Morty characters.
+    """Input schema for filtering Rick and Morty characters.
 
     This model defines optional parameters that can be used to filter
     the characters returned by the Rick and Morty API.
@@ -97,20 +93,19 @@ class FilterCharactersInput(BaseModel):
         gender (Optional[str]): Filter by character gender ("male", "female", "genderless", "unknown").
     """
 
-    name: Optional[str] = Field(None, description="Filter characters by name.")
-    status: Optional[str] = Field(None, description="alive, dead, or unknown")
-    species: Optional[str] = Field(None, description="Filter characters by species.")
-    gender: Optional[str] = Field(None, description="male, female, genderless, unknown")
+    name: str | None = Field(None, description="Filter characters by name.")
+    status: str | None = Field(None, description="alive, dead, or unknown")
+    species: str | None = Field(None, description="Filter characters by species.")
+    gender: str | None = Field(None, description="male, female, genderless, unknown")
 
 
 def filter_characters(
-    name: Optional[str] = None,
-    status: Optional[str] = None,
-    species: Optional[str] = None,
-    gender: Optional[str] = None,
-) -> Dict[str, Any]:
-    """
-    Filter Rick and Morty characters by various attributes.
+    name: str | None = None,
+    status: str | None = None,
+    species: str | None = None,
+    gender: str | None = None,
+) -> dict[str, Any]:
+    """Filter Rick and Morty characters by various attributes.
 
     This function allows filtering characters by name, status, species, and gender.
     Filters can be combined to narrow down results.
@@ -149,8 +144,7 @@ filter_characters_tool = StructuredTool.from_function(
 
 
 class GraphQLCharactersQueryInput(BaseModel):
-    """
-    Input schema for the GraphQL character query.
+    """Input schema for the GraphQL character query.
 
     This model defines the parameters that can be passed to the GraphQL API
     when querying for Rick and Morty characters.
@@ -160,15 +154,14 @@ class GraphQLCharactersQueryInput(BaseModel):
         page (Optional[int]): Page number for paginated results.
     """
 
-    name: Optional[str] = Field(None, description="Character name to filter")
-    page: Optional[int] = Field(None, description="Page number")
+    name: str | None = Field(None, description="Character name to filter")
+    page: int | None = Field(None, description="Page number")
 
 
 def graphql_characters_query(
-    name: Optional[str] = None, page: Optional[int] = None
-) -> Dict[str, Any]:
-    """
-    Query Rick and Morty characters using the GraphQL API.
+    name: str | None = None, page: int | None = None
+) -> dict[str, Any]:
+    """Query Rick and Morty characters using the GraphQL API.
 
     This function sends a GraphQL query to retrieve character information
     with optional filtering by name and pagination support.
@@ -219,8 +212,7 @@ graphql_characters_tool = StructuredTool.from_function(
 
 
 class GraphQLLocationByIDInput(BaseModel):
-    """
-    Input schema for the GraphQL location query by ID.
+    """Input schema for the GraphQL location query by ID.
 
     Attributes:
         id (int): The unique identifier of the location to retrieve.
@@ -229,9 +221,8 @@ class GraphQLLocationByIDInput(BaseModel):
     id: int = Field(..., description="Location ID")
 
 
-def graphql_location_by_id(id: int) -> Dict[str, Any]:
-    """
-    Get detailed information about a specific location by ID using GraphQL.
+def graphql_location_by_id(id: int) -> dict[str, Any]:
+    """Get detailed information about a specific location by ID using GraphQL.
 
     This function retrieves information about a location from the Rick and Morty
     universe, including its name, type, and dimension.
@@ -274,8 +265,7 @@ graphql_location_tool = StructuredTool.from_function(
 
 
 class RickAndMortyToolkit(BaseToolkit):
-    """
-    Toolkit for accessing the Rick and Morty API.
+    """Toolkit for accessing the Rick and Morty API.
 
     This toolkit provides a collection of tools for retrieving information about
     characters, locations, and episodes from the Rick and Morty TV show using
@@ -285,9 +275,8 @@ class RickAndMortyToolkit(BaseToolkit):
     by attributes, and performing more complex queries using GraphQL.
     """
 
-    def get_tools(self) -> List[StructuredTool]:
-        """
-        Get all tools in the Rick and Morty toolkit.
+    def get_tools(self) -> list[StructuredTool]:
+        """Get all tools in the Rick and Morty toolkit.
 
         Returns:
             List[StructuredTool]: A list of tools for interacting with the Rick and Morty API.

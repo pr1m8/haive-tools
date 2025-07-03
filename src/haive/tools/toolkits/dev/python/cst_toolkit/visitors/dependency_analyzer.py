@@ -1,5 +1,4 @@
-"""
-Dependency Analyzer Module
+"""Dependency Analyzer Module
 
 This module provides functionality to analyze import statements and track
 dependencies between modules in Python projects using LibCST. It helps identify
@@ -12,14 +11,12 @@ Example:
 """
 
 from collections import defaultdict
-from typing import Dict, Optional, Set
 
 import libcst as cst
 
 
 class DependencyAnalyzer(cst.CSTVisitor):
-    """
-    Analyzes imports and tracks dependencies within a project.
+    """Analyzes imports and tracks dependencies within a project.
 
     This visitor identifies and collects all import statements in a Python file,
     including both direct imports and imports from specific modules, to build
@@ -30,9 +27,8 @@ class DependencyAnalyzer(cst.CSTVisitor):
         current_file (str): Path of the file currently being analyzed
     """
 
-    def __init__(self, file_path: Optional[str] = None):
-        """
-        Initialize the dependency analyzer visitor.
+    def __init__(self, file_path: str | None = None):
+        """Initialize the dependency analyzer visitor.
 
         Args:
             file_path (Optional[str]): Path of the file to be analyzed. If not provided,
@@ -43,8 +39,7 @@ class DependencyAnalyzer(cst.CSTVisitor):
         self.current_file = file_path or "current_file"
 
     def visit_Import(self, node: cst.Import) -> None:
-        """
-        Handle simple 'import module' statements during the AST traversal.
+        """Handle simple 'import module' statements during the AST traversal.
 
         This method extracts module names from import statements and adds them
         to the dependency set for the current file.
@@ -56,8 +51,7 @@ class DependencyAnalyzer(cst.CSTVisitor):
             self.imports[self.current_file].add(alias.name.value)
 
     def visit_ImportFrom(self, node: cst.ImportFrom) -> None:
-        """
-        Handle 'from module import X' statements during the AST traversal.
+        """Handle 'from module import X' statements during the AST traversal.
 
         This method extracts the base module name from import-from statements
         and adds it to the dependency set for the current file.
@@ -68,9 +62,8 @@ class DependencyAnalyzer(cst.CSTVisitor):
         if node.module:
             self.imports[self.current_file].add(node.module.value)
 
-    def get_dependencies(self) -> Set[str]:
-        """
-        Get the set of dependencies for the current file.
+    def get_dependencies(self) -> set[str]:
+        """Get the set of dependencies for the current file.
 
         Returns:
             Set[str]: Set of module names imported in the current file
@@ -78,9 +71,8 @@ class DependencyAnalyzer(cst.CSTVisitor):
         return self.imports[self.current_file]
 
 
-def analyze_dependencies(filepath: str) -> Set[str]:
-    """
-    Analyze import dependencies in a Python file.
+def analyze_dependencies(filepath: str) -> set[str]:
+    """Analyze import dependencies in a Python file.
 
     This function parses a Python file and identifies all the modules it imports,
     returning a set of dependency module names.
@@ -95,7 +87,7 @@ def analyze_dependencies(filepath: str) -> Set[str]:
         FileNotFoundError: If the specified file does not exist
         IOError: If there are issues reading from the file
     """
-    with open(filepath, "r") as f:
+    with open(filepath) as f:
         tree = cst.parse_module(f.read())
 
     analyzer = DependencyAnalyzer(filepath)

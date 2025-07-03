@@ -1,5 +1,4 @@
-"""
-Stripe Toolkit Module
+"""Stripe Toolkit Module
 
 This module provides a toolkit for interacting with the Stripe API for payment processing
 and financial operations. It leverages the stripe-agent-toolkit package to provide
@@ -36,7 +35,7 @@ Examples:
 """
 
 import os
-from typing import Any, Dict, Optional
+from typing import Any
 
 from dotenv import load_dotenv
 from stripe_agent_toolkit.crewai.toolkit import StripeAgentToolkit
@@ -46,10 +45,9 @@ load_dotenv(".env")
 
 
 def create_stripe_toolkit(
-    secret_key: Optional[str] = None, configuration: Optional[Dict[str, Any]] = None
+    secret_key: str | None = None, configuration: dict[str, Any] | None = None
 ) -> StripeAgentToolkit:
-    """
-    Create a Stripe toolkit instance with the provided or environment API key.
+    """Create a Stripe toolkit instance with the provided or environment API key.
 
     This function initializes a Stripe Agent Toolkit with the specified configuration
     for accessing various Stripe API endpoints and operations.

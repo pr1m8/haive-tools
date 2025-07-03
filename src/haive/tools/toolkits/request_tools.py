@@ -25,10 +25,9 @@ Typical usage:
     })
 """
 
-from typing import Any, Dict, List, Optional, Union
+from typing import Any
 
 from langchain_community.tools.requests.tool import (
-    BaseRequestsTool,
     RequestsGetTool,
     RequestsPostTool,
 )
@@ -40,10 +39,10 @@ class RequestsGetInput(BaseModel):
     """Input schema for the RequestsGet tool."""
 
     url: str = Field(..., description="The URL to make a GET request to")
-    params: Optional[Dict[str, str]] = Field(
+    params: dict[str, str] | None = Field(
         None, description="URL parameters to include in the request"
     )
-    headers: Optional[Dict[str, str]] = Field(
+    headers: dict[str, str] | None = Field(
         None, description="Headers to include in the request"
     )
 
@@ -52,13 +51,13 @@ class RequestsPostInput(BaseModel):
     """Input schema for the RequestsPost tool."""
 
     url: str = Field(..., description="The URL to make a POST request to")
-    data: Optional[Dict[str, Any]] = Field(
+    data: dict[str, Any] | None = Field(
         None, description="JSON data to send in the request body"
     )
-    params: Optional[Dict[str, str]] = Field(
+    params: dict[str, str] | None = Field(
         None, description="URL parameters to include in the request"
     )
-    headers: Optional[Dict[str, str]] = Field(
+    headers: dict[str, str] | None = Field(
         None, description="Headers to include in the request"
     )
 

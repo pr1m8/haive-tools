@@ -1,5 +1,4 @@
-"""
-Code Smell Detector Module
+"""Code Smell Detector Module
 
 This module provides functionality to detect code smells and bad practices
 in Python code using LibCST. It identifies potential issues such as deeply
@@ -11,14 +10,11 @@ Example:
     ⚠️ Deeply nested loop detected at line 42
 """
 
-from typing import Dict, List, Set
-
 import libcst as cst
 
 
 class CodeSmellDetector(cst.CSTVisitor):
-    """
-    Detects code smells and bad coding patterns.
+    """Detects code smells and bad coding patterns.
 
     This visitor analyzes Python code for potential code smells, such as
     deeply nested loops, excessively large functions, and other anti-patterns
@@ -33,11 +29,10 @@ class CodeSmellDetector(cst.CSTVisitor):
         """Initialize the code smell detector visitor."""
         super().__init__()
         self.nesting_level = 0
-        self.issues: List[Dict] = []
+        self.issues: list[dict] = []
 
     def visit_For(self, node: cst.For) -> None:
-        """
-        Track nesting depth of for loops during the AST traversal.
+        """Track nesting depth of for loops during the AST traversal.
 
         This method increments the nesting level counter when entering a loop
         and checks if the nesting level exceeds a threshold (3).
@@ -56,17 +51,15 @@ class CodeSmellDetector(cst.CSTVisitor):
             print(f"⚠️ {issue['message']}")
 
     def leave_For(self, original_node: cst.For) -> None:
-        """
-        Decrement nesting level when leaving a for loop.
+        """Decrement nesting level when leaving a for loop.
 
         Args:
             original_node (cst.For): The for loop node being left
         """
         self.nesting_level -= 1
 
-    def get_issues(self) -> List[Dict]:
-        """
-        Return a list of all detected code smells.
+    def get_issues(self) -> list[dict]:
+        """Return a list of all detected code smells.
 
         Returns:
             List[Dict]: List of dictionaries containing details about each detected issue
@@ -74,9 +67,8 @@ class CodeSmellDetector(cst.CSTVisitor):
         return self.issues
 
 
-def detect_code_smells(filepath: str) -> List[Dict]:
-    """
-    Detect code smells in a Python file.
+def detect_code_smells(filepath: str) -> list[dict]:
+    """Detect code smells in a Python file.
 
     This function analyzes a Python file to identify potential code smells
     and bad practices that could impact code quality and maintainability.
@@ -91,7 +83,7 @@ def detect_code_smells(filepath: str) -> List[Dict]:
         FileNotFoundError: If the specified file does not exist
         IOError: If there are issues reading from the file
     """
-    with open(filepath, "r") as f:
+    with open(filepath) as f:
         tree = cst.parse_module(f.read())
 
     detector = CodeSmellDetector()

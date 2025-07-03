@@ -1,5 +1,4 @@
-"""
-Discord integration toolkit for Haive agents.
+"""Discord integration toolkit for Haive agents.
 
 This module provides a toolkit for interacting with Discord through the LangChain
 Discord integration. It allows agents to perform various Discord operations like
@@ -24,10 +23,7 @@ Example:
     ```
 """
 
-import getpass
-
 from dotenv import load_dotenv
-from haive.config.config import Config
 from langchain_discord_shikenso.toolkits import DiscordToolkit
 
 # Load environment variables from .env file

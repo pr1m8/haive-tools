@@ -1,5 +1,4 @@
-"""
-DataForSEO API integration tools for SEO and search engine data.
+"""DataForSEO API integration tools for SEO and search engine data.
 
 This module provides integration with DataForSEO's API services through the LangChain
 tools interface. DataForSEO offers various API endpoints for SEO analytics, search engine
@@ -29,8 +28,6 @@ Note:
     - Documentation for the DataForSEO API integration in LangChain is available at:
       https://python.langchain.com/docs/integrations/tools/dataforseo/
 """
-
-import os
 
 from haive.config.config import Config
 

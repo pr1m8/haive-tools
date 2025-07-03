@@ -1,5 +1,4 @@
-"""
-Google Jobs Tool Module
+"""Google Jobs Tool Module
 
 This module provides a tool for searching job listings using Google Jobs API.
 It leverages LangChain's GoogleJobsQueryRun to search for job postings, retrieve job details,
@@ -18,31 +17,27 @@ Examples:
 """
 
 import os
-from typing import Any, Dict, List
+from typing import Any
 
 from dotenv import load_dotenv
 from langchain_community.agent_toolkits.load_tools import load_tools
-from langchain_community.tools.google_jobs import GoogleJobsQueryRun
-from langchain_community.utilities.google_jobs import GoogleJobsAPIWrapper
 from pydantic import BaseModel, Field
 
 
 class GoogleJobsResult(BaseModel):
-    """
-    Response model for Google Jobs search results.
+    """Response model for Google Jobs search results.
 
     Attributes:
         results (List[Dict[str, Any]]): A list of job listings from Google Jobs API.
     """
 
-    results: List[Dict[str, Any]] = Field(
+    results: list[dict[str, Any]] = Field(
         ..., description="List of job listings from Google Jobs API"
     )
 
 
 class GoogleJobsInput(BaseModel):
-    """
-    Input model for Google Jobs search.
+    """Input model for Google Jobs search.
 
     Attributes:
         query (str): The job search query string.
@@ -54,8 +49,7 @@ class GoogleJobsInput(BaseModel):
 
 
 def initialize_google_jobs():
-    """
-    Initialize the Google Jobs API wrapper with credentials from environment variables.
+    """Initialize the Google Jobs API wrapper with credentials from environment variables.
 
     This function loads environment variables and configures the Google Jobs API client.
 

@@ -1,5 +1,4 @@
-"""
-Scene Explain Tool Module.
+"""Scene Explain Tool Module.
 
 This module provides a tool for explaining and analyzing images through the
 SceneXplain API. It leverages langchain_community's agent_toolkits to load

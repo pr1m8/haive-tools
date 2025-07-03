@@ -1,5 +1,4 @@
-"""
-Jira Integration Toolkit Module
+"""Jira Integration Toolkit Module
 
 This module provides a comprehensive toolkit for interacting with Jira instances via the
 atlassian-python-api library. It enables agents to perform operations such as searching for issues
@@ -34,7 +33,7 @@ Examples:
 """
 
 import os
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 from langchain.agents import AgentType, initialize_agent
 from langchain_community.agent_toolkits.jira.toolkit import JiraToolkit
@@ -43,8 +42,7 @@ from langchain_openai import OpenAI
 
 
 class JiraToolManager:
-    """
-    Manager class for Jira tools integration.
+    """Manager class for Jira tools integration.
 
     This class provides a simplified interface for initializing and using the Jira toolkit
     with LangChain agents.
@@ -57,13 +55,12 @@ class JiraToolManager:
 
     def __init__(
         self,
-        api_token: Optional[str] = None,
-        username: Optional[str] = None,
-        instance_url: Optional[str] = None,
+        api_token: str | None = None,
+        username: str | None = None,
+        instance_url: str | None = None,
         is_cloud: bool = True,
     ):
-        """
-        Initialize the Jira Tool Manager.
+        """Initialize the Jira Tool Manager.
 
         Args:
             api_token (Optional[str]): Jira API token. If not provided, will use JIRA_API_TOKEN env var.
@@ -86,8 +83,7 @@ class JiraToolManager:
         self.tools = self.toolkit.get_tools()
 
     def create_agent(self, llm=None, verbose: bool = False) -> Any:
-        """
-        Create an agent with the Jira toolkit.
+        """Create an agent with the Jira toolkit.
 
         Args:
             llm: Language model to use. If None, initializes an OpenAI model.
@@ -106,9 +102,8 @@ class JiraToolManager:
             verbose=verbose,
         )
 
-    def get_projects(self) -> List[Dict[str, Any]]:
-        """
-        Get all projects the user has access to.
+    def get_projects(self) -> list[dict[str, Any]]:
+        """Get all projects the user has access to.
 
         Returns:
             List[Dict[str, Any]]: List of project dictionaries.
@@ -122,9 +117,8 @@ class JiraToolManager:
         project_key: str,
         issue_type: str = "Task",
         priority: str = "Medium",
-    ) -> Dict[str, Any]:
-        """
-        Create a new Jira issue directly.
+    ) -> dict[str, Any]:
+        """Create a new Jira issue directly.
 
         Args:
             summary (str): Issue summary/title.
@@ -145,9 +139,8 @@ class JiraToolManager:
         }
         return self.jira_api.create_issue(issue_dict)
 
-    def jql_search(self, query: str) -> List[Dict[str, Any]]:
-        """
-        Search for issues using JQL (Jira Query Language).
+    def jql_search(self, query: str) -> list[dict[str, Any]]:
+        """Search for issues using JQL (Jira Query Language).
 
         Args:
             query (str): JQL query string (e.g. "project = ABC AND status = 'In Progress'").

@@ -1,5 +1,4 @@
-"""
-Import Consolidator Module
+"""Import Consolidator Module
 
 This module provides functionality to consolidate and deduplicate import statements
 in Python files using LibCST. It identifies duplicate imports and merges them into
@@ -15,8 +14,7 @@ from libcst import MetadataWrapper
 
 
 class ImportConsolidator(cst.CSTTransformer):
-    """
-    Consolidates duplicate imports into a single statement.
+    """Consolidates duplicate imports into a single statement.
 
     This transformer tracks all import statements in a Python file and
     consolidates duplicates to reduce redundancy and improve code organization.
@@ -30,8 +28,7 @@ class ImportConsolidator(cst.CSTTransformer):
         self.imports = {}
 
     def visit_Import(self, node):
-        """
-        Track module imports during the AST traversal.
+        """Track module imports during the AST traversal.
 
         Args:
             node (cst.Import): The import node being visited
@@ -41,8 +38,7 @@ class ImportConsolidator(cst.CSTTransformer):
             self.imports[module_name] = alias.asname.value if alias.asname else None
 
     def leave_Module(self, original_node, updated_node):
-        """
-        Remove duplicates and consolidate imports at the module level.
+        """Remove duplicates and consolidate imports at the module level.
 
         Args:
             original_node (cst.Module): The original module node
@@ -66,8 +62,7 @@ class ImportConsolidator(cst.CSTTransformer):
 
 
 def clean_imports(filepath: str):
-    """
-    Merge duplicate imports in a Python file.
+    """Merge duplicate imports in a Python file.
 
     Reads a Python file, identifies duplicate imports, consolidates them,
     and writes the updated code back to the file.
@@ -79,7 +74,7 @@ def clean_imports(filepath: str):
         FileNotFoundError: If the specified file does not exist
         IOError: If there are issues reading from or writing to the file
     """
-    with open(filepath, "r") as f:
+    with open(filepath) as f:
         tree = cst.parse_module(f.read())
 
     wrapper = MetadataWrapper(tree)

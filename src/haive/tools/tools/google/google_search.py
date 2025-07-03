@@ -1,5 +1,4 @@
-"""
-Google Search Tool Module
+"""Google Search Tool Module
 
 This module provides a tool for searching the web using Google's Custom Search API.
 It leverages LangChain's GoogleSearchAPIWrapper to perform searches and return relevant results.
@@ -17,30 +16,26 @@ Examples:
 """
 
 import os
-from typing import List
 
 from dotenv import load_dotenv
 from langchain_community.agent_toolkits.load_tools import load_tools
-from langchain_community.utilities.google_search import GoogleSearchAPIWrapper
 from pydantic import BaseModel, Field
 
 
 class GoogleSearchResult(BaseModel):
-    """
-    Response model for Google Search results.
+    """Response model for Google Search results.
 
     Attributes:
         results (List[str]): A list of search result snippets from Google.
     """
 
-    results: List[str] = Field(
+    results: list[str] = Field(
         ..., description="List of search result snippets from Google"
     )
 
 
 def initialize_google_search():
-    """
-    Initialize the Google Search API wrapper with credentials from environment variables.
+    """Initialize the Google Search API wrapper with credentials from environment variables.
 
     This function loads environment variables and configures the Google Search API client.
 

@@ -15,8 +15,6 @@ Attributes:
     None
 """
 
-from typing import List, Optional
-
 import requests
 from langchain_core.tools import StructuredTool
 from langchain_core.tools.base import BaseToolkit
@@ -74,14 +72,14 @@ class CitySDKTourismPOIInput(BaseModel):
         city: City name to filter POIs by location
     """
 
-    bbox: Optional[str] = Field(
+    bbox: str | None = Field(
         None,
         description="Bounding box (e.g., '24.9384,60.1695,24.9500,60.1750') to filter POIs geographically.",
     )
-    city: Optional[str] = Field(None, description="Optional city to filter POIs.")
+    city: str | None = Field(None, description="Optional city to filter POIs.")
 
 
-def get_tourism_pois(bbox: Optional[str] = None, city: Optional[str] = None) -> dict:
+def get_tourism_pois(bbox: str | None = None, city: str | None = None) -> dict:
     """Fetches Points of Interest data from the CitySDK Tourism API.
 
     Args:
@@ -122,7 +120,7 @@ class CitySDKToolkit(BaseToolkit):
     including SPARQL queries for linked data and tourism POI information.
     """
 
-    def get_tools(self) -> List[StructuredTool]:
+    def get_tools(self) -> list[StructuredTool]:
         """Gets the list of available CitySDK tools.
 
         Returns:

@@ -15,8 +15,6 @@ Attributes:
     DATA_URL: The data URL for extended Bible API operations
 """
 
-from typing import List, Optional
-
 import requests
 from langchain_core.tools import StructuredTool
 from pydantic import BaseModel, Field
@@ -83,12 +81,12 @@ class RandomVerseInput(BaseModel):
         book_ids: Optional list of book IDs to limit the random selection
     """
 
-    book_ids: Optional[List[str]] = Field(
+    book_ids: list[str] | None = Field(
         default=None, description="List of book IDs like ['GEN', 'JHN'], or 'OT'/'NT'"
     )
 
 
-def get_random_verse(book_ids: Optional[List[str]] = None) -> str:
+def get_random_verse(book_ids: list[str] | None = None) -> str:
     """Fetches a random verse, optionally from specific books or testaments.
 
     Args:
@@ -247,7 +245,6 @@ verses, listing translations and books, and retrieving full chapters.
 """
 vbible_toolkit = [query_tool, random_tool, translations_tool, books_tool, chapter_tool]
 # tests/test_vbible_toolkit.py
-import pytest
 
 from haive.haive.toolkits.vbible_toolkit import (
     get_chapter_verses,

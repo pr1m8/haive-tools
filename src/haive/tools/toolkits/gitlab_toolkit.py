@@ -1,4 +1,4 @@
-Gitlab Toolkit
+"""Gitlab Toolkit
 The Gitlab toolkit contains tools that enable an LLM agent to interact with a gitlab repository. The tool is a wrapper for the python-gitlab library.
 
 Quickstart
@@ -42,7 +42,10 @@ GITLAB_PERSONAL_ACCESS_TOKEN- The personal access token you created in the last 
 GITLAB_REPOSITORY- The name of the Gitlab repository you want your bot to act upon. Must follow the format {username}/{repo-name}.
 GITLAB_BRANCH- The branch where the bot will make its commits. Defaults to 'main.'
 GITLAB_BASE_BRANCH- The base branch of your repo, usually either 'main' or 'master.' This is where merge requests will base from. Defaults to 'main.'
+
 Example: Simple Agent
+"""
+
 import os
 
 from langchain.agents import AgentType, initialize_agent

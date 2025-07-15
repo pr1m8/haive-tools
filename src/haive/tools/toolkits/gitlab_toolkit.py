@@ -53,7 +53,8 @@ from langchain_community.agent_toolkits.gitlab.toolkit import GitLabToolkit
 from langchain_community.utilities.gitlab import GitLabAPIWrapper
 from langchain_openai import OpenAI
 
-API Reference:AgentType | initialize_agent | GitLabToolkit | GitLabAPIWrapper | OpenAI
+# API Reference: AgentType | initialize_agent | GitLabToolkit | GitLabAPIWrapper | OpenAI
+
 # Set your environment variables using os.environ
 os.environ["GITLAB_URL"] = "https://gitlab.example.org"
 os.environ["GITLAB_PERSONAL_ACCESS_TOKEN"] = ""

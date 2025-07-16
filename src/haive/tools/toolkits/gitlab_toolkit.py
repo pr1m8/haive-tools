@@ -103,7 +103,7 @@ OLD <<<<
 test contents
 >>>> OLD
 NEW >>>>
-<\!DOCTYPE html>
+<!DOCTYPE html>
 <html>
   <head>
     <title>Tic-Tac-Toe</title>
@@ -111,7 +111,7 @@ NEW >>>>
   <body>
     <h1>Tic-Tac-Toe</h1>
     <div id="game">
-      <\!-- game board goes here -->
+      <!-- game board goes here -->
     </div>
   </body>
 </html>

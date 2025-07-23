@@ -4,7 +4,10 @@ from haive.tools.tools.agify_tool import AgifyResponse, estimate_age
 from haive.tools.tools.binlist_lookup import BinLookupInput, lookup_bin
 from haive.tools.tools.corporate_bs_tool import CorporateBS, get_random_corporate_bs
 from haive.tools.tools.dev_tools import python_repl_tool
-from haive.tools.tools.domain_search_tool import DomainSearchInput, search_registered_domains
+from haive.tools.tools.domain_search_tool import (
+    DomainSearchInput,
+    search_registered_domains,
+)
 from haive.tools.tools.fruityvice_tool import FruitNameInput, get_fruit_info
 from haive.tools.tools.geek_jokes_tool import GetGeekJokeInput, get_geek_joke
 from haive.tools.tools.genderize_tool import GenderizeResponse, predict_gender
@@ -27,8 +30,11 @@ from haive.tools.tools.search_tools import (
     tavily_search_context,
     tavily_search_tool,
 )
-from tools.techy_phrase_tool import get_techy_phrase_json, get_techy_phrase_text
-from tools.translate_tools import DeepLInput, DeepLTranslateTool
+from haive.tools.tools.techy_phrase_tool import (
+    get_techy_phrase_json,
+    get_techy_phrase_text,
+)
+from haive.tools.tools.translate_tools import DeepLInput, DeepLTranslateTool
 
 __all__ = [
     "AgifyResponse",

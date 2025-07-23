@@ -162,15 +162,15 @@ class WeatherData(BaseModel):
         if match := re.search(r"Detailed status: (.+)", response):
             data["status"] = match.group(1).strip()
 
-        if match := re.search(r"Wind speed: ([\d.]+) m/s, direction: (\d+)°", response):
+        if match := re.search(r"Wind speed: ([\d.]+) m/s, direction: ()°", response):
             data["wind_speed_mps"] = float(match.group(1))
             data["wind_direction_deg"] = int(match.group(2))
 
-        if match := re.search(r"Humidity: (\d+)%", response):
+        if match := re.search(r"Humidity: ()%", response):
             data["humidity_percent"] = int(match.group(1))
 
         if match := re.search(
-            r"Temperature:\s+- Current: ([\d.]+)°C\s+- High: ([\d.]+)°C\s+- Low: ([\d.]+)°C\s+- Feels like: ([\d.]+)°C",
+            r"Temperature: - Current: ([\d.]+)°C - High: ([\d.]+)°C - Low: ([\d.]+)°C - Feels like: ([\d.]+)°C",
             response,
             re.DOTALL,
         ):
@@ -182,7 +182,7 @@ class WeatherData(BaseModel):
         if match := re.search(r"Rain: \{[^}]*'1h': ([\d.]+)[^}]*\}", response):
             data["rain_mm_last_hour"] = float(match.group(1))
 
-        if match := re.search(r"Cloud cover: (\d+)%", response):
+        if match := re.search(r"Cloud cover: ()%", response):
             data["cloud_cover_percent"] = int(match.group(1))
 
         return cls(**data)

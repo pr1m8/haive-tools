@@ -21,6 +21,14 @@ black = "^25.1.0"
 isort = "^6.0.1"
 mypy = "^1.15.0"
 
+
+[tool.poetry.group.pokemon.dependencies]
+pokebase = "^1.4.1"
+
+
+[tool.poetry.group.searech.dependencies]
+google-search-results = "^2.4.2"
+
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"

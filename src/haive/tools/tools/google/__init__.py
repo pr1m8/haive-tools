@@ -1,13 +1,13 @@
 """Module exports."""
 
-from google.google_books import GoogleBooksResult, initialize_google_books
-from google.google_finance import GoogleFinanceResult, initialize_google_finance
-from google.google_jobs import GoogleJobsInput, GoogleJobsResult, initialize_google_jobs
-from google.google_lens import GoogleLensInput, GoogleLensResult, initialize_google_lens
-from google.google_places import GooglePlacesResult, initialize_google_places
-from google.google_scholar import GoogleScholarResult, initialize_google_scholar
-from google.google_search import GoogleSearchResult, initialize_google_search
-from google.google_trends import GoogleTrendsResult, initialize_google_trends
+from haive.tools.tools.google.google_books import GoogleBooksResult, initialize_google_books
+from haive.tools.tools.google.google_finance import GoogleFinanceResult, initialize_google_finance
+from haive.tools.tools.google.google_jobs import GoogleJobsInput, GoogleJobsResult, initialize_google_jobs
+from haive.tools.tools.google.google_lens import GoogleLensInput, GoogleLensResult, initialize_google_lens
+from haive.tools.tools.google.google_places import GooglePlacesResult, initialize_google_places
+from haive.tools.tools.google.google_scholar import GoogleScholarResult, initialize_google_scholar
+from haive.tools.tools.google.google_search import GoogleSearchResult, initialize_google_search
+from haive.tools.tools.google.google_trends import GoogleTrendsResult, initialize_google_trends
 
 __all__ = [
     "GoogleBooksResult",

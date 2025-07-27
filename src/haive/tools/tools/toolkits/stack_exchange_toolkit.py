@@ -16,7 +16,7 @@ Typical usage:
     agent.run("How do I parse JSON in Python?")
 """
 
-from langchain.agents import load_tools
+from langchain_community.agent_toolkits.load_tools import load_tools
 from langchain_core.tools import BaseTool
 
 

@@ -1,4 +1,4 @@
-"""Type Hints Transformer Module
+"""Type Hints Transformer Module.
 
 This module provides functionality to add type hints to function parameters and
 return types in Python code using LibCST. It allows for automated type annotation

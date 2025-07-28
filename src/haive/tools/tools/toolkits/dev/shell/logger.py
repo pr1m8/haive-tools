@@ -1,3 +1,14 @@
+"""Logger core module.
+
+This module provides logger functionality for the Haive framework.
+
+Classes:
+    ExecutionLogger: ExecutionLogger implementation.
+
+Functions:
+    log: Log functionality.
+"""
+
 import datetime
 
 

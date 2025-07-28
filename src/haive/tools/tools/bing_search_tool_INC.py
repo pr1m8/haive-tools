@@ -1,3 +1,8 @@
+"""Bing_Search_Tool_Inc core module.
+
+This module provides bing search tool INC functionality for the Haive framework.
+"""
+
 # https://python.langchain.com/docs/integrations/tools/bing_search/
 
 

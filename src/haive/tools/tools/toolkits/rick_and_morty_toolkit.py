@@ -1,4 +1,4 @@
-"""Rick and Morty API Toolkit Module
+"""Rick and Morty API Toolkit Module.
 
 This toolkit provides tools for accessing data from the Rick and Morty TV show via
 the official Rick and Morty API. It offers both REST and GraphQL endpoints for retrieving

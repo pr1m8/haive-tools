@@ -1,4 +1,4 @@
-"""Alpha Vantage Toolkit Module
+"""Alpha Vantage Toolkit Module.
 
 This module provides a toolkit for accessing financial market data through the Alpha Vantage API.
 It offers tools for retrieving stock market data, currency exchange rates, market sentiment analysis,

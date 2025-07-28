@@ -1,4 +1,4 @@
-"""Google Search Tool Module
+"""Google Search Tool Module.
 
 This module provides a tool for searching the web using Google's Custom Search API.
 It leverages LangChain's GoogleSearchAPIWrapper to perform searches and return relevant results.

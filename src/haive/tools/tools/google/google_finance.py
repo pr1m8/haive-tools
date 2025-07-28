@@ -1,4 +1,4 @@
-"""Google Finance Tool Module
+"""Google Finance Tool Module.
 
 This module provides a tool for retrieving financial information from Google Finance.
 It leverages LangChain's GoogleFinanceQueryRun to query financial data like stock prices,

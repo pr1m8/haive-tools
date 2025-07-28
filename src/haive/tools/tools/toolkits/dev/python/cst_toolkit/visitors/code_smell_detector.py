@@ -1,4 +1,4 @@
-"""Code Smell Detector Module
+"""Code Smell Detector Module.
 
 This module provides functionality to detect code smells and bad practices
 in Python code using LibCST. It identifies potential issues such as deeply

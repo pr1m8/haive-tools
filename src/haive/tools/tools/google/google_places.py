@@ -1,4 +1,4 @@
-"""Google Places Tool Module
+"""Google Places Tool Module.
 
 This module provides a tool for searching and retrieving information about places using Google Places API.
 It leverages LangChain's GooglePlacesTool to search for locations, businesses, points of interest,

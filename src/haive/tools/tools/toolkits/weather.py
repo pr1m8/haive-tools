@@ -1,4 +1,4 @@
-"""Weather Information Toolkit Module
+"""Weather Information Toolkit Module.
 
 This toolkit provides tools for retrieving current weather information using the OpenWeatherMap API.
 It supports structured data parsing and temperature unit conversion between Celsius and Fahrenheit.

@@ -1,4 +1,4 @@
-"""Techy Phrase Generator Tool Module
+"""Techy Phrase Generator Tool Module.
 
 This module provides tools for generating random technology-related phrases using the Techy API.
 It offers functionality to retrieve phrases in both plain text and structured JSON formats,

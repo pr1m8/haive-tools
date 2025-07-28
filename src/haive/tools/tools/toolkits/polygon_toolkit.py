@@ -1,4 +1,4 @@
-"""Polygon.io Toolkit Module
+"""Polygon.io Toolkit Module.
 
 This module provides a toolkit for accessing financial market data through the Polygon.io API.
 It offers tools for retrieving stock market data, options data, crypto data, forex data,

@@ -1,3 +1,11 @@
+"""Dev_Tools core module.
+
+This module provides dev tools functionality for the Haive framework.
+
+Functions:
+    python_repl_tool: Python Repl Tool functionality.
+"""
+
 # Warning: This executes code locally, which can be unsafe when not sandboxed
 from typing import Annotated
 

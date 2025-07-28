@@ -38,8 +38,8 @@ Note:
 
 # Example implementation to be developed:
 """
-class MerriamWebsterLookupInput(BaseModel):
-    word: str = Field(..., description="The word to look up in the dictionary")
+Class MerriamWebsterLookupInput(BaseModel):
+    word: str = Field(..., description="The word to look up in the dictionary").
 
 def lookup_definition(input: MerriamWebsterLookupInput) -> Dict[str, Any]:
     # Implementation will use the Merriam-Webster API to look up word definitions

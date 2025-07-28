@@ -1,4 +1,4 @@
-"""Print to Logging Transformer Module
+"""Print to Logging Transformer Module.
 
 This module provides functionality to convert print statements to logging calls
 in Python files using LibCST. It automatically transforms print() calls to

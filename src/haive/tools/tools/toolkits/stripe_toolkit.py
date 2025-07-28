@@ -1,4 +1,4 @@
-"""Stripe Toolkit Module
+"""Stripe Toolkit Module.
 
 This module provides a toolkit for interacting with the Stripe API for payment processing
 and financial operations. It leverages the stripe-agent-toolkit package to provide

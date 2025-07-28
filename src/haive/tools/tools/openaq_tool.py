@@ -1,4 +1,4 @@
-"""OpenAQ API Tool Module
+"""OpenAQ API Tool Module.
 
 This module provides tools for accessing air quality data from the OpenAQ API.
 It currently supports retrieving detailed information about specific air quality

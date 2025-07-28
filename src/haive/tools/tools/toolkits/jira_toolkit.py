@@ -1,4 +1,4 @@
-"""Jira Integration Toolkit Module
+"""Jira Integration Toolkit Module.
 
 This module provides a comprehensive toolkit for interacting with Jira instances via the
 atlassian-python-api library. It enables agents to perform operations such as searching for issues

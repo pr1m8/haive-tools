@@ -1,4 +1,4 @@
-"""Agify Name Age Estimation Tool Module
+"""Agify Name Age Estimation Tool Module.
 
 This module provides a tool for estimating the average age of a person based on their first name
 using the Agify.io API. The tool can optionally filter age estimations by country.

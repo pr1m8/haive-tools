@@ -1,4 +1,4 @@
-"""Function Logging Transformer Module
+"""Function Logging Transformer Module.
 
 This module provides a LibCST transformer that automatically adds logging statements
 to functions in Python code. It can be used to instrument code for debugging,

@@ -1,4 +1,4 @@
-"""Pokebase Tool Module
+"""Pokebase Tool Module.
 
 This module provides a tool for accessing Pokémon data from the PokéAPI using the pokebase
 library. It allows querying various Pokémon resources including Pokémon species, moves,

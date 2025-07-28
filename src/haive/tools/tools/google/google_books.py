@@ -1,4 +1,4 @@
-"""Google Books Tool Module
+"""Google Books Tool Module.
 
 This module provides a tool for searching and retrieving information from Google Books.
 It leverages LangChain's GoogleBooksQueryRun to perform searches on the Google Books database

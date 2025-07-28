@@ -1,4 +1,4 @@
-"""GitHub Toolkit Module
+"""GitHub Toolkit Module.
 
 This module provides a toolkit for interacting with GitHub repositories and API.
 It wraps the GitHubToolkit from LangChain community tools, providing access to

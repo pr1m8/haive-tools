@@ -1,4 +1,4 @@
-"""Fruityvice API Tool Module
+"""Fruityvice API Tool Module.
 
 This module provides a tool for accessing the Fruityvice API, which offers comprehensive
 nutritional information and details about various fruits. It allows users to query

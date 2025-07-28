@@ -1,4 +1,4 @@
-"""Secure Shell Command Execution Module
+"""Secure Shell Command Execution Module.
 
 This module provides a secure way to execute shell commands with enforced security restrictions.
 It includes path permission checking, command validation, and structured result handling.

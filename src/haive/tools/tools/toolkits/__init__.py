@@ -13,7 +13,12 @@ from haive.tools.toolkits.amadues_toolkit import (
     from_config,
     get_tools,
 )
-from haive.tools.toolkits.base import HaiveToolkit, HaiveToolkitConfig, from_config, get_tools
+from haive.tools.toolkits.base import (
+    HaiveToolkit,
+    HaiveToolkitConfig,
+    from_config,
+    get_tools,
+)
 from haive.tools.toolkits.chuck_norris_jokes_toolkit import (
     Joke,
     get_available_categories,
@@ -142,7 +147,11 @@ from haive.tools.toolkits.trip_advisor_toolkit import (
     tripadvisor_get,
 )
 from haive.tools.toolkits.twilio_toolkit import get_twilio_tools
-from haive.tools.toolkits.useless_facts_toolkit import FactInput, get_random_fact, get_todays_fact
+from haive.tools.toolkits.useless_facts_toolkit import (
+    FactInput,
+    get_random_fact,
+    get_todays_fact,
+)
 from haive.tools.toolkits.vbible_toolkit import (
     BibleQueryInput,
     ChapterVersesInput,

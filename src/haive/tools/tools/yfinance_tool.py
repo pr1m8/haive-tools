@@ -1,4 +1,4 @@
-"""Yahoo Finance News Tool Module
+"""Yahoo Finance News Tool Module.
 
 This module provides a tool for fetching the latest financial news from Yahoo Finance.
 It wraps the YahooFinanceNewsTool from LangChain community tools, providing

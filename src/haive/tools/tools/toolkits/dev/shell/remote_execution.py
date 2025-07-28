@@ -1,3 +1,15 @@
+"""Remote_Execution core module.
+
+This module provides remote execution functionality for the Haive framework.
+
+Classes:
+    RemoteExecutor: RemoteExecutor implementation.
+
+Functions:
+    connect: Connect functionality.
+    run_remote: Run Remote functionality.
+"""
+
 import paramiko
 
 

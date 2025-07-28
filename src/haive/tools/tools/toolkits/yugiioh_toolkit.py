@@ -1,4 +1,4 @@
-"""Yu-Gi-Oh! API Toolkit Module
+"""Yu-Gi-Oh! API Toolkit Module.
 
 This toolkit provides a collection of tools to interact with the Yu-Gi-Oh! API,
 allowing users to search for cards, get card details, retrieve information about

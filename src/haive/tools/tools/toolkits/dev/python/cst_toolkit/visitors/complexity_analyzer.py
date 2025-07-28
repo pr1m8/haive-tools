@@ -1,4 +1,4 @@
-"""Complexity Analyzer Module
+"""Complexity Analyzer Module.
 
 This module provides a LibCST visitor that analyzes the cyclomatic complexity
 of functions in Python code. Cyclomatic complexity is a quantitative measure of

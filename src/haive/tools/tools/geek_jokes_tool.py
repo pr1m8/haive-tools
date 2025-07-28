@@ -1,4 +1,4 @@
-"""Geek Jokes API Tool Module
+"""Geek Jokes API Tool Module.
 
 This module provides a tool for fetching random geek and programming-related jokes from
 the Geek Jokes API. These jokes are oriented toward programmers, computer enthusiasts,

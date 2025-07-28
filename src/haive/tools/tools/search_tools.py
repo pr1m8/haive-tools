@@ -1,4 +1,4 @@
-"""Search Tools Module
+"""Search Tools Module.
 
 This module provides various search tools powered by the Tavily API and web scraping capabilities.
 It offers tools for question answering, web content extraction, context generation for RAG applications,

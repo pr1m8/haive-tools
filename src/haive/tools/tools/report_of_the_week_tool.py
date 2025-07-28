@@ -1,4 +1,4 @@
-"""Report Of The Week API Tools Module
+"""Report Of The Week API Tools Module.
 
 This module provides tools for accessing food and drink review data from "The Report Of The Week"
 API, which contains reviews by the popular YouTube food reviewer known as "Reviewbrah". The tools

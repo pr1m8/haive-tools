@@ -1,4 +1,4 @@
-"""Background Process Manager Module
+"""Background Process Manager Module.
 
 This module provides a utility for managing long-running background processes
 in a shell environment. It handles process spawning, monitoring, and termination,

@@ -1,4 +1,4 @@
-"""Rock-Paper-Scissors 101 Toolkit Module
+"""Rock-Paper-Scissors 101 Toolkit Module.
 
 This toolkit provides a collection of tools to interact with the RPS-101 API,
 allowing users to access the expanded version of Rock-Paper-Scissors that includes 101

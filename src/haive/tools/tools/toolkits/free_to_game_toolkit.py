@@ -1,4 +1,4 @@
-"""Free-To-Game Toolkit Module
+"""Free-To-Game Toolkit Module.
 
 This toolkit provides a collection of tools to interact with the Free-To-Game API,
 allowing users to search, filter, and retrieve information about free-to-play games

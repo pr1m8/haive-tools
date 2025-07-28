@@ -1,4 +1,4 @@
-"""Shell Permission Module
+"""Shell Permission Module.
 
 This module provides a role-based access control (RBAC) system for managing
 permissions in shell environments. It uses Pydantic models to define permission

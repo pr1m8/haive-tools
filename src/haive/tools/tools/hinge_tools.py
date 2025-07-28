@@ -1,4 +1,4 @@
-"""Hinge Dating App API Integration Module
+"""Hinge Dating App API Integration Module.
 
 This module provides tools for interacting with the Hinge dating app through the
 squeaky_hinge unofficial API. It allows programmatic access to Hinge functionalities

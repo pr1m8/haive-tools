@@ -1,4 +1,4 @@
-"""Function Call Analyzer Module
+"""Function Call Analyzer Module.
 
 This module provides functionality to analyze function definitions and calls
 in Python code using LibCST. It helps identify unused functions and analyze

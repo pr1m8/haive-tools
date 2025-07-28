@@ -1,4 +1,4 @@
-"""Multi-File Rename Module
+"""Multi-File Rename Module.
 
 This module provides functionality to rename functions across multiple Python files
 using LibCST. It identifies both function definitions and function calls and renames

@@ -1,4 +1,4 @@
-"""Dependency Analyzer Module
+"""Dependency Analyzer Module.
 
 This module provides functionality to analyze import statements and track
 dependencies between modules in Python projects using LibCST. It helps identify

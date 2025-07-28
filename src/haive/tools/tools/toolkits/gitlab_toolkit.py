@@ -91,7 +91,7 @@ Action Input: 15
 Observation: {"title": "Add tic-tac-toe game", "body": "Create a tic-tac-toe game using HTML, CSS, and JavaScript. Create a new file called game.html and store the code there.", "comments": "[]"}
 Thought: I need to create the game.html file and add the code.
 Action: Create File
-Action Input: game.html
+Action Input: game.html.
 
 test contents
 Observation: Created file game.html
@@ -128,4 +128,3 @@ Final Answer: I have created a merge request with number 12 that solves issue 15
 
 > Finished chain.
 """
-

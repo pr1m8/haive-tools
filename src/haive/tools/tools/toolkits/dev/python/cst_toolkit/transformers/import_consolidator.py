@@ -1,4 +1,4 @@
-"""Import Consolidator Module
+"""Import Consolidator Module.
 
 This module provides functionality to consolidate and deduplicate import statements
 in Python files using LibCST. It identifies duplicate imports and merges them into

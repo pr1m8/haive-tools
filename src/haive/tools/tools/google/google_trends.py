@@ -1,4 +1,4 @@
-"""Google Trends Tool Module
+"""Google Trends Tool Module.
 
 This module provides a tool for retrieving trend data from Google Trends.
 It leverages LangChain's GoogleTrendsQueryRun to fetch information about trending search terms,

@@ -1,4 +1,4 @@
-"""ArXiv Research Tool Module
+"""ArXiv Research Tool Module.
 
 This module provides a tool for searching and accessing research papers from arXiv.org,
 a popular open-access repository for academic papers in fields such as physics, mathematics,

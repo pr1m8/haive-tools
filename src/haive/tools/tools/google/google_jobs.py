@@ -1,4 +1,4 @@
-"""Google Jobs Tool Module
+"""Google Jobs Tool Module.
 
 This module provides a tool for searching job listings using Google Jobs API.
 It leverages LangChain's GoogleJobsQueryRun to search for job postings, retrieve job details,

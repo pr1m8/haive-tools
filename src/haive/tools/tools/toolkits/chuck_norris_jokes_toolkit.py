@@ -1,4 +1,4 @@
-"""Chuck Norris Jokes Toolkit Module
+"""Chuck Norris Jokes Toolkit Module.
 
 This toolkit provides a collection of tools to interact with the Chuck Norris Jokes API,
 allowing users to retrieve, search, and filter Chuck Norris jokes across different categories.

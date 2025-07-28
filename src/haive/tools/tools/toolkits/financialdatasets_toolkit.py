@@ -1,4 +1,4 @@
-"""Financial Datasets Toolkit Module
+"""Financial Datasets Toolkit Module.
 
 This module provides a toolkit for accessing comprehensive financial data through the Financial Datasets API.
 It offers tools for retrieving financial statements, market data, and other financial information for

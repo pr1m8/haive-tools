@@ -1,4 +1,4 @@
-"""Corporate Buzzword Generator Tool Module
+"""Corporate Buzzword Generator Tool Module.
 
 This module provides a tool for generating random corporate business jargon and buzzwords
 using the Corporate BS Generator API. Useful for satirical purposes or demonstrating

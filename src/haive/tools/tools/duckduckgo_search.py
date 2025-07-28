@@ -1,4 +1,4 @@
-"""DuckDuckGo Search Tools Module
+"""DuckDuckGo Search Tools Module.
 
 This module provides tools for performing web searches using the DuckDuckGo search engine.
 It includes tools for both getting formatted text results and structured search results.

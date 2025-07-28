@@ -1,4 +1,4 @@
-"""Google Scholar Tool Module
+"""Google Scholar Tool Module.
 
 This module provides a tool for searching academic papers using Google Scholar.
 It leverages LangChain's GoogleScholarAPIWrapper to perform searches and return relevant academic results.

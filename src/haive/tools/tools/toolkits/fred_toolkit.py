@@ -1,4 +1,4 @@
-"""Federal Reserve Economic Data (FRED) Toolkit Module
+"""Federal Reserve Economic Data (FRED) Toolkit Module.
 
 This toolkit provides tools for accessing economic data from the Federal Reserve Bank of St. Louis
 FRED API. It allows retrieval of economic time series data, categories, and related metadata.

@@ -1,4 +1,4 @@
-"""Google Lens Tool Module
+"""Google Lens Tool Module.
 
 This module provides a tool for visual search and image recognition using Google Lens API.
 It leverages LangChain's GoogleLensAPIWrapper to analyze images, identify objects, text,

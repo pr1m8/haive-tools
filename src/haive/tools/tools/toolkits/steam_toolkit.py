@@ -1,4 +1,4 @@
-"""Steam Toolkit Module
+"""Steam Toolkit Module.
 
 This toolkit provides integration with the Steam Web API, enabling access to
 information about Steam games, players, achievements, and other related data.

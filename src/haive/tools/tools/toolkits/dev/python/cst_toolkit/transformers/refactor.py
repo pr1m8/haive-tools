@@ -1,4 +1,4 @@
-"""Refactoring Transformers Module
+"""Refactoring Transformers Module.
 
 This module provides transformers for refactoring Python code using LibCST.
 It includes functionality to rename functions, classes, and variables

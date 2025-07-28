@@ -1,4 +1,4 @@
-"""Google Calendar Toolkit Module
+"""Google Calendar Toolkit Module.
 
 This module provides a toolkit for interacting with Google Calendar services.
 It leverages LangChain's CalendarToolkit to provide tools for creating, reading,

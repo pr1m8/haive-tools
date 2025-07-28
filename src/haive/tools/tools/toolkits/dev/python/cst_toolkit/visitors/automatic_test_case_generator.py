@@ -1,4 +1,4 @@
-"""Automatic Test Case Generator Module
+"""Automatic Test Case Generator Module.
 
 This module provides functionality to automatically generate test case templates
 for Python functions using LibCST. It analyzes function definitions and generates

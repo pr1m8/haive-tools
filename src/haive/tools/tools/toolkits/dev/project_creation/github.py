@@ -1,4 +1,4 @@
-"""GitHub Project Creation Module
+"""GitHub Project Creation Module.
 
 This module provides utilities for creating and initializing GitHub repositories
 programmatically. It offers functionality to create repositories, set up branch

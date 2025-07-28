@@ -1,4 +1,4 @@
-"""Type Checking Visitor Module
+"""Type Checking Visitor Module.
 
 This module provides functionality to analyze Python code for type annotation issues
 using LibCST. It identifies functions missing type hints and incorrect return type

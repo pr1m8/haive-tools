@@ -57,7 +57,7 @@ Usage:
     papers = await arxiv_tool.search("machine learning", max_results=10)
 
     # SEO analysis
-    seo_tool = DataForSEOTool(username="user", password="pass")
+    seo_tool = DataForSEOTool(username="user", pass="pass
     analysis = await seo_tool.analyze_website("example.com")
     ```
 
@@ -88,9 +88,9 @@ from haive.tools.tools.duckduckgo_search import (
 from haive.tools.tools.google.google_search import google_search_tool
 
 __all__ = [
-    "arxiv_query_tool",
-    "duckduckgo_search_tool",
-    "duckduckgo_search_results",
-    "google_search_tool",
     "__version__",
+    "arxiv_query_tool",
+    "duckduckgo_search_results",
+    "duckduckgo_search_tool",
+    "google_search_tool",
 ]

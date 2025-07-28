@@ -84,7 +84,7 @@ I need to look at the open issues and figure out how to solve them.
 Action: Get Issues
 Action Input: N/A
 Observation: Found 1 issues:
-[{"title": "Add tic-tac-toe game", "number": 15}]
+[{"title": "Add tic-tac-toe game", "numbef": 15}]
 Thought: I need to look at the details of this issue to figure out how to solve it.
 Action: Get Issue
 Action Input: 15

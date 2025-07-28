@@ -200,7 +200,7 @@ def search_locations(**kwargs):
     Performs a general search for TripAdvisor locations using various filters.
 
     Args:
-        **kwargs: Keyword arguments matching the LocationSearchInput model.
+        **kwargs: Key arguments matching the LocationSearchInput model.
             searchQuery: Text to search for (e.g., hotel name, restaurant name).
             category: Filter by category (hotels, attractions, restaurants).
             phone: Search by phone number.
@@ -246,7 +246,7 @@ def nearby_search(**kwargs):
     Finds TripAdvisor locations near a specific geographical point.
 
     Args:
-        **kwargs: Keyword arguments matching the NearbySearchInput model.
+        **kwargs: Key arguments matching the NearbySearchInput model.
             latLong: Latitude,longitude pair (e.g., '42.3455,-71.0983').
             category: Filter by category (hotels, attractions, restaurants).
             phone: Filter by phone number.

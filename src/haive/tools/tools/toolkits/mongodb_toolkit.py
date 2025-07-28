@@ -56,11 +56,7 @@ def get_mongodb_toolkit(
 
         # Custom connection and temperature
         toolkit = get_mongodb_toolkit(
-            connection_string="mongodb://username:password@host:port/mydatabase",
-            temperature=0.2
-        )
-
-        # Using a pre-configured LLM
+            connection_string="mongodb://username:pass
         my_llm = ChatOpenAI(temperature=0.1, model="gpt-4")
         toolkit = get_mongodb_toolkit(
             connection_string="mongodb://localhost:27017/analytics",

@@ -94,7 +94,7 @@ def search_lcbo_products(query: str, page: int = 1, per_page: int = 10) -> dict:
 
 search_products_tool = StructuredTool.from_function(
     name="search_lcbo_products",
-    description="Search for LCBO products by keyword, name, etc.",
+    description="Search for LCBO products by key, name, etc.",
     func=search_lcbo_products,
     args_schema=SearchLCBOProductsInput,
 )

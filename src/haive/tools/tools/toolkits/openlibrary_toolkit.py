@@ -2,7 +2,7 @@
 
 This module provides a set of tools for interacting with the OpenLibrary API
 (https://openlibrary.org). These tools allow users to search for books by title
-or keyword, search for authors by name, and retrieve cover images.
+or key, search for authors by name, and retrieve cover images.
 
 The module includes three main tools:
 1. search_books_tool: Search for books by title, keywords, or other query terms
@@ -37,7 +37,7 @@ class BookSearchInput(BaseModel):
 
 
 def search_books(query: str, page: int = 1) -> dict:
-    """Search for books on OpenLibrary by title, keyword, or subject.
+    """Search for books on OpenLibrary by title, key, or subject.
 
     This function queries the OpenLibrary search API and returns a list of
     matching books with their details.
@@ -75,7 +75,7 @@ def search_books(query: str, page: int = 1) -> dict:
 search_books_tool = StructuredTool.from_function(
     func=search_books,
     name="search_books_openlibrary",
-    description="Search for books by title, keyword, or subject using OpenLibrary",
+    description="Search for books by title, key, or subject using OpenLibrary",
     args_schema=BookSearchInput,
 )
 

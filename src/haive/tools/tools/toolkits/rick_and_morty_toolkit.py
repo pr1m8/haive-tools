@@ -124,7 +124,7 @@ def filter_characters(
     Raises:
         requests.RequestException: If the API request fails.
     """
-    params = {"name": name, "status": status, "species": species, "gender": gender}
+    params = {"name": name, "status": status, "species": species, "gendef": gender}
     params = {k: v for k, v in params.items() if v}
     url = f"{REST_BASE_URL}/character"
     response = requests.get(url, params=params)

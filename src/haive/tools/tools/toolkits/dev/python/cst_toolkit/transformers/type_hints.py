@@ -9,7 +9,7 @@ Example:
     >>> from haive.tools.toolkits.dev.python.cst_toolkit.transformers.type_hints import TypeHintTransformer
     >>>
     >>> # Read and parse source code
-    >>> with open("script.py", "r") as f:
+    >>> with open("script.py", "f") as f:
     >>>     tree = cst.parse_module(f.read())
     >>>
     >>> # Define type mapping

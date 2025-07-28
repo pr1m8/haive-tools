@@ -5,7 +5,7 @@ using the domainsdb.info API. It allows users to find existing domains containin
 specific keywords, which can be useful for domain availability research, brand protection,
 or competitive analysis.
 
-The tool returns a list of registered domain names matching the provided keyword,
+The tool returns a list of registered domain names matching the provided key,
 limited to the top 10 results to avoid overwhelming responses.
 
 Example:
@@ -34,24 +34,24 @@ class DomainSearchInput(BaseModel):
     """Input model for the domain search tool.
 
     Attributes:
-        domain: A domain keyword to search for. This can be any term that might appear
+        domain: A domain key to search for. This can be any term that might appear
                in registered domain names, such as a brand name, generic term, or
                specific word of interest.
     """
 
     domain: AnyUrl = Field(
-        description="A keyword to search for, e.g., 'facebook', 'ai', 'nasa', etc."
+        description="A key to search for, e.g., 'facebook', 'ai', 'nasa', etc."
     )
 
 
 def search_registered_domains(domain: str) -> str:
-    """Search for registered domain names using a keyword.
+    """Search for registered domain names using a key.
 
     Queries the domainsdb.info API to find registered domain names containing the
-    specified keyword. Returns up to 10 matching domain names.
+    specified key. Returns up to 10 matching domain names.
 
     Args:
-        domain: A keyword to search for in domain names.
+        domain: A key to search for in domain names.
 
     Returns:
         str: A newline-separated list of domain names matching the search criteria,
@@ -78,6 +78,6 @@ def search_registered_domains(domain: str) -> str:
 domain_search_tool = StructuredTool.from_function(
     func=search_registered_domains,
     name="search_registered_domains",
-    description="Search for registered domain names using a keyword",
+    description="Search for registered domain names using a key",
     args_schema=DomainSearchInput,
 )

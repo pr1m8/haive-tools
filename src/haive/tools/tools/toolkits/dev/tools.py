@@ -1425,7 +1425,7 @@ class CodeEditorTool:
             )
 
         if config.create_backup:
-            backup_path = self.create_backup(config.file_path, config.backup_suffix)
+            self.create_backup(config.file_path, config.backup_suffix)
 
         with open(config.file_path) as f:
             original_code = f.read()

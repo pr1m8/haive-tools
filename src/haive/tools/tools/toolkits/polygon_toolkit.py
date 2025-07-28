@@ -76,7 +76,8 @@ except ValueError as e:
     import warnings
 
     warnings.warn(
-        f"Polygon toolkit initialization failed: {e}. Set POLYGON_API_KEY environment variable."
+        f"Polygon toolkit initialization failed: {e}. Set POLYGON_API_KEY environment variable.",
+        stacklevel=2,
     )
     # Create an empty object that will raise proper errors if accessed
     polygon_toolkit = None

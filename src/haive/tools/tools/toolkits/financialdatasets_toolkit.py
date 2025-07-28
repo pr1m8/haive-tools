@@ -110,6 +110,7 @@ except ValueError as e:
     import warnings
 
     warnings.warn(
-        f"Financial Datasets toolkit initialization failed: {e}. Set FINANCIAL_DATASETS_API_KEY environment variable."
+        f"Financial Datasets toolkit initialization failed: {e}. Set FINANCIAL_DATASETS_API_KEY environment variable.",
+        stacklevel=2,
     )
     financial_datasets_toolkit = []

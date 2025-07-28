@@ -92,7 +92,8 @@ except ValueError as e:
     import warnings
 
     warnings.warn(
-        f"Stripe toolkit initialization failed: {e}. Set STRIPE_SECRET_KEY environment variable."
+        f"Stripe toolkit initialization failed: {e}. Set STRIPE_SECRET_KEY environment variable.",
+        stacklevel=2,
     )
     # Create a None value that will raise proper errors if accessed
     stripe_agent_toolkit = None

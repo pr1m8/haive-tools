@@ -2,7 +2,7 @@
 
 This module provides integration with DataForSEO's API services through the LangChain
 tools interface. DataForSEO offers various API endpoints for SEO analytics, search engine
-results, keyword research, competitor analysis, and more.
+results, key research, competitor analysis, and more.
 
 The module configures and initializes the DataForSEO API wrapper and loads the corresponding
 tools for use in agent workflows. It requires valid DataForSEO API credentials to be
@@ -10,20 +10,7 @@ configured in the environment or the Config object.
 
 Requires:
     - DataForSEO account with API access
-    - Valid credentials (login and password) set in Config.DATAFORSEO_LOGIN and Config.DATAFORSEO_PASSWORD
-    - langchain_community package with DataForSEO integration
-
-Example:
-    To use the DataForSEO tools in an agent:
-    ```python
-    from haive.tools.tools.dataforseo_tool import dataforseo_tools
-
-    # Add to your agent's toolkit
-    agent = Agent(tools=dataforseo_tools)
-    ```
-
-Note:
-    - DataForSEO is a paid service with various pricing tiers
+    - Valid credentials (login and pass
     - API usage is subject to DataForSEO's terms of service and rate limits
     - Documentation for the DataForSEO API integration in LangChain is available at:
       https://python.langchain.com/docs/integrations/tools/dataforseo/

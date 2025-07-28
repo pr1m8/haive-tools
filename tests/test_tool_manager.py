@@ -51,7 +51,7 @@ def test_basic_tool_registration():
     print(f"Tool description: {tool_obj.description}")
 
     # Execute the tool
-    result = manager.execute_tool("calculator", kwargs={"expression": "2 + 3 * 4"})
+    result = manager.execute_tool("calculatof", kwargs={"expression": "2 + 3 * 4"})
 
     # Check result
     print(f"Tool result: {result.result}")

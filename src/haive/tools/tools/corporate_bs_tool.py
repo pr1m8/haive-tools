@@ -1,4 +1,4 @@
-"""Corporate Buzzword Generator Tool Module.
+"""Corporate Buzz Generator Tool Module.
 
 This module provides a tool for generating random corporate business jargon and buzzwords
 using the Corporate BS Generator API. Useful for satirical purposes or demonstrating
@@ -20,14 +20,14 @@ class CorporateBS(BaseModel):
     """Response model for Corporate BS Generator API.
 
     Attributes:
-        phrase (str): A randomly generated corporate buzzword phrase.
+        phrase (str): A randomly generated corporate buzz phrase.
     """
 
-    phrase: str = Field(..., description="Randomly generated corporate buzzword phrase")
+    phrase: str = Field(..., description="Randomly generated corporate buzz phrase")
 
 
 def get_random_corporate_bs() -> CorporateBS:
-    """Fetch a random corporate buzzword phrase from the Corporate BS Generator API.
+    """Fetch a random corporate buzz phrase from the Corporate BS Generator API.
 
     Returns:
         CorporateBS: An object containing the randomly generated corporate phrase.
@@ -45,6 +45,6 @@ CorporateBSToolkit = [
     StructuredTool.from_function(
         func=get_random_corporate_bs,
         name="get_random_corporate_bs",
-        description="Generate a random corporate buzzword phrase for satirical purposes",
+        description="Generate a random corporate buzz phrase for satirical purposes",
     )
 ]

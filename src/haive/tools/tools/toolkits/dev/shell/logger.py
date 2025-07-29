@@ -18,7 +18,7 @@ class ExecutionLogger:
     LOG_FILE = Path.home() / ".secure_shell_log.json"
 
     @classmethod
-    def log(cls, role: str, command: str, result: Dict[str, Any]):
+    def log(cls, role: str, command: str, result: dict[str, Any]):
         """Log command execution details."""
         log_entry = {
             "timestamp": datetime.datetime.now().isoformat(),

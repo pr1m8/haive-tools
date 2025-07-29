@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """Natural Language API (NLA) Toolkit for interacting with OpenAPI specifications.
 
 This module provides a toolkit for creating tools from OpenAPI specifications or AI plugin
@@ -27,7 +29,6 @@ Typical usage:
     agent_executor = AgentExecutor(agent=agent, tools=tools)
 """
 
-from __future__ import annotations
 
 import os
 

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """Reddit Search Tool Module.
 
 This module provides a structured tool for searching Reddit posts based on
@@ -23,7 +25,6 @@ Note:
     to be set in the environment variables.
 """
 
-from __future__ import annotations
 
 import os
 from typing import Annotated

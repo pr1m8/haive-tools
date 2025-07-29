@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 """Amadeus Travel API Toolkit for accessing flight information and travel data.
 
 This toolkit provides a Langchain-compatible interface to the Amadeus Travel APIs,
@@ -18,7 +20,6 @@ Attributes:
     None
 """
 
-from __future__ import annotations
 
 import os
 

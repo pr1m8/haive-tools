@@ -36,7 +36,9 @@ class FunctionLoggingTransformer(cst.CSTTransformer):
     """
 
     def __init__(
-        self, log_format: str = "Executing {name}", exclude_methods: list[str] = None
+        self,
+        log_format: str = "Executing {name}",
+        exclude_methods: list[str] | None = None,
     ):
         """Initialize the function logging transformer.
 
@@ -83,7 +85,7 @@ class FunctionLoggingTransformer(cst.CSTTransformer):
 def add_logging(
     filepath: str,
     log_format: str = "Executing {name}",
-    exclude_methods: list[str] = None,
+    exclude_methods: list[str] | None = None,
 ) -> None:
     """Inject logging into functions in a Python file.
 

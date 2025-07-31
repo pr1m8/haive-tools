@@ -6,15 +6,14 @@ them with Haive agents for specialized functionality.
 """
 
 import asyncio
+import contextlib
 from datetime import datetime
 from typing import Any
 
-from langchain_core.tools import tool
-from pydantic import BaseModel, Field
-
 from haive.agents.react import ReactAgent
 from haive.core.engine.aug_llm import AugLLMConfig
-
+from langchain_core.tools import tool
+from pydantic import BaseModel, Field
 
 # === CUSTOM TOOL EXAMPLES ===
 
@@ -78,7 +77,7 @@ TASK_LIST: list[dict[str, Any]] = []
 
 
 @tool(args_schema=TaskInput)
-def add_task(task: str, priority: str = "medium", due_date: str = None) -> str:
+def add_task(task: str, priority: str = "medium", due_date: str | None = None) -> str:
     """Add a new task to the task list.
 
     Args:
@@ -173,9 +172,6 @@ def text_analyzer(text: str) -> str:
 
 async def main():
     """Run the custom tools example."""
-    print("🔧 Haive Custom Tools Example")
-    print("=" * 50)
-
     # Create agent configuration
     config = AugLLMConfig(
         model="gpt-4",
@@ -199,9 +195,8 @@ async def main():
     # Create ReactAgent with custom tools
     agent = ReactAgent(name="custom_tools_agent", engine=config, tools=custom_tools)
 
-    print("\n🛠️  Available Custom Tools:")
-    for custom_tool in custom_tools:
-        print(f"   • {custom_tool.name}: {custom_tool.description}")
+    for _custom_tool in custom_tools:
+        pass
 
     # Example tasks using custom tools
     tasks = [
@@ -214,31 +209,16 @@ async def main():
         "Convert 100 Fahrenheit to Kelvin",
     ]
 
-    print(f"\n🎯 Running {len(tasks)} example tasks...")
-    print("-" * 50)
+    for _i, task in enumerate(tasks, 1):
 
-    for i, task in enumerate(tasks, 1):
-        print(f"\n📋 Task {i}: {task}")
-        print("🤔 Processing...")
-
-        try:
-            response = await agent.arun(task)
-            print(f"✅ Response: {response}")
-        except Exception as e:
-            print(f"❌ Error: {e}")
+        with contextlib.suppress(Exception):
+            await agent.arun(task)
 
         # Small delay between tasks
         await asyncio.sleep(1.5)
 
-    print("\n🎉 Custom tools example completed!")
-    print(
-        f"Agent '{agent.name}' successfully demonstrated {len(custom_tools)} custom tools."
-    )
-
     # Show final task list
-    print("\n📋 Final Task List:")
-    final_tasks = list_tasks()
-    print(final_tasks)
+    list_tasks()
 
 
 if __name__ == "__main__":

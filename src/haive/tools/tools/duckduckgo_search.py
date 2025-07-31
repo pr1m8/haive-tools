@@ -1,4 +1,4 @@
-"""DuckDuckGo Search Tools Module.
+r"""DuckDuckGo Search Tools Module.
 
 This module provides tools for performing web searches using the DuckDuckGo search engine.
 It includes tools for both getting formatted text results and structured search results.
@@ -25,7 +25,6 @@ Examples:
 """
 
 from langchain_community.tools import DuckDuckGoSearchResults, DuckDuckGoSearchRun
-
 
 # Initialize the text-based search tool
 duckduckgo_search_tool = DuckDuckGoSearchRun()

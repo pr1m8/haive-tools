@@ -11,8 +11,8 @@ Examples:
 
 """
 
-from collections.abc import Sequence
 import os
+from collections.abc import Sequence
 from typing import Literal
 
 from dotenv import load_dotenv
@@ -20,7 +20,6 @@ from langchain_community.document_loaders import WebBaseLoader
 from langchain_community.tools.tavily_search import TavilySearchResults
 from langchain_core.tools import tool
 from tavily import TavilyClient
-
 
 load_dotenv(dotenv_path=".env")
 
@@ -164,8 +163,8 @@ def tavily_search_tool(
     include_raw_content: bool | None = False,
     include_images: bool | None = False,
     search_depth: str | None = "advanced",
-    include_domains: list[str] | None = [],
-    exclude_domains: list[str] | None = [],
+    include_domains: list[str] | None = None,
+    exclude_domains: list[str] | None = None,
     verbose: bool | None = False,
 ) -> dict:
     """Query Tavily Search API with full configurability for comprehensive search
@@ -198,6 +197,10 @@ def tavily_search_tool(
 
     """
     # Initialize TavilySearchResults with provided parameters
+    if exclude_domains is None:
+        exclude_domains = []
+    if include_domains is None:
+        include_domains = []
     tavily_tool = TavilySearchResults(
         max_results=max_results,
         include_answer=include_answer,

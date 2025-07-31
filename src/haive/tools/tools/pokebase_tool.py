@@ -17,8 +17,8 @@ Examples:
 
 from typing import Literal
 
-from langchain_core.tools import StructuredTool
 import pokebase as pb
+from langchain_core.tools import StructuredTool
 from pydantic import BaseModel, Field
 
 
@@ -78,7 +78,7 @@ def query_pokebase_resource(query_input: PokeBaseQueryInput) -> dict:
             k: v
             for k, v in resource.__dict__.items()
             if not k.startswith("_")
-            and isinstance(v, (str, int, float, list, dict, bool, type(None)))
+            and isinstance(v, str | int | float | list | dict | bool | type(None))
         }
         return result
     except Exception as e:

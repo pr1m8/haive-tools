@@ -23,17 +23,16 @@ Examples:
 
 """
 
-from dataclasses import dataclass
 import difflib
-from enum import Enum
 import logging
 import os
+from dataclasses import dataclass
+from enum import Enum
 from typing import Any
 
 import libcst as cst
 from libcst.metadata import MetadataWrapper
 from pydantic import BaseModel, Field
-
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -1317,7 +1316,7 @@ class AddParameterTransformer(BaseTransformer):
         )
 
         # Add to parameter list
-        params = list(updated_node.params.params) + [new_param]
+        params = [*list(updated_node.params.params), new_param]
         updated_params = updated_node.params.with_changes(params=params)
 
         self.add_change(

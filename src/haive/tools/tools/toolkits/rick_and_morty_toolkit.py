@@ -1,8 +1,8 @@
 from typing import Any
 
+import requests
 from langchain_core.tools import BaseToolkit, StructuredTool
 from pydantic import BaseModel, Field
-import requests
 
 r"""Rick and Morty API Toolkit Module.
 

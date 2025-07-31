@@ -16,8 +16,8 @@ Examples:
 
 """
 
-from collections import defaultdict
 import os
+from collections import defaultdict
 
 import libcst as cst
 
@@ -171,7 +171,7 @@ class ComplexityAnalyzer(cst.CSTVisitor):
         }
 
 
-def analyze_complexity(filepath: str, threshold: int = None) -> dict[str, int]:
+def analyze_complexity(filepath: str, threshold: int | None = None) -> dict[str, int]:
     """Analyze the cyclomatic complexity of functions in a Python file.
 
     Args:

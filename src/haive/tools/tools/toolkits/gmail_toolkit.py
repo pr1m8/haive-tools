@@ -20,11 +20,11 @@ Examples:
 
 """
 
+import contextlib
 import os
 import sys
 
 from langchain_google_community.gmail.toolkit import GmailToolkit
-
 
 # Define the credentials file path
 CREDENTIALS_FILE = "credentials.json"
@@ -34,7 +34,5 @@ if not os.path.exists(CREDENTIALS_FILE):
     sys.exit(1)  # Exit the program if credentials are missing
 
 # Initialize the Gmail toolkit only if credentials exist
-try:
+with contextlib.suppress(Exception):
     gmail_toolkit = GmailToolkit().get_tools()
-except Exception:
-    pass

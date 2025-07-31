@@ -42,16 +42,17 @@ class PrintToLoggingTransformer(cst.CSTTransformer):
                 otherwise the original node
 
         """
-        if isinstance(original_node.value, cst.Call) and isinstance(
-            original_node.value.func, cst.Name
+        if (
+            isinstance(original_node.value, cst.Call)
+            and isinstance(original_node.value.func, cst.Name)
+            and original_node.value.func.value == "print"
         ):
-            if original_node.value.func.value == "print":
-                return updated_node.with_changes(
-                    value=cst.Call(
-                        func=cst.parse_expression("logging.info"),
-                        args=original_node.value.args,
-                    )
+            return updated_node.with_changes(
+                value=cst.Call(
+                    func=cst.parse_expression("logging.info"),
+                    args=original_node.value.args,
                 )
+            )
         return updated_node
 
 

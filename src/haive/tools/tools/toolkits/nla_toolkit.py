@@ -1,16 +1,14 @@
 from __future__ import annotations
 
 import os
-from pprint import pprint
 
 from dotenv import load_dotenv
+from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 from langchain_community.agent_toolkits.nla.toolkit import NLAToolkit as RawNLAToolkit
 from langchain_community.utilities.requests import Requests
 from langchain_core.language_models import BaseLanguageModel
 from langchain_core.tools import BaseTool, BaseToolkit
 from pydantic import BaseModel, ConfigDict, Field
-
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 
 """Natural Language API (NLA) Toolkit for interacting with OpenAPI specifications.
 
@@ -155,5 +153,5 @@ if __name__ == "__main__":
     toolkit = StructuredNLAToolkit.from_config(config)
     tools = toolkit.get_tools()
 
-    for tool in tools:
-        pprint({"name": tool.name, "description": tool.description})
+    for _tool in tools:
+        pass

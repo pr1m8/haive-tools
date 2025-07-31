@@ -1,17 +1,15 @@
 from __future__ import annotations
 
 import os
-from pprint import pprint
 
 from amadeus import Client
 from dotenv import load_dotenv
+from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 from langchain_community.tools.amadeus.closest_airport import AmadeusClosestAirport
 from langchain_community.tools.amadeus.flight_search import AmadeusFlightSearch
 from langchain_core.language_models import BaseLanguageModel
 from langchain_core.tools import BaseTool, BaseToolkit
 from pydantic import BaseModel, ConfigDict, Field
-
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 
 """Amadeus Travel API Toolkit for accessing flight information and travel data.
 
@@ -163,5 +161,5 @@ if __name__ == "__main__":
     toolkit = AmadeusToolkit.from_config(config)
     tools = toolkit.get_tools()
 
-    for tool in tools:
-        pprint({"name": tool.name, "description": tool.description})
+    for _tool in tools:
+        pass

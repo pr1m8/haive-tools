@@ -16,11 +16,12 @@ Example:
 Note:
     No API key is required for basic usage, but rate limits apply.
     See https://genderize.io/ for more information.
+
 """
 
-import requests
 from langchain_core.tools import StructuredTool
 from pydantic import BaseModel, Field
+import requests
 
 
 class GenderizeResponse(BaseModel):
@@ -32,6 +33,7 @@ class GenderizeResponse(BaseModel):
         probability: The probability of the predicted gender
         count: The number of people with the name in the country
         country_id: The country code of the name
+
     """
 
     name: str = Field(description="The name to predict gender for")
@@ -57,6 +59,7 @@ def predict_gender(name: str, country_id: str | None = None) -> GenderizeRespons
 
     Raises:
         requests.exceptions.HTTPError: If the API request fails
+
     """
     url = "https://api.genderize.io"
     params = {"name": name}

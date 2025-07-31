@@ -12,11 +12,12 @@ Example:
 
 Attributes:
     None
+
 """
 
-import requests
 from langchain_core.tools import BaseToolkit, StructuredTool
 from pydantic import BaseModel, Field
+import requests
 
 
 # --- Tool to fetch a product by ID ---
@@ -25,6 +26,7 @@ class GetLCBOProductInput(BaseModel):
 
     Args:
         product_id: The unique LCBO product identifier
+
     """
 
     product_id: int = Field(..., description="LCBO product ID")
@@ -41,6 +43,7 @@ def get_lcbo_product(product_id: int) -> dict:
 
     Raises:
         HTTPError: If the request fails or returns an error status code
+
     """
     url = f"https://lcboapi.com/products/{product_id}"
     response = requests.get(url)
@@ -64,6 +67,7 @@ class SearchLCBOProductsInput(BaseModel):
         query: The search terms to find matching products
         page: Page number for paginated results
         per_page: Number of results to return per page
+
     """
 
     query: str = Field(..., description="Search query string")
@@ -84,6 +88,7 @@ def search_lcbo_products(query: str, page: int = 1, per_page: int = 10) -> dict:
 
     Raises:
         HTTPError: If the request fails or returns an error status code
+
     """
     url = "https://lcboapi.com/products"
     params = {"q": query, "page": page, "per_page": per_page}
@@ -104,8 +109,9 @@ search_products_tool = StructuredTool.from_function(
 class LCBOApiToolkit(BaseToolkit):
     """Toolkit for interacting with the LCBO API.
 
-    This toolkit provides tools for searching LCBO's product database
-    and retrieving detailed information about specific products.
+    This toolkit provides tools for searching LCBO's product database and retrieving
+    detailed information about specific products.
+
     """
 
     def get_tools(self) -> list[StructuredTool]:
@@ -113,5 +119,6 @@ class LCBOApiToolkit(BaseToolkit):
 
         Returns:
             List[StructuredTool]: A list of tools for working with the LCBO API
+
         """
         return [get_product_tool, search_products_tool]

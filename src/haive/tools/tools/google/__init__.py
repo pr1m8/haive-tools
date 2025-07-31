@@ -35,6 +35,7 @@ from haive.tools.tools.google.google_trends import (
     initialize_google_trends,
 )
 
+
 __all__ = [
     "GoogleBooksResult",
     "GoogleFinanceResult",

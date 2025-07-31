@@ -1,5 +1,13 @@
 from __future__ import annotations
 
+import os
+from typing import Annotated
+
+from dotenv import load_dotenv
+from langchain_community.utilities.reddit_search import RedditSearchAPIWrapper
+from langchain_core.tools import StructuredTool
+from pydantic import Field
+
 """Reddit Search Tool Module.
 
 This module provides a structured tool for searching Reddit posts based on
@@ -25,14 +33,6 @@ Note:
     to be set in the environment variables.
 """
 
-
-import os
-from typing import Annotated
-
-from dotenv import load_dotenv
-from langchain_community.utilities.reddit_search import RedditSearchAPIWrapper
-from langchain_core.tools import StructuredTool
-from pydantic import Field
 
 # -----------------------------
 # ✅ Load credentials
@@ -82,6 +82,7 @@ def search_reddit(
 
     Raises:
         ValueError: If the Reddit API returns an error
+
     """
     return reddit_api.run(
         query=query,
@@ -114,4 +115,3 @@ if __name__ == "__main__":
             "limit": 3,
         }
     )
-    print("✅ Reddit Search Results:\n", result)

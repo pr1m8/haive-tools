@@ -10,10 +10,12 @@ Example:
 
 Note:
     Make sure to set up a .env file with required API credentials.
+
 """
 
 from dotenv import load_dotenv
 from langchain_community.tools.asknews import AskNewsSearch
+
 
 # Load environment variables from .env file
 load_dotenv(".env")

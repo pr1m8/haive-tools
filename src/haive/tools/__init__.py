@@ -76,16 +76,18 @@ Each tool includes:
 - Performance monitoring and metrics
 """
 
-__version__ = "0.1.0"
-
 from haive.tools.tools.arxiv import arxiv_query_tool
 from haive.tools.tools.duckduckgo_search import (
     duckduckgo_search_results,
     duckduckgo_search_tool,
 )
+from haive.tools.tools.google.google_search import google_search_tool
+
+
+__version__ = "0.1.0"
+
 
 # Import commonly used tools for convenience
-from haive.tools.tools.google.google_search import google_search_tool
 
 __all__ = [
     "__version__",

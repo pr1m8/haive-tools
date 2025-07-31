@@ -29,13 +29,16 @@ Examples:
     >>> os.environ["POLYGON_API_KEY"] = "your_api_key_here"
     >>> from haive.tools.toolkits.polygon_toolkit import create_polygon_toolkit
     >>> custom_toolkit = create_polygon_toolkit()
+
 """
 
 import os
+import warnings
 
 from dotenv import load_dotenv
 from langchain_community.agent_toolkits.polygon.toolkit import PolygonToolkit
 from langchain_community.utilities.polygon import PolygonAPIWrapper
+
 
 # Load environment variables from .env file if it exists
 load_dotenv(".env")
@@ -56,6 +59,7 @@ def create_polygon_toolkit(api_key: str | None = None) -> PolygonToolkit:
 
     Raises:
         ValueError: If no API key is available (neither provided nor in environment).
+
     """
     if api_key:
         os.environ["POLYGON_API_KEY"] = api_key
@@ -73,8 +77,6 @@ def create_polygon_toolkit(api_key: str | None = None) -> PolygonToolkit:
 try:
     polygon_toolkit = create_polygon_toolkit()
 except ValueError as e:
-    import warnings
-
     warnings.warn(
         f"Polygon toolkit initialization failed: {e}. Set POLYGON_API_KEY environment variable.",
         stacklevel=2,

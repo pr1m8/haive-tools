@@ -16,9 +16,11 @@ Examples:
 
     >>> # To send a message to a match:
     >>> # api.send_message(user_id="USER_ID", text="Hello!")
+
 """
 
 from squeaky_hinge import HingeAPI
+
 
 # Initialize client - this is a placeholder implementation
 api = HingeAPI()

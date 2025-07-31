@@ -14,15 +14,18 @@ Requires:
     - API usage is subject to DataForSEO's terms of service and rate limits
     - Documentation for the DataForSEO API integration in LangChain is available at:
       https://python.langchain.com/docs/integrations/tools/dataforseo/
+
 """
 
+from langchain_community.agent_toolkits.load_tools import load_tools
+from langchain_community.utilities.dataforseo_api_search import DataForSeoAPIWrapper
+
 from haive.config.config import Config
+
 
 if not Config.DATAFORSEO_LOGIN or not Config.DATAFORSEO_PASSWORD:
     raise ValueError("DATAFORSEO_LOGIN and DATAFORSEO_PASSWORD must be set")
 
-from langchain_community.agent_toolkits.load_tools import load_tools
-from langchain_community.utilities.dataforseo_api_search import DataForSeoAPIWrapper
 
 # Initialize the DataForSEO API wrapper
 dataforseo = DataForSeoAPIWrapper()
@@ -31,8 +34,6 @@ dataforseo = DataForSeoAPIWrapper()
 result = dataforseo.run(
     "https://python.langchain.com/docs/integrations/tools/dataforseo/"
 )
-print(result)
 
 # Load the DataForSEO tools
 dataforseo_tools = load_tools(["dataforseo-api"])
-print(dataforseo_tools)

@@ -13,6 +13,7 @@ Before:
 
 After:
     logging.info("Hello, world!")
+
 """
 
 import libcst as cst
@@ -26,6 +27,7 @@ class PrintToLoggingTransformer(cst.CSTTransformer):
 
     Attributes:
         None
+
     """
 
     def leave_Expr(self, original_node: cst.Expr, updated_node: cst.Expr):
@@ -38,6 +40,7 @@ class PrintToLoggingTransformer(cst.CSTTransformer):
         Returns:
             cst.Expr: The transformed expression with logging.info() if it was a print call,
                 otherwise the original node
+
         """
         if isinstance(original_node.value, cst.Call) and isinstance(
             original_node.value.func, cst.Name
@@ -65,6 +68,7 @@ def replace_print_with_logging(filepath: str):
     Raises:
         FileNotFoundError: If the specified file does not exist
         IOError: If there are issues reading from or writing to the file
+
     """
     with open(filepath) as f:
         tree = cst.parse_module(f.read())

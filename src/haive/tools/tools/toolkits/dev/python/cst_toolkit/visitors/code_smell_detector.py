@@ -8,6 +8,7 @@ Example:
     >>> from haive.tools.toolkits.dev.python.cst_toolkit.visitors.code_smell_detector import detect_code_smells
     >>> detect_code_smells("/path/to/file.py")
     ⚠️ Deeply nested loop detected at line 42
+
 """
 
 import libcst as cst
@@ -23,6 +24,7 @@ class CodeSmellDetector(cst.CSTVisitor):
     Attributes:
         nesting_level (int): The current nesting level of loops being analyzed
         issues (List[Dict]): List of detected code smells with details
+
     """
 
     def __init__(self):
@@ -39,22 +41,25 @@ class CodeSmellDetector(cst.CSTVisitor):
 
         Args:
             node (cst.For): The for loop node being visited
+
         """
         self.nesting_level += 1
         if self.nesting_level > 3:
             issue = {
                 "type": "deeply_nested_loop",
-                "message": f"Deeply nested loop detected at line {node.lineno if hasattr(node, 'lineno') else 'unknown'}",
+                "message": f"Deeply nested loop detected at line {
+                    node.lineno if hasattr(node, 'lineno') else 'unknown'
+                }",
                 "severity": "warning",
             }
             self.issues.append(issue)
-            print(f"⚠️ {issue['message']}")
 
     def leave_For(self, original_node: cst.For) -> None:
         """Decrement nesting level when leaving a for loop.
 
         Args:
             original_node (cst.For): The for loop node being left
+
         """
         self.nesting_level -= 1
 
@@ -63,6 +68,7 @@ class CodeSmellDetector(cst.CSTVisitor):
 
         Returns:
             List[Dict]: List of dictionaries containing details about each detected issue
+
         """
         return self.issues
 
@@ -82,6 +88,7 @@ def detect_code_smells(filepath: str) -> list[dict]:
     Raises:
         FileNotFoundError: If the specified file does not exist
         IOError: If there are issues reading from the file
+
     """
     with open(filepath) as f:
         tree = cst.parse_module(f.read())

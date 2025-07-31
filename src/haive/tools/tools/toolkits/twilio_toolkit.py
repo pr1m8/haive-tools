@@ -17,12 +17,14 @@ Typical usage:
     # Use in an agent
     agent = Agent(tools=twilio_toolkit)
     agent.run("Send a text message to +1234567890 with the message 'Hello!'")
+
 """
 
-from haive.config.config import Config
 from langchain_community.agent_toolkits.load_tools import load_tools
 from langchain_community.utilities.twilio import TwilioAPIWrapper
 from langchain_core.tools import BaseTool
+
+from haive.config.config import Config
 
 
 def get_twilio_tools() -> list[BaseTool]:
@@ -37,6 +39,7 @@ def get_twilio_tools() -> list[BaseTool]:
 
     Raises:
         ValueError: If TWILIO_ACCOUNT_SID or TWILIO_AUTH_TOKEN is not set.
+
     """
     # Check if Twilio credentials are set
     if not Config.TWILIO_ACCOUNT_SID:

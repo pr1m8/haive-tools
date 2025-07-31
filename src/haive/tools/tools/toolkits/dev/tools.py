@@ -20,18 +20,20 @@ Examples:
     ... )
     >>> result = editor.perform_ast_edit(config)
     >>> print(result.success)
+
 """
 
+from dataclasses import dataclass
 import difflib
+from enum import Enum
 import logging
 import os
-from dataclasses import dataclass
-from enum import Enum
 from typing import Any
 
 import libcst as cst
 from libcst.metadata import MetadataWrapper
 from pydantic import BaseModel, Field
+
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -62,6 +64,7 @@ class EditType(str, Enum):
         REMOVE_PARAMETER (str): Remove a parameter from a function
         RENAME_PARAMETER (str): Rename a function parameter
         CUSTOM_TRANSFORM (str): Apply a custom transformation
+
     """
 
     RENAME_FUNCTION = "rename_function"
@@ -94,6 +97,7 @@ class GitOperation(str, Enum):
         BRANCH (str): List, create, or delete branches
         CHECKOUT (str): Switch branches or restore working tree files
         RESET (str): Reset current HEAD to the specified state
+
     """
 
     DIFF = "diff"
@@ -119,6 +123,7 @@ class CodeQualityTool(str, Enum):
         MYPY (str): The MyPy static type checker
         ISORT (str): The isort import sorter
         AUTOFLAKE (str): The Autoflake tool for removing unused imports
+
     """
 
     BLACK = "black"
@@ -165,6 +170,7 @@ class ASTEditConfig(BaseModel):
         transform_args (Optional[Dict[str, Any]]): Arguments to pass to the custom transformer
         create_backup (bool): Whether to create a backup of the file before editing
         backup_suffix (str): Suffix to add to the filename when creating a backup
+
     """
 
     file_path: str = Field(
@@ -276,6 +282,7 @@ class CodeQualityConfig(BaseModel):
         aggressive (Optional[int]): Aggression level for autoflake (0-3)
         mypy_options (Optional[List[str]]): Additional command-line options for mypy
         show_diff (bool): Whether to show a diff of changes made by formatting tools
+
     """
 
     file_path: str = Field(
@@ -328,6 +335,7 @@ class GitOperationConfig(BaseModel):
         reset_mode (Optional[str]): Reset mode to use (soft, mixed, hard)
         log_count (Optional[int]): Number of recent commits to show in log operations
         log_format (Optional[str]): Format string for Git log output
+
     """
 
     file_paths: str | list[str] = Field(
@@ -389,6 +397,7 @@ class CodeSummarizeConfig(BaseModel):
         include_imports (bool): Whether to include import statements
         include_global_vars (bool): Whether to include global variable declarations
         output_format (str): Format for the summary output (text, json, markdown)
+
     """
 
     file_path: str = Field(
@@ -435,6 +444,7 @@ class EditResult(BaseModel):
         error (Optional[str]): Error message if the operation failed
         diff (Optional[str]): Unified diff showing the changes made to the file
         backup_path (Optional[str]): Path to the backup file if one was created
+
     """
 
     success: bool = Field(
@@ -472,6 +482,7 @@ class QualityResult(BaseModel):
         fixed_count (int): Number of issues that were automatically fixed
         diff (Optional[str]): Unified diff showing changes made by formatting tools
         error (Optional[str]): Error message if any of the quality checks failed
+
     """
 
     success: bool = Field(..., description="Whether all quality checks passed")
@@ -507,6 +518,7 @@ class GitResult(BaseModel):
         error (Optional[str]): Error message if the operation failed
         commit_id (Optional[str]): ID of the commit if a commit operation was performed
         diff (Optional[str]): Diff output if a diff operation was performed
+
     """
 
     success: bool = Field(
@@ -543,6 +555,7 @@ class CodeSummary(BaseModel):
         docstring (Optional[str]): Module-level docstring if present
         loc (int): Total lines of code in the file
         summary (str): High-level summary of the file's purpose and contents
+
     """
 
     file_path: str = Field(..., description="Path to the file that was summarized")
@@ -584,6 +597,7 @@ class TransformerContext:
         metadata (Optional[MetadataWrapper]): Optional metadata wrapper for the AST
         file_path (Optional[str]): Path to the file being transformed
         changes (List[Dict[str, Any]]): List of changes made during transformation
+
     """
 
     tree: cst.Module
@@ -608,6 +622,7 @@ class BaseTransformer(cst.CSTTransformer):
     Attributes:
         context (TransformerContext): The transformation context
         changes (List[Dict[str, Any]]): Reference to the list of changes in the context
+
     """
 
     def __init__(self, context: TransformerContext):
@@ -615,6 +630,7 @@ class BaseTransformer(cst.CSTTransformer):
 
         Args:
             context (TransformerContext): The transformation context
+
         """
         super().__init__()
         self.context = context
@@ -626,6 +642,7 @@ class BaseTransformer(cst.CSTTransformer):
         Args:
             change_type (str): Type of change being made
             **kwargs: Additional details about the change
+
         """
         change = {"type": change_type, **kwargs}
         self.changes.append(change)
@@ -639,6 +656,7 @@ class RenameFunctionTransformer(BaseTransformer):
     Attributes:
         old_name (str): Current name of the function
         new_name (str): New name for the function
+
     """
 
     def __init__(self, context: TransformerContext, old_name: str, new_name: str):
@@ -648,6 +666,7 @@ class RenameFunctionTransformer(BaseTransformer):
             context (TransformerContext): The transformation context
             old_name (str): Current name of the function to rename
             new_name (str): New name for the function
+
         """
         super().__init__(context)
         self.old_name = old_name
@@ -664,6 +683,7 @@ class RenameFunctionTransformer(BaseTransformer):
 
         Returns:
             cst.FunctionDef: The transformed function definition node
+
         """
         if original_node.name.value == self.old_name:
             self.add_change(
@@ -688,6 +708,7 @@ class RenameClassTransformer(BaseTransformer):
     Attributes:
         old_name (str): Current name of the class
         new_name (str): New name for the class
+
     """
 
     def __init__(self, context: TransformerContext, old_name: str, new_name: str):
@@ -697,6 +718,7 @@ class RenameClassTransformer(BaseTransformer):
             context (TransformerContext): The transformation context
             old_name (str): Current name of the class to rename
             new_name (str): New name for the class
+
         """
         super().__init__(context)
         self.old_name = old_name
@@ -713,6 +735,7 @@ class RenameClassTransformer(BaseTransformer):
 
         Returns:
             cst.ClassDef: The transformed class definition node
+
         """
         if original_node.name.value == self.old_name:
             self.add_change(
@@ -738,6 +761,7 @@ class AddDocstringTransformer(BaseTransformer):
         target_name (str): Name of the function or class to add/update the docstring for
         docstring (str): Content of the docstring
         transformed (bool): Whether the docstring has been added/updated
+
     """
 
     def __init__(self, context: TransformerContext, target_name: str, docstring: str):
@@ -747,6 +771,7 @@ class AddDocstringTransformer(BaseTransformer):
             context (TransformerContext): The transformation context
             target_name (str): Name of the function or class to modify
             docstring (str): Content of the docstring to add
+
         """
         super().__init__(context)
         self.target_name = target_name
@@ -764,6 +789,7 @@ class AddDocstringTransformer(BaseTransformer):
 
         Returns:
             cst.FunctionDef: The transformed function definition node with added/updated docstring
+
         """
         if original_node.name.value == self.target_name:
             # Create a new docstring node
@@ -779,7 +805,6 @@ class AddDocstringTransformer(BaseTransformer):
                     original_node.body.body[0].body[0].value, cst.SimpleString
                 )
             ):
-
                 has_docstring = True
                 new_body = list(original_node.body.body)
                 new_body[0] = new_body[0].with_changes(
@@ -839,6 +864,7 @@ class AddDocstringTransformer(BaseTransformer):
 
         Returns:
             cst.ClassDef: The transformed class definition node with added/updated docstring
+
         """
         if original_node.name.value == self.target_name:
             # Create a new docstring node
@@ -854,7 +880,6 @@ class AddDocstringTransformer(BaseTransformer):
                     original_node.body.body[0].body[0].value, cst.SimpleString
                 )
             ):
-
                 has_docstring = True
                 new_body = list(original_node.body.body)
                 new_body[0] = new_body[0].with_changes(
@@ -913,6 +938,7 @@ class AddTypeHintsTransformer(BaseTransformer):
         target_name (Optional[str]): Optional name of the function to add type hints to
         type_annotations (Dict[str, str]): Dictionary mapping parameter names to type annotations
         changes_made (bool): Whether any type hints were added
+
     """
 
     def __init__(
@@ -927,6 +953,7 @@ class AddTypeHintsTransformer(BaseTransformer):
             context (TransformerContext): The transformation context
             target_name (Optional[str]): Optional name of the function to modify
             type_annotations (Optional[Dict[str, str]]): Dictionary mapping parameter names to type annotations
+
         """
         super().__init__(context)
         self.target_name = target_name
@@ -944,6 +971,7 @@ class AddTypeHintsTransformer(BaseTransformer):
 
         Returns:
             cst.FunctionDef: The transformed function definition node with added type hints
+
         """
         # Skip if we have a target and this isn't it
         if self.target_name and original_node.name.value != self.target_name:
@@ -1017,6 +1045,7 @@ class AddLoggingTransformer(BaseTransformer):
         log_level (str): Logging level to use (info, debug, warning, error)
         log_points (List[Dict[str, Any]]): List of locations to add logging statements
         changes_made (bool): Whether any logging statements were added
+
     """
 
     def __init__(
@@ -1033,6 +1062,7 @@ class AddLoggingTransformer(BaseTransformer):
             target_name (str): Name of the function to modify
             log_level (str): Logging level to use (info, debug, warning, error)
             log_points (Optional[List[Dict[str, Any]]]): List of locations to add logging statements
+
         """
         super().__init__(context)
         self.target_name = target_name
@@ -1053,6 +1083,7 @@ class AddLoggingTransformer(BaseTransformer):
 
         Returns:
             cst.FunctionDef: The transformed function definition node with added logging statements
+
         """
         if original_node.name.value != self.target_name:
             return updated_node
@@ -1130,6 +1161,7 @@ class AddErrorHandlingTransformer(BaseTransformer):
         exception_type (str): Type of exception to catch
         error_message (str): Error message to log when an exception is caught
         changes_made (bool): Whether error handling was added
+
     """
 
     def __init__(
@@ -1146,6 +1178,7 @@ class AddErrorHandlingTransformer(BaseTransformer):
             target_name (str): Name of the function to modify
             exception_type (str): Type of exception to catch
             error_message (Optional[str]): Error message to log when an exception is caught
+
         """
         super().__init__(context)
         self.target_name = target_name
@@ -1164,6 +1197,7 @@ class AddErrorHandlingTransformer(BaseTransformer):
 
         Returns:
             cst.FunctionDef: The transformed function definition node with added error handling
+
         """
         if original_node.name.value != self.target_name:
             return updated_node
@@ -1218,6 +1252,7 @@ class AddParameterTransformer(BaseTransformer):
         param_type (Optional[str]): Optional type annotation for the parameter
         param_default (Optional[str]): Optional default value for the parameter
         changes_made (bool): Whether the parameter was added
+
     """
 
     def __init__(
@@ -1236,6 +1271,7 @@ class AddParameterTransformer(BaseTransformer):
             param_name (str): Name of the parameter to add
             param_type (Optional[str]): Optional type annotation for the parameter
             param_default (Optional[str]): Optional default value for the parameter
+
         """
         super().__init__(context)
         self.target_name = target_name
@@ -1255,6 +1291,7 @@ class AddParameterTransformer(BaseTransformer):
 
         Returns:
             cst.FunctionDef: The transformed function definition node with the added parameter
+
         """
         if original_node.name.value != self.target_name:
             return updated_node
@@ -1317,6 +1354,7 @@ class CodeStyleConfig(BaseModel):
         use_autoflake (bool): Whether to use autoflake to remove unused imports
         fix (bool): Whether to automatically fix detected style issues
         show_diff (bool): Whether to show a diff of changes made by formatting tools
+
     """
 
     line_length: int = Field(88, description="Maximum line length for formatted code")
@@ -1346,6 +1384,7 @@ class CodeEditorTool:
     Attributes:
         debug (bool): Whether detailed debugging is enabled
         style_config (CodeStyleConfig): Configuration for code formatting
+
     """
 
     def __init__(
@@ -1356,6 +1395,7 @@ class CodeEditorTool:
         Args:
             debug (bool): Enable detailed debug logging
             style_config (Optional[CodeStyleConfig]): Code formatting settings
+
         """
         self.debug = debug
         self.style_config = style_config or CodeStyleConfig()
@@ -1374,6 +1414,7 @@ class CodeEditorTool:
 
         Returns:
             str: Path to the created backup file
+
         """
         backup_path = f"{file_path}{suffix}"
         with open(file_path) as src, open(backup_path, "w") as dst:
@@ -1391,6 +1432,7 @@ class CodeEditorTool:
 
         Returns:
             str: Unified diff string showing the changes
+
         """
         diff = "".join(
             difflib.unified_diff(
@@ -1414,6 +1456,7 @@ class CodeEditorTool:
 
         Returns:
             EditResult: Result of the edit operation
+
         """
         if not os.path.exists(config.file_path):
             return EditResult(

@@ -1,5 +1,5 @@
-"""Gitlab Toolkit
-The Gitlab toolkit contains tools that enable an LLM agent to interact with a gitlab repository. The tool is a wrapper for the python-gitlab library.
+"""Gitlab Toolkit The Gitlab toolkit contains tools that enable an LLM agent to interact
+with a gitlab repository. The tool is a wrapper for the python-gitlab library.
 
 Quickstart
 Install the python-gitlab library
@@ -44,6 +44,7 @@ GITLAB_BRANCH- The branch where the bot will make its commits. Defaults to 'main
 GITLAB_BASE_BRANCH- The base branch of your repo, usually either 'main' or 'master.' This is where merge requests will base from. Defaults to 'main.'
 
 Example: Simple Agent
+
 """
 
 import os
@@ -53,7 +54,9 @@ from langchain_community.agent_toolkits.gitlab.toolkit import GitLabToolkit
 from langchain_community.utilities.gitlab import GitLabAPIWrapper
 from langchain_openai import OpenAI
 
-# API Reference: AgentType | initialize_agent | GitLabToolkit | GitLabAPIWrapper | OpenAI
+
+# API Reference: AgentType | initialize_agent | GitLabToolkit |
+# GitLabAPIWrapper | OpenAI
 
 # Set your environment variables using os.environ
 os.environ["GITLAB_URL"] = "https://gitlab.example.org"

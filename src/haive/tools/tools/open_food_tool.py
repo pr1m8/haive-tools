@@ -16,11 +16,12 @@ Example:
 Note:
     No API key is required for usage, but rate limits may apply.
     See https://world.openfoodfacts.org/api/v2/ for API details.
+
 """
 
-import requests
 from langchain_core.tools import StructuredTool
 from pydantic import BaseModel, Field
+import requests
 
 
 class GetProductInfoInput(BaseModel):
@@ -28,6 +29,7 @@ class GetProductInfoInput(BaseModel):
 
     Attributes:
         barcode: The barcode of the product to look up
+
     """
 
     barcode: str = Field(..., description="The barcode of the product to look up.")
@@ -44,6 +46,7 @@ def get_product_info(barcode: str) -> dict:
 
     Raises:
         ValueError: If the API request fails or no product is found
+
     """
     url = f"https://world.openfoodfacts.org/api/v2/product/{barcode}.json"
     response = requests.get(url)

@@ -12,11 +12,14 @@ Example:
 
 Attributes:
     tools: The list of available Office 365 tools
+
 """
 
-from haive.config.config import Config
 from langchain_community.agent_toolkits import O365Toolkit
 from langchain_community.tools.office365.events_search import O365SearchEvents
+
+from haive.config.config import Config
+
 
 # 🔧 Required by Pydantic v2
 O365SearchEvents.model_rebuild()
@@ -43,7 +46,6 @@ toolkit = O365Toolkit(
 
 # Get all available tools from the toolkit
 tools = toolkit.get_tools()
-print(f"✅ Loaded O365 tools: {[t.name for t in tools]}")
 
 # The tools include:
 # - O365SearchEvents: Search for calendar events

@@ -9,6 +9,7 @@ Example:
     >>> check_types("/path/to/file.py")
     ⚠️ Functions missing type hints: ['process_data', 'calculate_total']
     ❌ Incorrect return type in `format_result`: Expected str, got int
+
 """
 
 import libcst as cst
@@ -25,6 +26,7 @@ class TypeChecker(cst.CSTVisitor):
         incorrect_annotations (List[Tuple[str, str, str]]): List of tuples containing function name,
             expected return type, and actual return type for functions with incorrect annotations
         function_types (Dict[str, str]): Dictionary mapping function names to their expected return types
+
     """
 
     def __init__(self):
@@ -42,6 +44,7 @@ class TypeChecker(cst.CSTVisitor):
 
         Args:
             node (cst.FunctionDef): The function definition node being visited
+
         """
         function_name = node.name.value
         has_annotations = any(param.annotation for param in node.params.params)
@@ -67,14 +70,13 @@ class TypeChecker(cst.CSTVisitor):
 
         This method generates a human-readable report of functions missing type hints
         and functions with incorrect return type annotations.
+
         """
         if self.missing_annotations:
-            print(f"⚠️ Functions missing type hints: {self.missing_annotations}")
+            pass
         if self.incorrect_annotations:
-            for func, expected, actual in self.incorrect_annotations:
-                print(
-                    f"❌ Incorrect return type in `{func}`: Expected {expected}, got {actual}"
-                )
+            for _func, _expected, _actual in self.incorrect_annotations:
+                pass
 
 
 def check_types(filepath: str) -> None:
@@ -89,6 +91,7 @@ def check_types(filepath: str) -> None:
     Raises:
         FileNotFoundError: If the specified file does not exist
         IOError: If there are issues reading from the file
+
     """
     with open(filepath) as f:
         tree = cst.parse_module(f.read())

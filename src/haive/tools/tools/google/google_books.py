@@ -13,6 +13,7 @@ Examples:
     >>> result = google_books_tool[0].invoke("quantum physics introductions")
     >>> print(result)
     ['Introduction to Quantum Physics by John Doe...']
+
 """
 
 import os
@@ -27,6 +28,7 @@ class GoogleBooksResult(BaseModel):
 
     Attributes:
         results (List[str]): A list of book information snippets from Google Books.
+
     """
 
     results: list[str] = Field(
@@ -35,7 +37,8 @@ class GoogleBooksResult(BaseModel):
 
 
 def initialize_google_books():
-    """Initialize the Google Books API wrapper with credentials from environment variables.
+    """Initialize the Google Books API wrapper with credentials from environment
+    variables.
 
     This function loads environment variables and configures the Google Books API client.
 
@@ -44,6 +47,7 @@ def initialize_google_books():
 
     Raises:
         ValueError: If required environment variables are not set.
+
     """
     # Load environment variables from the .env file
     load_dotenv(".env")

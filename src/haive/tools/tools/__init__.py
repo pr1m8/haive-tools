@@ -36,6 +36,7 @@ from haive.tools.tools.techy_phrase_tool import (
 )
 from haive.tools.tools.translate_tools import DeepLInput, DeepLTranslateTool
 
+
 __all__ = [
     "AgifyResponse",
     "BinLookupInput",

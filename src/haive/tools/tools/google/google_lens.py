@@ -14,6 +14,7 @@ Examples:
     >>> result = google_lens_tool[0].invoke({"image_url": "https://example.com/image.jpg"})
     >>> print(result)
     ['The image shows a Siberian Husky dog in a snowy environment...']
+
 """
 
 import os
@@ -28,6 +29,7 @@ class GoogleLensResult(BaseModel):
 
     Attributes:
         results (List[str]): A list of image analysis information from Google Lens.
+
     """
 
     results: list[str] = Field(
@@ -40,6 +42,7 @@ class GoogleLensInput(BaseModel):
 
     Attributes:
         image_url (str): URL of the image to analyze.
+
     """
 
     image_url: str = Field(
@@ -48,7 +51,8 @@ class GoogleLensInput(BaseModel):
 
 
 def initialize_google_lens():
-    """Initialize the Google Lens API wrapper with credentials from environment variables.
+    """Initialize the Google Lens API wrapper with credentials from environment
+    variables.
 
     This function loads environment variables and configures the Google Lens API client.
 
@@ -57,6 +61,7 @@ def initialize_google_lens():
 
     Raises:
         ValueError: If required environment variables are not set.
+
     """
     # Load environment variables from the .env file
     load_dotenv(".env")

@@ -22,22 +22,26 @@ Examples:
     >>> filtered_games = tools[2].invoke({"tag": "mmorpg.fantasy", "platform": "pc"})
     >>> print(filtered_games[0]["title"])
     'World of Warcraft'
+
 """
 
-import requests
 from langchain_core.tools import BaseToolkit, StructuredTool
 from pydantic import BaseModel, Field
+import requests
+
 
 BASE_URL = "https://www.freetogame.com/api"
 
 
 class GetAllGamesInput(BaseModel):
-    """Input model for retrieving all free-to-play games with optional filtering parameters.
+    """Input model for retrieving all free-to-play games with optional filtering
+    parameters.
 
     Attributes:
         platform (Optional[str]): Filter games by platform (pc or browser).
         category (Optional[str]): Filter games by category or genre.
         sort_by (Optional[str]): Sort results by specified criteria.
+
     """
 
     platform: str | None = Field(
@@ -53,7 +57,8 @@ class GetAllGamesInput(BaseModel):
 
 
 def get_all_games(input: GetAllGamesInput) -> list[dict]:
-    """Retrieve all free-to-play games with optional filtering by platform, category, and sort order.
+    """Retrieve all free-to-play games with optional filtering by platform, category,
+    and sort order.
 
     Args:
         input (GetAllGamesInput): Input parameters for filtering and sorting games.
@@ -63,6 +68,7 @@ def get_all_games(input: GetAllGamesInput) -> list[dict]:
 
     Raises:
         requests.RequestException: If the API request fails.
+
     """
     params = {}
     if input.platform:
@@ -81,6 +87,7 @@ class GetGameDetailsInput(BaseModel):
 
     Attributes:
         game_id (int): The unique identifier for the game to retrieve details for.
+
     """
 
     game_id: int = Field(..., description="The game ID to retrieve.")
@@ -97,6 +104,7 @@ def get_game_details(input: GetGameDetailsInput) -> dict:
 
     Raises:
         requests.RequestException: If the API request fails or the game ID is invalid.
+
     """
     response = requests.get(f"{BASE_URL}/game", params={"id": input.game_id})
     response.raise_for_status()
@@ -109,6 +117,7 @@ class FilterGamesByTagsInput(BaseModel):
     Attributes:
         tag (str): Dot-separated tag filter to match games with specific features.
         platform (Optional[str]): Optional platform filter (pc or browser).
+
     """
 
     tag: str = Field(
@@ -130,6 +139,7 @@ def filter_games_by_tags(input: FilterGamesByTagsInput) -> list[dict]:
 
     Raises:
         requests.RequestException: If the API request fails or the tags are invalid.
+
     """
     params = {"tag": input.tag}
     if input.platform:
@@ -147,6 +157,7 @@ class FreeToGameToolkit(BaseToolkit):
 
     Attributes:
         None
+
     """
 
     def get_tools(self) -> list[StructuredTool]:
@@ -154,6 +165,7 @@ class FreeToGameToolkit(BaseToolkit):
 
         Returns:
             List[StructuredTool]: A list of structured tools for working with the FreeToGame API.
+
         """
         return [
             StructuredTool.from_function(get_all_games),

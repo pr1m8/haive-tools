@@ -1,5 +1,17 @@
 from __future__ import annotations
 
+import os
+from pprint import pprint
+
+from dotenv import load_dotenv
+from langchain_community.agent_toolkits.nla.toolkit import NLAToolkit as RawNLAToolkit
+from langchain_community.utilities.requests import Requests
+from langchain_core.language_models import BaseLanguageModel
+from langchain_core.tools import BaseTool, BaseToolkit
+from pydantic import BaseModel, ConfigDict, Field
+
+from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
+
 """Natural Language API (NLA) Toolkit for interacting with OpenAPI specifications.
 
 This module provides a toolkit for creating tools from OpenAPI specifications or AI plugin
@@ -30,16 +42,6 @@ Typical usage:
 """
 
 
-import os
-
-from dotenv import load_dotenv
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
-from langchain_community.agent_toolkits.nla.toolkit import NLAToolkit as RawNLAToolkit
-from langchain_community.utilities.requests import Requests
-from langchain_core.language_models import BaseLanguageModel
-from langchain_core.tools import BaseTool, BaseToolkit
-from pydantic import BaseModel, ConfigDict, Field
-
 # -----------------------------
 # 📦 Load Environment
 # -----------------------------
@@ -60,6 +62,7 @@ class NLAToolkitConfig(BaseModel):
         url: URL of the OpenAPI spec or AI plugin manifest.
         llm_config: LLM configuration for the model to use with the toolkit.
             Defaults to an AzureLLMConfig instance.
+
     """
 
     url: str = Field(..., description="URL of the OpenAPI spec or AI plugin manifest.")
@@ -72,6 +75,7 @@ class NLAToolkitConfig(BaseModel):
 
         Returns:
             An instantiated language model, or None if no llm_config is provided.
+
         """
         if self.llm_config:
             return self.llm_config.instantiate()
@@ -91,6 +95,7 @@ class StructuredNLAToolkit(BaseToolkit):
         config: The configuration for this toolkit.
         llm: The language model to use for parsing and understanding the API.
         url: The URL of the OpenAPI specification or AI plugin manifest.
+
     """
 
     config: NLAToolkitConfig
@@ -110,6 +115,7 @@ class StructuredNLAToolkit(BaseToolkit):
 
         Raises:
             ValueError: If the LLM is not initialized.
+
         """
         if not self.llm:
             raise ValueError("LLM must be initialized before using the NLA toolkit.")
@@ -127,6 +133,7 @@ class StructuredNLAToolkit(BaseToolkit):
 
         Returns:
             A new instance of the StructuredNLAToolkit.
+
         """
         return cls(
             config=config,
@@ -139,8 +146,6 @@ class StructuredNLAToolkit(BaseToolkit):
 # 🧪 CLI Test
 # -----------------------------
 if __name__ == "__main__":
-    from pprint import pprint
-
     config = NLAToolkitConfig(
         url=os.getenv(
             "NLA_URL", "https://www.klarna.com/us/shopping/openai/v0/api-docs/"
@@ -150,6 +155,5 @@ if __name__ == "__main__":
     toolkit = StructuredNLAToolkit.from_config(config)
     tools = toolkit.get_tools()
 
-    print("✅ Loaded NLA tools:")
     for tool in tools:
         pprint({"name": tool.name, "description": tool.description})

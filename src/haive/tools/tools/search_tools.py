@@ -8,9 +8,11 @@ Examples:
     >>> from haive.tools.tools.search_tools import tavily_search_tool
     >>> results = tavily_search_tool(query="What is quantum computing?")
     >>> print(results)
+
 """
 
 from collections.abc import Sequence
+import os
 from typing import Literal
 
 from dotenv import load_dotenv
@@ -19,8 +21,8 @@ from langchain_community.tools.tavily_search import TavilySearchResults
 from langchain_core.tools import tool
 from tavily import TavilyClient
 
+
 load_dotenv(dotenv_path=".env")
-import os
 
 TAVILY_API_KEY = os.getenv("TAVILY_API_KEY")
 
@@ -39,7 +41,8 @@ def tavily_qna(
     include_domains: Sequence[str] = [],
     exclude_domains: Sequence[str] = [],
 ) -> str:
-    """Search tool for getting a quick answer to a specific question using Tavily's QnA search.
+    """Search tool for getting a quick answer to a specific question using Tavily's QnA
+    search.
 
     This tool queries the Tavily API with a question and returns a direct answer along
     with supporting information from web search results.
@@ -62,6 +65,7 @@ def tavily_qna(
 
     Raises:
         Exception: If the Tavily API request fails.
+
     """
     response = client.qna_search(
         query=query,
@@ -92,6 +96,7 @@ def tavily_extract(urls: list[str], **kwargs) -> dict:
 
     Raises:
         Exception: If the URL extraction fails or if the API request encounters an error.
+
     """
     response = client.extract(urls=urls, **kwargs)
     return response
@@ -135,6 +140,7 @@ def tavily_search_context(
 
     Raises:
         Exception: If the API request fails.
+
     """
     response = client.get_search_context(
         query=query,
@@ -162,7 +168,8 @@ def tavily_search_tool(
     exclude_domains: list[str] | None = [],
     verbose: bool | None = False,
 ) -> dict:
-    """Query Tavily Search API with full configurability for comprehensive search results.
+    """Query Tavily Search API with full configurability for comprehensive search
+    results.
 
     This tool provides complete access to all Tavily search options and returns structured
     search results with customizable content types and filtering options.
@@ -188,6 +195,7 @@ def tavily_search_tool(
 
     Raises:
         Exception: If the API request fails or if invalid parameters are provided.
+
     """
     # Initialize TavilySearchResults with provided parameters
     tavily_tool = TavilySearchResults(
@@ -220,6 +228,7 @@ def scrape_webpages(urls: list[str]) -> str:
 
     Raises:
         Exception: If URL scraping fails due to network issues, invalid URLs, or access restrictions.
+
     """
     loader = WebBaseLoader(urls)
     docs = loader.load()

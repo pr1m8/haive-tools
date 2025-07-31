@@ -12,13 +12,16 @@ Examples:
     >>> from haive.tools.toolkits.github_toolkit import github_toolkit
     >>> tools = github_toolkit.get_tools()
     >>> # Use tools to interact with GitHub repositories
+
 """
 
 import getpass
 
-from haive.config.config import Config
 from langchain_community.agent_toolkits.github.toolkit import GitHubToolkit
 from langchain_community.utilities.github import GitHubAPIWrapper
+
+from haive.config.config import Config
+
 
 # Check if GitHub credentials are available, prompt for them if not
 if not Config.GITHUB_APP_ID or not Config.GITHUB_APP_PRIVATE_KEY:

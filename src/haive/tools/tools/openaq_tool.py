@@ -12,12 +12,13 @@ Examples:
     >>> from haive.tools.tools.openaq_tool import get_openaq_location
     >>> location_data = get_openaq_location(location_id=12345, api_key="your_api_key")
     >>> print(location_data['name'])
+
 """
 
 import os
 
-import requests
 from langchain_core.tools import StructuredTool
+import requests
 
 
 def get_openaq_location(location_id: int, api_key: str | None = None) -> dict:
@@ -39,6 +40,7 @@ def get_openaq_location(location_id: int, api_key: str | None = None) -> dict:
     Raises:
         ValueError: If no API key is provided or found in environment variables.
         requests.RequestException: If the API request fails.
+
     """
     api_key = api_key or os.getenv("OPENAQ_API_KEY")
     if not api_key:

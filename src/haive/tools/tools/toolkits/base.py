@@ -13,6 +13,7 @@ Typical usage:
 
     class MyCustomToolkit(BaseToolkit):
         # Implementation details...
+
 """
 
 from abc import ABC, abstractmethod
@@ -30,6 +31,7 @@ class HaiveToolkitConfig(BaseModel):
     Attributes:
         name: A human-readable name for the toolkit.
         description: A detailed description of what the toolkit does.
+
     """
 
     name: str = Field(..., description="Human-readable name for the toolkit")
@@ -47,6 +49,7 @@ class HaiveToolkit(BaseToolkit, ABC):
 
     Attributes:
         config: The configuration for this toolkit.
+
     """
 
     config: HaiveToolkitConfig
@@ -59,6 +62,7 @@ class HaiveToolkit(BaseToolkit, ABC):
 
         Returns:
             A list of BaseTool instances that make up this toolkit.
+
         """
 
     @classmethod
@@ -71,4 +75,5 @@ class HaiveToolkit(BaseToolkit, ABC):
 
         Returns:
             A new instance of the toolkit.
+
         """

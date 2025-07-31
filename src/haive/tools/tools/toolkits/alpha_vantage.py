@@ -26,6 +26,7 @@ Examples:
     >>> from haive.tools.toolkits.alpha_vantage import AlphaVantageConfig, get_alpha_vantage_tools
     >>> config = AlphaVantageConfig(api_key="your_api_key_here")
     >>> tools = get_alpha_vantage_tools(config)
+
 """
 
 import os
@@ -34,6 +35,7 @@ from dotenv import load_dotenv
 from langchain_community.utilities.alpha_vantage import AlphaVantageAPIWrapper
 from langchain_core.tools import Tool
 from pydantic import BaseModel, Field
+
 
 load_dotenv(".env")
 
@@ -47,6 +49,7 @@ class AlphaVantageConfig(BaseModel):
     Attributes:
         api_key (Optional[str]): Alpha Vantage API key. If not provided, will use
             the ALPHAVANTAGE_API_KEY environment variable.
+
     """
 
     api_key: str | None = Field(
@@ -62,6 +65,7 @@ class AlphaVantageConfig(BaseModel):
 
         Raises:
             ValueError: If no API key is available (neither provided nor in environment).
+
         """
         return AlphaVantageAPIWrapper()
 
@@ -81,6 +85,7 @@ def get_alpha_vantage_tools(config: AlphaVantageConfig) -> list[Tool]:
 
     Raises:
         ValueError: If the API client cannot be initialized due to missing credentials.
+
     """
     client = config.get_client()
 

@@ -8,9 +8,11 @@ Examples:
     >>> from haive.tools.tools.yfinance_tool import yfinance_news_tool
     >>> result = yfinance_news_tool.run("AAPL")
     >>> print(result)  # Returns latest news about Apple Inc.
+
 """
 
 from langchain_community.tools.yahoo_finance_news import YahooFinanceNewsTool
+
 
 # Initialize the Yahoo Finance news tool
 # This provides capabilities to fetch financial news from Yahoo Finance

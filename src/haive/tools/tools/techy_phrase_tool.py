@@ -14,10 +14,11 @@ Examples:
     >>> phrase_data = get_techy_phrase_json()
     >>> print(phrase_data['text'])
     'Try to quantify the EXE application, maybe it will index the multi-byte port!'
+
 """
 
-import requests
 from langchain_core.tools import Tool
+import requests
 
 
 def get_techy_phrase_text() -> str:
@@ -31,6 +32,7 @@ def get_techy_phrase_text() -> str:
 
     Raises:
         requests.RequestException: If the API request fails.
+
     """
     return requests.get("https://techy-api.vercel.app/api/text").text.strip()
 
@@ -47,6 +49,7 @@ def get_techy_phrase_json() -> dict:
     Raises:
         requests.RequestException: If the API request fails.
         ValueError: If the response cannot be parsed as JSON.
+
     """
     return requests.get("https://techy-api.vercel.app/api/json").json()
 

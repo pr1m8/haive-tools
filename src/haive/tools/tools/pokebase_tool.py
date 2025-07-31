@@ -12,12 +12,13 @@ Examples:
     >>> input_data = PokeBaseQueryInput(resource_type="pokemon", identifier="pikachu")
     >>> result = query_pokebase_resource(input_data)
     >>> print(result["name"])  # Outputs: pikachu
+
 """
 
 from typing import Literal
 
-import pokebase as pb
 from langchain_core.tools import StructuredTool
+import pokebase as pb
 from pydantic import BaseModel, Field
 
 
@@ -31,6 +32,7 @@ class PokeBaseQueryInput(BaseModel):
         resource_type (Literal): The type of resource to query, limited to supported
             PokéAPI resource types.
         identifier (str): The name or ID of the specific resource to retrieve.
+
     """
 
     resource_type: Literal[
@@ -44,7 +46,7 @@ class PokeBaseQueryInput(BaseModel):
     )
 
 
-def query_pokebase_resource(input: PokeBaseQueryInput) -> dict:
+def query_pokebase_resource(query_input: PokeBaseQueryInput) -> dict:
     """Query a PokéAPI resource using the pokebase library.
 
     This function retrieves data for a specified Pokémon-related resource
@@ -52,7 +54,7 @@ def query_pokebase_resource(input: PokeBaseQueryInput) -> dict:
     a dictionary.
 
     Args:
-        input (PokeBaseQueryInput): The input parameters specifying the resource
+        query_input (PokeBaseQueryInput): The input parameters specifying the resource
             type and identifier to query.
 
     Returns:
@@ -63,9 +65,10 @@ def query_pokebase_resource(input: PokeBaseQueryInput) -> dict:
     Raises:
         AttributeError: If an invalid resource_type is provided.
         ValueError: If the resource cannot be found with the given identifier.
+
     """
-    resource_type = input.resource_type
-    identifier = input.identifier
+    resource_type = query_input.resource_type
+    identifier = query_input.identifier
 
     try:
         resource_func = getattr(pb, resource_type)

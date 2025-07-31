@@ -1,13 +1,15 @@
 """Bing_Search_Tool_Inc core module.
 
 This module provides bing search tool INC functionality for the Haive framework.
+
 """
 
 # https://python.langchain.com/docs/integrations/tools/bing_search/
 
+from langchain_community.utilities import BingSearchAPIWrapper
 
 from haive.config.config import Config
-from langchain_community.utilities import BingSearchAPIWrapper
+
 
 if not Config.BING_SUBSCRIPTION_KEY:
     raise ValueError("BING_SUBSCRIPTION_KEY is not set")
@@ -23,5 +25,3 @@ bing_search_tool = BingSearchAPIWrapper(
 
 
 search_result = bing_search_tool.run("python")
-
-print(search_result)

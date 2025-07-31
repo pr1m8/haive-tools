@@ -14,6 +14,7 @@ Examples:
     >>> result = google_places_tool[0].invoke("coffee shops in Seattle")
     >>> print(result)
     ['Starbucks at Pike Place Market, Seattle...']
+
 """
 
 import os
@@ -29,6 +30,7 @@ class GooglePlacesResult(BaseModel):
 
     Attributes:
         results (List[Dict[str, Any]]): A list of place information from Google Places API.
+
     """
 
     results: list[dict[str, Any]] = Field(
@@ -37,7 +39,8 @@ class GooglePlacesResult(BaseModel):
 
 
 def initialize_google_places():
-    """Initialize the Google Places API wrapper with credentials from environment variables.
+    """Initialize the Google Places API wrapper with credentials from environment
+    variables.
 
     This function loads environment variables and configures the Google Places API client.
 
@@ -46,6 +49,7 @@ def initialize_google_places():
 
     Raises:
         ValueError: If required environment variables are not set.
+
     """
     # Load environment variables from the .env file
     load_dotenv(".env")

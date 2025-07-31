@@ -31,9 +31,11 @@ Examples:
     >>> agent = create_tool_calling_agent(model, tools, prompt)
     >>> agent_executor = AgentExecutor(agent=agent, tools=tools)
     >>> agent_executor.invoke({"input": "What was AAPL's revenue in 2023?"})
+
 """
 
 import os
+import warnings
 
 from langchain_community.agent_toolkits.financial_datasets.toolkit import (
     FinancialDatasetsToolkit,
@@ -52,6 +54,7 @@ class FinancialDatasetsConfig(BaseModel):
     Attributes:
         api_key (Optional[str]): Financial Datasets API key. If not provided, will use
             the FINANCIAL_DATASETS_API_KEY environment variable.
+
     """
 
     api_key: str | None = Field(
@@ -67,6 +70,7 @@ class FinancialDatasetsConfig(BaseModel):
 
         Raises:
             ValueError: If no API key is available (neither provided nor in environment).
+
         """
         if not self.api_key:
             raise ValueError(
@@ -94,6 +98,7 @@ def get_financial_datasets_tools(
 
     Raises:
         ValueError: If the API client cannot be initialized due to missing credentials.
+
     """
     if config is None:
         config = FinancialDatasetsConfig()
@@ -107,8 +112,6 @@ def get_financial_datasets_tools(
 try:
     financial_datasets_toolkit = get_financial_datasets_tools()
 except ValueError as e:
-    import warnings
-
     warnings.warn(
         f"Financial Datasets toolkit initialization failed: {e}. Set FINANCIAL_DATASETS_API_KEY environment variable.",
         stacklevel=2,

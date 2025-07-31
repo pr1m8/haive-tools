@@ -23,11 +23,13 @@ Examples:
     >>> match = tools[2].invoke({"object_one": "paper", "object_two": "rock"})
     >>> print(f"{match['winner']} {match['outcome']} {match['loser']}")
     'paper covers rock'
+
 """
 
-import requests
 from langchain_core.tools import BaseToolkit, StructuredTool
 from pydantic import BaseModel, Field
+import requests
+
 
 BASE_URL = "https://rps101.pythonanywhere.com/api/v1"
 
@@ -41,6 +43,7 @@ def _get_all_rps101_objects() -> list[str]:
 
     Raises:
         requests.RequestException: If the API request fails.
+
     """
     response = requests.get(f"{BASE_URL}/objects/all")
     response.raise_for_status()
@@ -60,6 +63,7 @@ class ObjectNameInput(BaseModel):
 
     Attributes:
         object_name (str): The name of the RPS-101 object to get information about.
+
     """
 
     object_name: str = Field(
@@ -69,7 +73,8 @@ class ObjectNameInput(BaseModel):
 
 
 def _get_rps101_object_outcomes(object_name: str) -> dict:
-    """Get detailed information about a specific RPS-101 object, including what it defeats.
+    """Get detailed information about a specific RPS-101 object, including what it
+    defeats.
 
     Args:
         object_name (str): The name of the RPS-101 object to get information about.
@@ -80,6 +85,7 @@ def _get_rps101_object_outcomes(object_name: str) -> dict:
 
     Raises:
         requests.RequestException: If the API request fails or the object name is invalid.
+
     """
     response = requests.get(f"{BASE_URL}/objects/{object_name}")
     response.raise_for_status()
@@ -101,6 +107,7 @@ class RPSMatchInput(BaseModel):
     Attributes:
         object_one (str): The name of the first object in the match.
         object_two (str): The name of the second object in the match.
+
     """
 
     object_one: str = Field(
@@ -124,6 +131,7 @@ def _get_rps101_match_result(object_one: str, object_two: str) -> dict:
 
     Raises:
         requests.RequestException: If the API request fails or the object names are invalid.
+
     """
     response = requests.get(
         f"{BASE_URL}/match", params={"object_one": object_one, "object_two": object_two}
@@ -150,6 +158,7 @@ class RPS101Toolkit(BaseToolkit):
 
     Attributes:
         None
+
     """
 
     def get_tools(self) -> list[StructuredTool]:
@@ -157,6 +166,7 @@ class RPS101Toolkit(BaseToolkit):
 
         Returns:
             List[StructuredTool]: A list of structured tools for working with the RPS-101 API.
+
         """
         return [
             get_all_rps101_objects,

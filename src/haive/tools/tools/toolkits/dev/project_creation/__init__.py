@@ -10,6 +10,7 @@ from project_creation.github import (
     set_branch_protection,
 )
 
+
 __all__ = [
     "BranchProtectionRule",
     "GitHubProjectCreator",

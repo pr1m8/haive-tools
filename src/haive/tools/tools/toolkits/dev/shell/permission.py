@@ -16,6 +16,7 @@ Examples:
     True
     >>> rbac.can_write("guest", "/home/guest/data")  # Check if guest can write to path
     False
+
 """
 
 import json
@@ -35,6 +36,7 @@ class RolePermissions(BaseModel):
         read: List of filesystem paths allowed for reading.
         write: List of filesystem paths allowed for writing.
         execute: List of commands allowed for execution.
+
     """
 
     read: list[Path] = Field(
@@ -57,6 +59,7 @@ class RBACConfig(BaseModel):
 
     Attributes:
         roles: Dictionary mapping role names to RolePermissions objects.
+
     """
 
     roles: dict[str, RolePermissions] = Field(
@@ -83,6 +86,7 @@ class RBACConfig(BaseModel):
 
         Returns:
             True if the role has permission to read from the path, False otherwise.
+
         """
         return any(
             Path(path).resolve().is_relative_to(p)
@@ -98,6 +102,7 @@ class RBACConfig(BaseModel):
 
         Returns:
             True if the role has permission to write to the path, False otherwise.
+
         """
         return any(
             Path(path).resolve().is_relative_to(p)
@@ -113,6 +118,7 @@ class RBACConfig(BaseModel):
 
         Returns:
             True if the role has permission to execute the command, False otherwise.
+
         """
         allowed_commands = self.roles.get(role, RolePermissions()).execute
         return "*" in allowed_commands or command in allowed_commands
@@ -126,6 +132,7 @@ class RBACConfig(BaseModel):
 
         Raises:
             ValueError: If the role already exists.
+
         """
         if role_name in self.roles:
             raise ValueError(f"Role '{role_name}' already exists.")
@@ -140,6 +147,7 @@ class RBACConfig(BaseModel):
 
         Raises:
             ValueError: If the role does not exist.
+
         """
         if role_name not in self.roles:
             raise ValueError(f"Role '{role_name}' does not exist.")
@@ -153,6 +161,7 @@ class RBACConfig(BaseModel):
 
         Raises:
             ValueError: If the role does not exist.
+
         """
         if role_name not in self.roles:
             raise ValueError(f"Role '{role_name}' does not exist.")
@@ -167,6 +176,7 @@ class RBACConfig(BaseModel):
         Raises:
             PermissionError: If the file cannot be written to.
             OSError: If another I/O error occurs.
+
         """
         # Convert Path objects to strings for serialization
         serializable_config = {
@@ -198,6 +208,7 @@ class RBACConfig(BaseModel):
             FileNotFoundError: If the file does not exist.
             json.JSONDecodeError: If the file contains invalid JSON.
             ValidationError: If the loaded data does not match the expected schema.
+
         """
         try:
             with open(path) as f:

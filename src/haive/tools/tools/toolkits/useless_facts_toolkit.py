@@ -19,11 +19,13 @@ Example:
 
 Note:
     No API key is required for the Useless Facts API, though rate limits may apply.
+
 """
 
-import requests
 from langchain_core.tools import StructuredTool
 from pydantic import BaseModel, Field
+import requests
+
 
 # Base URL for the Useless Facts API
 BASE_URL = "https://uselessfacts.jsph.pl/api/v2/facts"
@@ -34,6 +36,7 @@ class FactInput(BaseModel):
 
     Attributes:
         language: Language code for the fact (en or de)
+
     """
 
     language: str | None = Field(
@@ -52,6 +55,7 @@ def get_random_fact(language: str | None = "en") -> str:
 
     Raises:
         requests.exceptions.HTTPError: If the API request fails
+
     """
     res = requests.get(
         f"{BASE_URL}/random",
@@ -73,6 +77,7 @@ def get_todays_fact(language: str | None = "en") -> str:
 
     Raises:
         requests.exceptions.HTTPError: If the API request fails
+
     """
     res = requests.get(
         f"{BASE_URL}/today",

@@ -1,10 +1,12 @@
 """Powerbi_Toolkit core module.
 
 This module provides powerbi toolkit functionality for the Haive framework.
+
 """
 
 from azure.identity import DefaultAzureCredential
 from langchain_community.agent_toolkits import PowerBIToolkit
+
 
 credential = DefaultAzureCredential()
 

@@ -25,6 +25,7 @@ Example:
     >>> # Write updated code back to file
     >>> with open("script.py", "w") as f:
     >>>     f.write(modified_tree.code)
+
 """
 
 import libcst as cst
@@ -39,6 +40,7 @@ class TypeHintTransformer(cst.CSTTransformer):
 
     Attributes:
         type_map (dict): A dictionary mapping parameter names and 'return' to their types
+
     """
 
     def __init__(self, type_map):
@@ -47,6 +49,7 @@ class TypeHintTransformer(cst.CSTTransformer):
         Args:
             type_map (dict): A dictionary mapping parameter names and 'return' to their
                 types, in the format {"param_name": "type", "return": "return_type"}
+
         """
         super().__init__()
         self.type_map = type_map  # {"param_name": "int", "return": "str"}
@@ -64,6 +67,7 @@ class TypeHintTransformer(cst.CSTTransformer):
         Returns:
             cst.FunctionDef: The function definition with added type hints for parameters
                 and return type if specified in the type_map
+
         """
         updated_params = []
         for param in updated_node.params.params:

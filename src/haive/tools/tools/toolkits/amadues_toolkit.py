@@ -1,5 +1,18 @@
 from __future__ import annotations
 
+import os
+from pprint import pprint
+
+from amadeus import Client
+from dotenv import load_dotenv
+from langchain_community.tools.amadeus.closest_airport import AmadeusClosestAirport
+from langchain_community.tools.amadeus.flight_search import AmadeusFlightSearch
+from langchain_core.language_models import BaseLanguageModel
+from langchain_core.tools import BaseTool, BaseToolkit
+from pydantic import BaseModel, ConfigDict, Field
+
+from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
+
 """Amadeus Travel API Toolkit for accessing flight information and travel data.
 
 This toolkit provides a Langchain-compatible interface to the Amadeus Travel APIs,
@@ -21,28 +34,18 @@ Attributes:
 """
 
 
-import os
-
-from amadeus import Client
-from dotenv import load_dotenv
-from langchain_community.tools.amadeus.closest_airport import AmadeusClosestAirport
-from langchain_community.tools.amadeus.flight_search import AmadeusFlightSearch
-from langchain_core.language_models import BaseLanguageModel
-from langchain_core.tools import BaseTool, BaseToolkit
-from pydantic import BaseModel, ConfigDict, Field
-
 # Load environment variables
 load_dotenv(".env")
 
 # Import your LLM config wrapper
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
 
 
 # -----------------------------
 # 🔧 Amadeus Config (Serializable)
 # -----------------------------
 class AmadeusToolkitConfig(BaseModel):
-    """JSON-serializable config for instantiating the Amadeus toolkit and its dependencies.
+    """JSON-serializable config for instantiating the Amadeus toolkit and its
+    dependencies.
 
     This configuration class holds the authentication credentials for the Amadeus API
     and optionally an LLM configuration for tools that require language model support.
@@ -51,6 +54,7 @@ class AmadeusToolkitConfig(BaseModel):
         client_id: The Amadeus API client ID for authentication
         client_secret: The Amadeus API client secret for authentication
         llm_config: Optional configuration for a language model that some tools may require
+
     """
 
     client_id: str = Field(
@@ -74,6 +78,7 @@ class AmadeusToolkitConfig(BaseModel):
 
         Raises:
             ValueError: If client credentials are invalid
+
         """
         return Client(client_id=self.client_id, client_secret=self.client_secret)
 
@@ -82,6 +87,7 @@ class AmadeusToolkitConfig(BaseModel):
 
         Returns:
             Optional[BaseLanguageModel]: An initialized language model or None if not configured
+
         """
         if self.llm_config:
             return self.llm_config.instantiate()
@@ -101,6 +107,7 @@ class AmadeusToolkit(BaseToolkit):
         config: Configuration for Amadeus API authentication and LLM settings
         client: An authenticated Amadeus API client instance
         llm: Optional language model for tools that require LLM capabilities
+
     """
 
     config: AmadeusToolkitConfig
@@ -114,6 +121,7 @@ class AmadeusToolkit(BaseToolkit):
 
         Returns:
             List[BaseTool]: A list of LangChain tools for working with Amadeus APIs
+
         """
         # Required model rebuilds for Pydantic v2
         AmadeusClosestAirport.model_rebuild()
@@ -136,6 +144,7 @@ class AmadeusToolkit(BaseToolkit):
 
         Raises:
             ValueError: If client creation fails due to invalid credentials
+
         """
         return cls(
             config=config, client=config.create_client(), llm=config.create_llm()
@@ -146,8 +155,6 @@ class AmadeusToolkit(BaseToolkit):
 # 🧪 Test CLI
 # -----------------------------
 if __name__ == "__main__":
-    from pprint import pprint
-
     config = AmadeusToolkitConfig(
         client_id=os.getenv("AMADEUS_CLIENT_ID", ""),
         client_secret=os.getenv("AMADEUS_CLIENT_SECRET", ""),
@@ -156,6 +163,5 @@ if __name__ == "__main__":
     toolkit = AmadeusToolkit.from_config(config)
     tools = toolkit.get_tools()
 
-    print("✅ Loaded Amadeus tools:")
     for tool in tools:
         pprint({"name": tool.name, "description": tool.description})

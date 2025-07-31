@@ -32,13 +32,16 @@ Examples:
     ...     }
     ... }
     >>> custom_toolkit = create_stripe_toolkit("sk_test_your_key", custom_config)
+
 """
 
 import os
 from typing import Any
+import warnings
 
 from dotenv import load_dotenv
 from stripe_agent_toolkit.crewai.toolkit import StripeAgentToolkit
+
 
 # Load environment variables from .env file if it exists
 load_dotenv(".env")
@@ -63,6 +66,7 @@ def create_stripe_toolkit(
 
     Raises:
         ValueError: If no secret key is available (neither provided nor in environment).
+
     """
     if not secret_key:
         secret_key = os.getenv("STRIPE_SECRET_KEY")
@@ -89,8 +93,6 @@ def create_stripe_toolkit(
 try:
     stripe_agent_toolkit = create_stripe_toolkit()
 except ValueError as e:
-    import warnings
-
     warnings.warn(
         f"Stripe toolkit initialization failed: {e}. Set STRIPE_SECRET_KEY environment variable.",
         stacklevel=2,

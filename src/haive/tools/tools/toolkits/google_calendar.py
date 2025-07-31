@@ -15,6 +15,7 @@ Examples:
     >>> # Use a specific tool (e.g., to create an event)
     >>> create_event_tool = [t for t in calendar_tools if 'create' in t.name.lower()][0]
     >>> result = create_event_tool.invoke({"summary": "Team Meeting", "start": "2023-07-21T10:00:00", "end": "2023-07-21T11:00:00"})
+
 """
 
 import os
@@ -34,6 +35,7 @@ class CalendarEvent(BaseModel):
         description (Optional[str]): Optional description for the event.
         location (Optional[str]): Optional location for the event.
         attendees (Optional[List[str]]): Optional list of attendee email addresses.
+
     """
 
     summary: str = Field(..., description="The title/summary of the calendar event")
@@ -59,6 +61,7 @@ class CalendarResponse(BaseModel):
         success (bool): Whether the operation was successful.
         data (Optional[Dict[str, Any]]): Optional data returned from the operation.
         message (Optional[str]): Optional message providing details about the operation result.
+
     """
 
     success: bool = Field(..., description="Whether the operation was successful")
@@ -82,6 +85,7 @@ def initialize_google_calendar_toolkit():
     Raises:
         FileNotFoundError: If the credentials.json file is not found.
         Exception: If initialization fails for any other reason.
+
     """
     # Define the credentials file path
     CREDENTIALS_FILE = "credentials.json"
@@ -89,20 +93,14 @@ def initialize_google_calendar_toolkit():
     # Check if the credentials file exists in the root directory
     if not os.path.exists(CREDENTIALS_FILE):
         error_msg = f"Error: '{CREDENTIALS_FILE}' not found in the root directory."
-        print(f"❌ {error_msg}")
-        print(
-            "🔹 Please ensure the credentials file is present before running the script."
-        )
         raise FileNotFoundError(error_msg)
 
     # Initialize the Google Calendar toolkit
     try:
         toolkit = CalendarToolkit().get_tools()
-        print("✅ Google CalendarToolkit initialized successfully.")
         return toolkit
     except Exception as e:
         error_msg = f"Failed to initialize Google CalendarToolkit: {e}"
-        print(f"❌ {error_msg}")
         raise Exception(error_msg)
 
 

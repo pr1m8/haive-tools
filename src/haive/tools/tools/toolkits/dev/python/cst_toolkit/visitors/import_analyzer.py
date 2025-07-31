@@ -11,6 +11,7 @@ Example:
     ✅ Used Imports: {'os', 'sys', 'pandas'}
     🛑 Unused Imports: {'numpy', 'matplotlib'}
     ⚠️ Conflict: DataFrame is imported from multiple sources: {'pandas', 'pyspark.sql'}
+
 """
 
 from collections import defaultdict
@@ -30,6 +31,7 @@ class ImportAnalyzer(cst.CSTVisitor):
         import_conflicts (Dict[str, Set[str]]): Dictionary mapping imported names to their source modules
         unused_imports (Set[str]): Set of imported names that are not used in the code
         used_identifiers (Set[str]): Set of identifier names used in the code
+
     """
 
     def __init__(self):
@@ -48,6 +50,7 @@ class ImportAnalyzer(cst.CSTVisitor):
 
         Args:
             node (cst.Import): The import node being visited
+
         """
         for alias in node.names:
             module_name = alias.name.value
@@ -64,6 +67,7 @@ class ImportAnalyzer(cst.CSTVisitor):
 
         Args:
             node (cst.ImportFrom): The import-from node being visited
+
         """
         if node.module:
             module_name = node.module.value
@@ -81,6 +85,7 @@ class ImportAnalyzer(cst.CSTVisitor):
 
         Args:
             node (cst.Name): The name node being visited
+
         """
         if node.value in self.unused_imports:
             self.unused_imports.discard(node.value)
@@ -95,19 +100,13 @@ class ImportAnalyzer(cst.CSTVisitor):
         Returns:
             Dict[str, List]: Dictionary containing analysis results, including
                 'unused_imports', 'import_conflicts', and 'all_imports'
-        """
-        print("📌 **Import Analysis Report**")
-        print(f"✅ Used Imports: {self.imports}")
-        print(f"🛑 Unused Imports: {self.unused_imports}")
 
+        """
         conflicts = []
         for import_name, sources in self.import_conflicts.items():
             if len(sources) > 1:
                 conflict = (import_name, list(sources))
                 conflicts.append(conflict)
-                print(
-                    f"⚠️ Conflict: {import_name} is imported from multiple sources: {sources}"
-                )
 
         return {
             "unused_imports": list(self.unused_imports),
@@ -132,6 +131,7 @@ def analyze_imports(filepath: str) -> dict[str, list]:
     Raises:
         FileNotFoundError: If the specified file does not exist
         IOError: If there are issues reading from the file
+
     """
     with open(filepath) as f:
         tree = cst.parse_module(f.read())
@@ -142,4 +142,5 @@ def analyze_imports(filepath: str) -> dict[str, list]:
 
 
 # Example Usage:
-# analyze_imports("your_script.py")  # ✅ Detects unused, conflicting, and missing imports
+# analyze_imports("your_script.py")  # ✅ Detects unused, conflicting, and
+# missing imports

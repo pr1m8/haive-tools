@@ -17,12 +17,14 @@ Example:
 Note:
     This module is configured to use a SQLite database named "Chinook.db" by default.
     You can modify the database URI to connect to other SQL database types.
+
 """
 
 from langchain import hub
 from langchain_community.agent_toolkits.sql.toolkit import SQLDatabaseToolkit
 from langchain_community.utilities.sql_database import SQLDatabase
 from langchain_openai import ChatOpenAI
+
 
 # Initialize a connection to the database
 db = SQLDatabase.from_uri("sqlite:///Chinook.db")

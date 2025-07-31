@@ -15,6 +15,7 @@ Example:
 
 Attributes:
     gradio_toolkit: List of Langchain-compatible tools for various AI tasks
+
 """
 
 from gradio_tools.tools import (
@@ -29,6 +30,7 @@ from gradio_tools.tools import (
     TextToVideoTool,
     WhisperAudioTranscriptionTool,
 )
+
 
 # Create a list of Langchain-compatible tools from Gradio-hosted models
 # Note: Tool initialization may fail if the Gradio space is unavailable
@@ -48,4 +50,4 @@ gradio_toolkit = [
 
 # Display the loaded tools when the module is run directly
 if __name__ == "__main__":
-    print(f"Loaded Gradio tools: {[t.name for t in gradio_toolkit]}")
+    pass

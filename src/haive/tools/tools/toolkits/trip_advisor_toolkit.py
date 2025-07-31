@@ -1,19 +1,21 @@
 """TripAdvisor Toolkit.
 
-This module provides tools to interact with the TripAdvisor Content API.
-It allows querying for location details, photos, reviews, and searching
-for locations by various criteria.
+This module provides tools to interact with the TripAdvisor Content API. It allows
+querying for location details, photos, reviews, and searching for locations by various
+criteria.
 
-Requires a TripAdvisor API key set as TRIPADVISOR_API_KEY in environment
-variables or .env file.
+Requires a TripAdvisor API key set as TRIPADVISOR_API_KEY in environment variables or
+.env file.
+
 """
 
 import os
 
-import requests
 from dotenv import load_dotenv
 from langchain_core.tools import tool
 from pydantic import BaseModel, Field
+import requests
+
 
 load_dotenv()
 TRIPADVISOR_API_KEY = os.getenv("TRIPADVISOR_API_KEY")
@@ -32,6 +34,7 @@ def tripadvisor_get(endpoint: str, params: dict):
 
     Raises:
         requests.HTTPError: If the request fails.
+
     """
     headers = {"accept": "application/json"}
     params["key"] = TRIPADVISOR_API_KEY
@@ -68,6 +71,7 @@ def get_location_details(location_id: int, language: str = "en", currency: str =
 
     Returns:
         dict: Location details including name, address, rating, etc.
+
     """
     return tripadvisor_get(
         f"/location/{location_id}/details",
@@ -119,6 +123,7 @@ def get_location_photos(
 
     Returns:
         dict: Collection of photo objects with URLs and metadata.
+
     """
     params = {"language": language, "limit": limit, "offset": offset}
     if source:
@@ -159,6 +164,7 @@ def get_location_reviews(
 
     Returns:
         dict: Collection of review objects with ratings, text, and metadata.
+
     """
     return tripadvisor_get(
         f"/location/{location_id}/reviews",
@@ -212,6 +218,7 @@ def search_locations(**kwargs):
 
     Returns:
         dict: Search results with location data.
+
     """
     kwargs["key"] = TRIPADVISOR_API_KEY
     return tripadvisor_get("/location/search", kwargs)
@@ -257,6 +264,7 @@ def nearby_search(**kwargs):
 
     Returns:
         dict: Search results with nearby location data.
+
     """
     kwargs["key"] = TRIPADVISOR_API_KEY
     return tripadvisor_get("/location/nearby_search", kwargs)

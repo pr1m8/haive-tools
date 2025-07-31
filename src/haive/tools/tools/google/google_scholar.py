@@ -12,6 +12,7 @@ Examples:
     >>> result = google_scholar_tool[0].invoke("quantum computing advances")
     >>> print(result)
     ['Smith, J. (2023). Recent advances in quantum computing...']
+
 """
 
 import os
@@ -26,6 +27,7 @@ class GoogleScholarResult(BaseModel):
 
     Attributes:
         results (List[str]): A list of academic paper snippets from Google Scholar.
+
     """
 
     results: list[str] = Field(
@@ -34,7 +36,8 @@ class GoogleScholarResult(BaseModel):
 
 
 def initialize_google_scholar():
-    """Initialize the Google Scholar API wrapper with credentials from environment variables.
+    """Initialize the Google Scholar API wrapper with credentials from environment
+    variables.
 
     This function loads environment variables and configures the Google Scholar API client.
 
@@ -43,6 +46,7 @@ def initialize_google_scholar():
 
     Raises:
         ValueError: If required environment variables are not set.
+
     """
     # Load environment variables from the .env file
     load_dotenv(".env")

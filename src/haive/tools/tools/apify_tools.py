@@ -20,6 +20,7 @@ Requires:
     - Apify API token (when implemented)
     - langchain_community's Apify integration
     - apify-client package (when implemented)
+
 """
 
 # Reference to implementation documentation

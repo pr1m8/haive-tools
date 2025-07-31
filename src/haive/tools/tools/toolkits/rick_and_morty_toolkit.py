@@ -1,3 +1,9 @@
+from typing import Any
+
+from langchain_core.tools import BaseToolkit, StructuredTool
+from pydantic import BaseModel, Field
+import requests
+
 r"""Rick and Morty API Toolkit Module.
 
 This toolkit provides tools for accessing data from the Rick and Morty TV show via
@@ -26,11 +32,6 @@ Examples:
     >>> print(f"Found {aliens['info']['count']} living aliens")
 """
 
-from typing import Any
-
-import requests
-from langchain_core.tools import BaseToolkit, StructuredTool
-from pydantic import BaseModel, Field
 
 # API endpoints
 GRAPHQL_ENDPOINT = "https://rickandmortyapi.com/graphql"
@@ -45,6 +46,7 @@ class GetCharacterByIDInput(BaseModel):
 
     Attributes:
         id (int): The unique identifier of the character to retrieve.
+
     """
 
     id: int = Field(..., description="The ID of the character.")
@@ -65,6 +67,7 @@ def get_character_by_id(id: int) -> dict[str, Any]:
 
     Raises:
         requests.RequestException: If the API request fails.
+
     """
     url = f"{REST_BASE_URL}/character/{id}"
     response = requests.get(url)
@@ -91,6 +94,7 @@ class FilterCharactersInput(BaseModel):
         status (Optional[str]): Filter by character status ("alive", "dead", or "unknown").
         species (Optional[str]): Filter by character species (e.g., "Human", "Alien").
         gender (Optional[str]): Filter by character gender ("male", "female", "genderless", "unknown").
+
     """
 
     name: str | None = Field(None, description="Filter characters by name.")
@@ -123,6 +127,7 @@ def filter_characters(
 
     Raises:
         requests.RequestException: If the API request fails.
+
     """
     params = {"name": name, "status": status, "species": species, "gendef": gender}
     params = {k: v for k, v in params.items() if v}
@@ -152,6 +157,7 @@ class GraphQLCharactersQueryInput(BaseModel):
     Attributes:
         name (Optional[str]): Character name to filter results by.
         page (Optional[int]): Page number for paginated results.
+
     """
 
     name: str | None = Field(None, description="Character name to filter")
@@ -175,6 +181,7 @@ def graphql_characters_query(
 
     Raises:
         requests.RequestException: If the API request fails.
+
     """
     query = """
     query ($page: Int, $name: String) {
@@ -216,6 +223,7 @@ class GraphQLLocationByIDInput(BaseModel):
 
     Attributes:
         id (int): The unique identifier of the location to retrieve.
+
     """
 
     id: int = Field(..., description="Location ID")
@@ -235,6 +243,7 @@ def graphql_location_by_id(id: int) -> dict[str, Any]:
 
     Raises:
         requests.RequestException: If the API request fails.
+
     """
     query = """
     query ($id: ID!) {
@@ -268,11 +277,12 @@ class RickAndMortyToolkit(BaseToolkit):
     """Toolkit for accessing the Rick and Morty API.
 
     This toolkit provides a collection of tools for retrieving information about
-    characters, locations, and episodes from the Rick and Morty TV show using
-    both REST and GraphQL endpoints.
+    characters, locations, and episodes from the Rick and Morty TV show using both REST
+    and GraphQL endpoints.
 
-    The toolkit includes tools for getting specific characters, filtering characters
-    by attributes, and performing more complex queries using GraphQL.
+    The toolkit includes tools for getting specific characters, filtering characters by
+    attributes, and performing more complex queries using GraphQL.
+
     """
 
     def get_tools(self) -> list[StructuredTool]:
@@ -280,6 +290,7 @@ class RickAndMortyToolkit(BaseToolkit):
 
         Returns:
             List[StructuredTool]: A list of tools for interacting with the Rick and Morty API.
+
         """
         return [
             get_character_tool,

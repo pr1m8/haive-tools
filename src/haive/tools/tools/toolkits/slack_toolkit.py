@@ -20,14 +20,16 @@ Typical usage:
     # Use in an agent
     agent = Agent(tools=slack_toolkit)
     agent.run("Send a message to the general channel")
+
 """
 
 import getpass
 import os
 
-from haive.config.config import Config
 from langchain_community.agent_toolkits import SlackToolkit
 from langchain_core.tools import BaseTool
+
+from haive.config.config import Config
 
 
 def get_slack_tools() -> list[BaseTool]:
@@ -42,6 +44,7 @@ def get_slack_tools() -> list[BaseTool]:
 
     Raises:
         ValueError: If the Slack API returns an error or if authentication fails.
+
     """
     # Ensure we have a Slack token
     if not Config.SLACK_USER_TOKEN:

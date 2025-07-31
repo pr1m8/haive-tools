@@ -20,6 +20,7 @@ Typical usage:
         temperature=0
     )
     ```
+
 """
 
 from langchain_mongodb.agent_toolkit.database import MongoDBDatabase
@@ -63,6 +64,7 @@ def get_mongodb_toolkit(
             llm=my_llm
         )
         ```
+
     """
     db = MongoDBDatabase.from_connection_string(connection_string)
 

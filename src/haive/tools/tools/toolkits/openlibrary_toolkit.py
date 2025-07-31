@@ -15,11 +15,13 @@ Typical usage:
     # Use in an agent
     agent = Agent(tools=open_library_tools)
     agent.run("Find books by J.K. Rowling")
+
 """
 
-import requests
 from langchain_core.tools import StructuredTool
 from pydantic import BaseModel, Field
+import requests
+
 
 BASE_URL = "https://openlibrary.org"
 
@@ -30,6 +32,7 @@ class BookSearchInput(BaseModel):
     Attributes:
         query: The book title, keywords, or search query to use.
         page: Page number of results to retrieve, starting from 1.
+
     """
 
     query: str = Field(..., description="The book title, keywords, or search query")
@@ -52,6 +55,7 @@ def search_books(query: str, page: int = 1) -> dict:
 
     Raises:
         requests.HTTPError: If the API request fails.
+
     """
     url = f"{BASE_URL}/search.json"
     params = {"q": query, "page": page}
@@ -85,6 +89,7 @@ class AuthorSearchInput(BaseModel):
 
     Attributes:
         name: Name of the author to search for.
+
     """
 
     name: str = Field(..., description="Name of the author to search for")
@@ -105,6 +110,7 @@ def search_authors(name: str) -> dict:
 
     Raises:
         requests.HTTPError: If the API request fails.
+
     """
     url = f"{BASE_URL}/search/authors.json"
     params = {"q": name}
@@ -139,6 +145,7 @@ class CoverInput(BaseModel):
     Attributes:
         olid: The OpenLibrary ID for a book or author.
         is_author: Boolean flag indicating if the OLID is for an author.
+
     """
 
     olid: str = Field(..., description="The OpenLibrary ID for a book or author")
@@ -159,6 +166,7 @@ def get_cover_image_url(olid: str, is_author: bool = False) -> str:
 
     Returns:
         A URL string for the medium-sized cover image.
+
     """
     prefix = "a" if is_author else "b"
     return f"https://covers.openlibrary.org/{prefix}/olid/{olid}-M.jpg"

@@ -21,10 +21,12 @@ Example:
     # Add to your agent's toolkit
     agent = Agent(tools=discord_tools)
     ```
+
 """
 
 from dotenv import load_dotenv
 from langchain_discord_shikenso.toolkits import DiscordToolkit
+
 
 # Load environment variables from .env file
 load_dotenv(".env")

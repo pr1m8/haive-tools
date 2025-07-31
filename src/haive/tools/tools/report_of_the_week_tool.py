@@ -15,11 +15,13 @@ Examples:
     >>> from haive.tools.tools.report_of_the_week_tool import get_reports_by_category, GetReportsByCategoryInput
     >>> energy_reviews = get_reports_by_category(GetReportsByCategoryInput(category="Energy Crisis"))
     >>> print(f"Found {len(energy_reviews)} energy drink reviews")
+
 """
 
-import requests
 from langchain_core.tools import StructuredTool
 from pydantic import BaseModel, Field
+import requests
+
 
 BASE_URL = "https://thereportoftheweek-api.herokuapp.com"
 
@@ -28,8 +30,9 @@ BASE_URL = "https://thereportoftheweek-api.herokuapp.com"
 class GetAllReportsInput(BaseModel):
     """Input model for retrieving all reports from The Report Of The Week API.
 
-    This empty model is used as a placeholder for the get_all_reports function
-    to maintain a consistent API pattern across tools.
+    This empty model is used as a placeholder for the get_all_reports function to
+    maintain a consistent API pattern across tools.
+
     """
 
 
@@ -48,6 +51,7 @@ def get_all_reports(_: GetAllReportsInput) -> list:
 
     Raises:
         requests.RequestException: If the API request fails.
+
     """
     response = requests.get(f"{BASE_URL}/reports")
     response.raise_for_status()
@@ -72,6 +76,7 @@ class GetReportsByCategoryInput(BaseModel):
     Attributes:
         category (str): The category to filter reviews by, such as 'Energy Crisis'
             for energy drinks or 'Running On Empty' for food reviews.
+
     """
 
     category: str = Field(
@@ -80,14 +85,14 @@ class GetReportsByCategoryInput(BaseModel):
     )
 
 
-def get_reports_by_category(input: GetReportsByCategoryInput) -> list:
+def get_reports_by_category(category_input: GetReportsByCategoryInput) -> list:
     """Retrieve reviews filtered by a specific category.
 
     This function fetches reviews from The Report Of The Week API that match
     the specified category.
 
     Args:
-        input (GetReportsByCategoryInput): Input containing the category to filter by.
+        category_input (GetReportsByCategoryInput): Input containing the category to filter by.
 
     Returns:
         list: A list of dictionaries, each containing a review in the specified category
@@ -95,8 +100,11 @@ def get_reports_by_category(input: GetReportsByCategoryInput) -> list:
 
     Raises:
         requests.RequestException: If the API request fails.
+
     """
-    response = requests.get(f"{BASE_URL}/reports", params={"category": input.category})
+    response = requests.get(
+        f"{BASE_URL}/reports", params={"category": category_input.category}
+    )
     response.raise_for_status()
     return response.json()
 
@@ -119,20 +127,21 @@ class GetReportsByDateRangeInput(BaseModel):
     Attributes:
         start_date (str): The beginning date of the range in YYYY-M-D format.
         end_date (str): The ending date of the range in YYYY-M-D format.
+
     """
 
     start_date: str = Field(..., description="Start date in YYYY-M-D format.")
     end_date: str = Field(..., description="End date in YYYY-M-D format.")
 
 
-def get_reports_by_date_range(input: GetReportsByDateRangeInput) -> list:
+def get_reports_by_date_range(date_range_input: GetReportsByDateRangeInput) -> list:
     """Retrieve reviews published within a specific date range.
 
     This function fetches reviews from The Report Of The Week API that were
     published between the specified start and end dates.
 
     Args:
-        input (GetReportsByDateRangeInput): Input containing the start and end dates.
+        date_range_input (GetReportsByDateRangeInput): Input containing the start and end dates.
 
     Returns:
         list: A list of dictionaries, each containing a review published within the
@@ -140,8 +149,9 @@ def get_reports_by_date_range(input: GetReportsByDateRangeInput) -> list:
 
     Raises:
         requests.RequestException: If the API request fails.
+
     """
-    query = f"{input.start_date}|{input.end_date}"
+    query = f"{date_range_input.start_date}|{date_range_input.end_date}"
     response = requests.get(f"{BASE_URL}/reports", params={"between": query})
     response.raise_for_status()
     return response.json()

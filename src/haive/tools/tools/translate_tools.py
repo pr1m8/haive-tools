@@ -21,14 +21,17 @@ Example:
 Note:
     Requires a DeepL API key, which can be obtained from https://www.deepl.com/pro#developer
     The API key should be available in your .env file or environment variables.
+
 """
 
 import os
 from typing import Literal
 
+import deepl
 import dotenv
 from langchain_core.tools import BaseTool
 from pydantic import BaseModel, Field
+
 
 dotenv.load_dotenv(".env")
 
@@ -106,6 +109,7 @@ class DeepLInput(BaseModel):
 
     Attributes:
         text: Text to translate
+
     """
 
     text: str = Field(..., description="Text to translate")
@@ -127,6 +131,7 @@ class DeepLTranslateTool(BaseTool):
         mode: DeepL API mode ('free' or 'pro')
         api_key: DeepL API key
         args_schema: Pydantic schema for validating inputs
+
     """
 
     name: str = "deepl_translate"
@@ -163,10 +168,9 @@ class DeepLTranslateTool(BaseTool):
 
         Raises:
             Exception: If the DeepL API returns an error
+
         """
         try:
-            import deepl
-
             server_url = (
                 "https://api-free.deepl.com"
                 if self.mode == "free"
@@ -191,6 +195,7 @@ class DeepLTranslateTool(BaseTool):
 
         Raises:
             NotImplementedError: Always raised as async is not supported
+
         """
         raise NotImplementedError("Async not supported for DeepLTranslateTool")
 

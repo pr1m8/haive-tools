@@ -14,6 +14,7 @@ Typical usage:
     # Use in an agent
     agent = Agent(tools=stackexchange_tools)
     agent.run("How do I parse JSON in Python?")
+
 """
 
 from langchain_community.agent_toolkits.load_tools import load_tools
@@ -31,6 +32,7 @@ def get_stackexchange_tools() -> list[BaseTool]:
 
     Raises:
         ValueError: If the STACKEXCHANGE_API_KEY environment variable is not set.
+
     """
     return load_tools(["stackexchange"])
 

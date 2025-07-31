@@ -8,6 +8,7 @@ Example:
     >>> from haive.tools.toolkits.dev.python.cst_toolkit.visitors.function_call_analyzer import analyze_function_calls
     >>> analyze_function_calls("/path/to/file.py")
     Unused Functions: ['initialize_config', 'cleanup_resources']
+
 """
 
 from collections import defaultdict
@@ -26,6 +27,7 @@ class FunctionCallAnalyzer(CSTVisitor):
     Attributes:
         function_defs (Set[str]): Set of defined function names
         function_calls (Dict[str, int]): Dictionary mapping function names to call counts
+
     """
 
     def __init__(self):
@@ -41,6 +43,7 @@ class FunctionCallAnalyzer(CSTVisitor):
 
         Args:
             node (cst.FunctionDef): The function definition node being visited
+
         """
         self.function_defs.add(node.name.value)
 
@@ -53,6 +56,7 @@ class FunctionCallAnalyzer(CSTVisitor):
 
         Args:
             node (Call): The function call node being visited
+
         """
         if isinstance(node.func, Name):
             self.function_calls[node.func.value] += 1
@@ -63,6 +67,7 @@ class FunctionCallAnalyzer(CSTVisitor):
         Returns:
             List[str]: List of function names that are defined but never called
                 within the analyzed code
+
         """
         return [f for f in self.function_defs if self.function_calls[f] == 0]
 
@@ -71,6 +76,7 @@ class FunctionCallAnalyzer(CSTVisitor):
 
         Returns:
             Dict[str, int]: Dictionary mapping function names to their call counts
+
         """
         return {f: self.function_calls[f] for f in self.function_defs}
 
@@ -90,6 +96,7 @@ def analyze_function_calls(filepath: str) -> dict[str, list[str]]:
     Raises:
         FileNotFoundError: If the specified file does not exist
         IOError: If there are issues reading from the file
+
     """
     with open(filepath) as f:
         tree = cst.parse_module(f.read())
@@ -98,7 +105,6 @@ def analyze_function_calls(filepath: str) -> dict[str, list[str]]:
     tree.visit(analyzer)
 
     unused_functions = analyzer.report_unused_functions()
-    print(f"Unused Functions: {unused_functions}")
 
     return {
         "unused_functions": unused_functions,

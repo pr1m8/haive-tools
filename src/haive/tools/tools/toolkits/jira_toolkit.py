@@ -30,6 +30,7 @@ Examples:
     >>> llm = OpenAI(temperature=0)
     >>> agent = initialize_agent(tools, llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, verbose=True)
     >>> agent.run("Create a task in project XYZ to remind me about the quarterly report")
+
 """
 
 import os
@@ -51,6 +52,7 @@ class JiraToolManager:
         jira_api (JiraAPIWrapper): The wrapped Jira API client.
         toolkit (JiraToolkit): The Jira toolkit containing all tools.
         tools (List): The list of individual tools from the toolkit.
+
     """
 
     def __init__(
@@ -67,6 +69,7 @@ class JiraToolManager:
             username (Optional[str]): Jira username. If not provided, will use JIRA_USERNAME env var.
             instance_url (Optional[str]): Jira instance URL. If not provided, will use JIRA_INSTANCE_URL env var.
             is_cloud (bool): Whether the Jira instance is cloud-based. Defaults to True.
+
         """
         # Set environment variables if provided
         if api_token:
@@ -91,6 +94,7 @@ class JiraToolManager:
 
         Returns:
             Any: The initialized agent that can be used with agent.run()
+
         """
         if llm is None:
             llm = OpenAI(temperature=0)
@@ -107,6 +111,7 @@ class JiraToolManager:
 
         Returns:
             List[Dict[str, Any]]: List of project dictionaries.
+
         """
         return self.jira_api.projects()
 
@@ -129,6 +134,7 @@ class JiraToolManager:
 
         Returns:
             Dict[str, Any]: Response from Jira API containing the created issue details.
+
         """
         issue_dict = {
             "summary": summary,
@@ -147,6 +153,7 @@ class JiraToolManager:
 
         Returns:
             List[Dict[str, Any]]: List of matching issues.
+
         """
         return self.jira_api.jql_query(query)
 

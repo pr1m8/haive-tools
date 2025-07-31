@@ -20,11 +20,13 @@ Examples:
     >>> news = tools[1].invoke({"app_id": 570, "count": 3})  # Dota 2
     >>> print(news["newsitems"][0]["title"])
     'Dota 2 Update - June 15, 2023'
+
 """
 
 from dotenv import load_dotenv
 from langchain_community.agent_toolkits.steam.toolkit import SteamToolkit
 from langchain_community.utilities.steam import SteamWebAPIWrapper
+
 
 # Load environment variables from .env file if it exists
 load_dotenv(".env")

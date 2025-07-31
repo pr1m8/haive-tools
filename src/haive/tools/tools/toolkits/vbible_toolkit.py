@@ -13,17 +13,27 @@ Example:
 Attributes:
     BASE_URL: The base URL for the Bible API
     DATA_URL: The data URL for extended Bible API operations
+
 """
 
-import requests
 from langchain_core.tools import StructuredTool
 from pydantic import BaseModel, Field
+import requests
+
+from haive.haive.toolkits.vbible_toolkit import (
+    get_chapter_verses,
+    get_random_verse,
+    list_books,
+    list_translations,
+    query_bible_by_reference,
+)
+
 
 BASE_URL = "https://bible-api.com"
 DATA_URL = "https://bible-api.com/data"
 
 
-### TOOL 1: Query by natural language reference
+# TOOL 1: Query by natural language reference
 
 
 class BibleQueryInput(BaseModel):
@@ -31,6 +41,7 @@ class BibleQueryInput(BaseModel):
 
     Args:
         reference: A natural language Bible reference
+
     """
 
     reference: str = Field(
@@ -50,6 +61,7 @@ def query_bible_by_reference(reference: str) -> str:
 
     Raises:
         None: Returns an error message string if the request fails
+
     """
     response = requests.get(f"{BASE_URL}/{reference}")
     if not response.ok:
@@ -71,7 +83,7 @@ query_tool = StructuredTool.from_function(
 )
 
 
-### TOOL 2: Random verse
+# TOOL 2: Random verse
 
 
 class RandomVerseInput(BaseModel):
@@ -79,6 +91,7 @@ class RandomVerseInput(BaseModel):
 
     Args:
         book_ids: Optional list of book IDs to limit the random selection
+
     """
 
     book_ids: list[str] | None = Field(
@@ -97,6 +110,7 @@ def get_random_verse(book_ids: list[str] | None = None) -> str:
 
     Raises:
         None: Returns an error message string if the request fails
+
     """
     book_path = ",".join(book_ids) if book_ids else ""
     url = (
@@ -119,7 +133,7 @@ random_tool = StructuredTool.from_function(
 )
 
 
-### TOOL 3: Get all translations
+# TOOL 3: Get all translations
 
 
 def list_translations() -> str:
@@ -130,6 +144,7 @@ def list_translations() -> str:
 
     Raises:
         None: Returns an error message string if the request fails
+
     """
     response = requests.get(f"{DATA_URL}")
     if not response.ok:
@@ -145,7 +160,7 @@ translations_tool = StructuredTool.from_function(
 )
 
 
-### TOOL 4: Get books by translation
+# TOOL 4: Get books by translation
 
 
 class TranslationBooksInput(BaseModel):
@@ -153,6 +168,7 @@ class TranslationBooksInput(BaseModel):
 
     Args:
         translation_id: ID of the translation to list books for
+
     """
 
     translation_id: str = Field(
@@ -171,6 +187,7 @@ def list_books(translation_id: str) -> str:
 
     Raises:
         None: Returns an error message string if the request fails
+
     """
     response = requests.get(f"{DATA_URL}/{translation_id}")
     if not response.ok:
@@ -187,7 +204,7 @@ books_tool = StructuredTool.from_function(
 )
 
 
-### TOOL 5: Get verses in a chapter
+# TOOL 5: Get verses in a chapter
 
 
 class ChapterVersesInput(BaseModel):
@@ -197,6 +214,7 @@ class ChapterVersesInput(BaseModel):
         translation_id: ID of the translation to use
         book_id: Book ID (e.g., 'JHN' for John)
         chapter: Chapter number to retrieve
+
     """
 
     translation_id: str = Field(..., description="Translation ID (e.g., 'web')")
@@ -217,6 +235,7 @@ def get_chapter_verses(translation_id: str, book_id: str, chapter: int) -> str:
 
     Raises:
         None: Returns an error message string if the request fails
+
     """
     url = f"{DATA_URL}/{translation_id}/{book_id}/{chapter}"
     response = requests.get(url)
@@ -236,23 +255,16 @@ chapter_tool = StructuredTool.from_function(
 )
 
 
-### Toolkit
-
+# Toolkit
 """Collection of tools for working with Bible data through the Bible API.
 
 This toolkit includes tools for querying verses by reference, getting random
 verses, listing translations and books, and retrieving full chapters.
 """
 vbible_toolkit = [query_tool, random_tool, translations_tool, books_tool, chapter_tool]
-# tests/test_vbible_toolkit.py
 
-from haive.haive.toolkits.vbible_toolkit import (
-    get_chapter_verses,
-    get_random_verse,
-    list_books,
-    list_translations,
-    query_bible_by_reference,
-)
+
+# tests/test_vbible_toolkit.py
 
 
 def test_query_single_verse():

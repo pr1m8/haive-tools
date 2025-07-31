@@ -23,11 +23,12 @@ Note:
     - The domainsdb.info API has usage limits and may throttle requests
     - Results are limited to the top 10 matches to keep responses manageable
     - No authentication is required for basic lookups
+
 """
 
-import requests
 from langchain_core.tools import StructuredTool
 from pydantic import AnyUrl, BaseModel, Field
+import requests
 
 
 class DomainSearchInput(BaseModel):
@@ -37,6 +38,7 @@ class DomainSearchInput(BaseModel):
         domain: A domain key to search for. This can be any term that might appear
                in registered domain names, such as a brand name, generic term, or
                specific word of interest.
+
     """
 
     domain: AnyUrl = Field(
@@ -60,6 +62,7 @@ def search_registered_domains(domain: str) -> str:
 
     Raises:
         requests.exceptions.RequestException: If the API request fails.
+
     """
     url = f"https://api.domainsdb.info/v1/domains/search?domain={domain}"
     response = requests.get(url)

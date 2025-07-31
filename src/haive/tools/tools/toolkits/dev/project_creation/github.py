@@ -13,12 +13,14 @@ Examples:
     >>> from haive.tools.toolkits.dev.project_creation.github import GitHubProjectCreator
     >>> creator = GitHubProjectCreator(token="your-github-token")
     >>> creator.create_repository("my-new-project", private=True, team_access=["engineering"])
+
 """
 
+import base64
 from typing import Any
 
-import requests
 from pydantic import BaseModel, Field
+import requests
 
 
 class RepositorySettings(BaseModel):
@@ -34,6 +36,7 @@ class RepositorySettings(BaseModel):
         team_access: List of team names to grant access to.
         branch_protection: Whether to set up branch protection rules.
         default_branch: The default branch name.
+
     """
 
     name: str = Field(..., description="Name of the repository to create")
@@ -68,6 +71,7 @@ class BranchProtectionRule(BaseModel):
         require_code_owner_reviews: Whether to require review from code owners.
         required_status_checks: List of status checks that must pass before merging.
         enforce_admins: Whether to enforce restrictions for repository administrators.
+
     """
 
     required_approvals: int = Field(
@@ -100,6 +104,7 @@ class GitHubProjectCreator:
         token: GitHub personal access token with repo permissions.
         api_url: Base URL for GitHub API requests.
         headers: HTTP headers for API requests.
+
     """
 
     def __init__(self, token: str, api_url: str = "https://api.github.com"):
@@ -111,6 +116,7 @@ class GitHubProjectCreator:
 
         Raises:
             ValueError: If the token is empty or None.
+
         """
         if not token:
             raise ValueError("GitHub token cannot be empty")
@@ -138,6 +144,7 @@ class GitHubProjectCreator:
 
         Raises:
             requests.HTTPError: If the repository creation fails.
+
         """
         settings = RepositorySettings(
             name=name, description=description, private=private, **kwargs
@@ -187,6 +194,7 @@ class GitHubProjectCreator:
 
         Raises:
             requests.HTTPError: If setting branch protection fails.
+
         """
         if rules is None:
             rules = BranchProtectionRule()
@@ -231,6 +239,7 @@ class GitHubProjectCreator:
 
         Raises:
             requests.HTTPError: If adding team access fails.
+
         """
         payload = {"permission": permission}
 
@@ -259,9 +268,8 @@ class GitHubProjectCreator:
 
         Raises:
             requests.HTTPError: If creating the workflow file fails.
-        """
-        import base64
 
+        """
         path = f".github/workflows/{workflow_file}"
         content = base64.b64encode(workflow_content.encode()).decode()
 

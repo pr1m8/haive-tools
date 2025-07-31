@@ -7,6 +7,7 @@ single, cleaner import statements.
 Example:
     >>> from haive.tools.toolkits.dev.python.cst_toolkit.transformers.import_consolidator import clean_imports
     >>> clean_imports("/path/to/file.py")
+
 """
 
 import libcst as cst
@@ -21,6 +22,7 @@ class ImportConsolidator(cst.CSTTransformer):
 
     Attributes:
         imports (dict): Dictionary mapping module names to their alias (if any)
+
     """
 
     def __init__(self):
@@ -32,6 +34,7 @@ class ImportConsolidator(cst.CSTTransformer):
 
         Args:
             node (cst.Import): The import node being visited
+
         """
         for alias in node.names:
             module_name = alias.name.value
@@ -46,6 +49,7 @@ class ImportConsolidator(cst.CSTTransformer):
 
         Returns:
             cst.Module: The module with consolidated import statements
+
         """
         unique_imports = [
             cst.Import(
@@ -73,6 +77,7 @@ def clean_imports(filepath: str):
     Raises:
         FileNotFoundError: If the specified file does not exist
         IOError: If there are issues reading from or writing to the file
+
     """
     with open(filepath) as f:
         tree = cst.parse_module(f.read())

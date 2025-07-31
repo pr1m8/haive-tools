@@ -13,6 +13,7 @@ Examples:
     >>> from haive.tools.toolkits.dev.python.cst_toolkit.transformers.function_logging_transformer import add_logging
     >>> add_logging("path/to/your_script.py")
     # This will modify the file, adding logging to all functions
+
 """
 
 import os
@@ -31,6 +32,7 @@ class FunctionLoggingTransformer(cst.CSTTransformer):
     Attributes:
         log_format: Format string for the log message, with {name} as placeholder.
         exclude_methods: List of method names to exclude from logging.
+
     """
 
     def __init__(
@@ -41,6 +43,7 @@ class FunctionLoggingTransformer(cst.CSTTransformer):
         Args:
             log_format: Format string for the log message, with {name} as placeholder.
             exclude_methods: List of method names to exclude from logging.
+
         """
         super().__init__()
         self.log_format = log_format
@@ -60,6 +63,7 @@ class FunctionLoggingTransformer(cst.CSTTransformer):
 
         Returns:
             A modified function definition with logging injected.
+
         """
         # Skip if the function name is in the exclude list
         if original_node.name.value in self.exclude_methods:
@@ -95,6 +99,7 @@ def add_logging(
         FileNotFoundError: If the specified file does not exist.
         PermissionError: If the file cannot be read or written.
         SyntaxError: If the file contains invalid Python syntax.
+
     """
     # Check if file exists
     if not os.path.exists(filepath):

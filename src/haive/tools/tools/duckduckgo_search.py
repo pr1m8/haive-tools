@@ -21,9 +21,11 @@ Examples:
     >>> structured_results = duckduckgo_search_results.run("python programming")
     >>> for result in structured_results:
     ...     print(f"Title: {result['title']}\nURL: {result['link']}")
+
 """
 
 from langchain_community.tools import DuckDuckGoSearchResults, DuckDuckGoSearchRun
+
 
 # Initialize the text-based search tool
 duckduckgo_search_tool = DuckDuckGoSearchRun()

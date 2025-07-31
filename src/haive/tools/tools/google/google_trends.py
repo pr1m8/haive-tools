@@ -13,6 +13,7 @@ Examples:
     >>> result = google_trends_tool[0].invoke("blockchain technology")
     >>> print(result)
     ['The interest in blockchain technology has increased by 120% over the past year...']
+
 """
 
 from dotenv import load_dotenv
@@ -26,6 +27,7 @@ class GoogleTrendsResult(BaseModel):
 
     Attributes:
         results (List[str]): A list of trend information from Google Trends.
+
     """
 
     results: list[str] = Field(
@@ -40,6 +42,7 @@ def initialize_google_trends():
 
     Returns:
         list: A list containing the Google Trends search tool.
+
     """
     # Load environment variables from the .env file
     load_dotenv(".env")

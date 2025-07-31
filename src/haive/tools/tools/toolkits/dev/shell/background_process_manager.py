@@ -17,6 +17,7 @@ Examples:
     [{'pid': 12345, 'command': 'npm run dev', 'status': 'running'}]
     >>> bg_manager.stop_process(12345)
     {'success': True, 'message': '✅ Process 12345 stopped'}
+
 """
 
 import shlex
@@ -34,12 +35,14 @@ class BackgroundProcessManager:
 
     Attributes:
         processes: Dictionary mapping process IDs to subprocess.Popen objects.
+
     """
 
     def __init__(self):
         """Initialize the background process manager.
 
         Sets up an empty processes dictionary to track spawned processes.
+
         """
         self.processes = {}
 
@@ -65,6 +68,7 @@ class BackgroundProcessManager:
 
         Raises:
             OSError: If there's an issue with the system call to create the process.
+
         """
         try:
             # Split command into arguments
@@ -101,6 +105,7 @@ class BackgroundProcessManager:
                 - status: Current status of the process.
                 - memory: Memory usage in MB (if available).
                 - cpu: CPU usage percentage (if available).
+
         """
         active_processes = []
 
@@ -148,6 +153,7 @@ class BackgroundProcessManager:
                 - success: Boolean indicating whether the process was stopped successfully.
                 - message: Success or error message.
                 - error: Error details if the process could not be stopped.
+
         """
         try:
             if pid in self.processes:
@@ -188,6 +194,7 @@ class BackgroundProcessManager:
                 - pid: The process ID.
                 - address: The binding address.
                 - protocol: The protocol (TCP/UDP).
+
         """
         listeners = []
 
@@ -227,6 +234,7 @@ class BackgroundProcessManager:
                 - stdout: Standard output from the process.
                 - stderr: Standard error from the process.
                 - error: Error details if logs could not be retrieved.
+
         """
         if pid not in self.processes:
             return {
@@ -270,6 +278,7 @@ class BackgroundProcessManager:
                 - success: Boolean indicating whether cleanup was successful.
                 - stopped: Number of processes stopped.
                 - errors: List of errors encountered during cleanup.
+
         """
         errors = []
         stopped_count = 0

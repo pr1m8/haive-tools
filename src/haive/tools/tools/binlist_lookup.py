@@ -23,11 +23,12 @@ Note:
     - The Binlist.net API has rate limits and usage restrictions
     - Only the first 6-8 digits should be provided, not the full card number
     - No authentication is required for basic lookups
+
 """
 
-import requests
 from langchain_core.tools import StructuredTool
 from pydantic import BaseModel, Field
+import requests
 
 
 class BinLookupInput(BaseModel):
@@ -37,16 +38,18 @@ class BinLookupInput(BaseModel):
         bin_number: The first 6 to 8 digits of a payment card number, also known as
                     the Bank Identification Number (BIN) or Issuer Identification Number (IIN).
                     This identifies the issuing bank or financial institution.
+
     """
 
     bin_number: str = Field(..., description="The first 6 to 8 digits of a card number")
 
 
-def lookup_bin(input: BinLookupInput) -> dict:
-    """Look up information about a payment card based on its BIN/IIN using the Binlist.net API.
+def lookup_bin(bin_input: BinLookupInput) -> dict:
+    """Look up information about a payment card based on its BIN/IIN using the
+    Binlist.net API.
 
     Args:
-        input: A BinLookupInput object containing the bin_number to look up.
+        bin_input: A BinLookupInput object containing the bin_number to look up.
 
     Returns:
         dict: A dictionary containing information about the card, including:
@@ -59,10 +62,11 @@ def lookup_bin(input: BinLookupInput) -> dict:
 
     Raises:
         requests.exceptions.HTTPError: If the API request fails for any reason other than a 404.
+
     """
     headers = {"Accept-Version": "3"}
     response = requests.get(
-        f"https://lookup.binlist.net/{input.bin_number}", headers=headers
+        f"https://lookup.binlist.net/{bin_input.bin_number}", headers=headers
     )
     if response.status_code == 404:
         return {"error": "No matching card found"}

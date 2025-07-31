@@ -13,6 +13,7 @@ Examples:
     >>> result = google_finance_tool[0].invoke("AAPL stock price")
     >>> print(result)
     ['Apple Inc. (AAPL) stock is currently trading at $XXX.XX...']
+
 """
 
 import os
@@ -27,6 +28,7 @@ class GoogleFinanceResult(BaseModel):
 
     Attributes:
         results (List[str]): A list of financial information snippets from Google Finance.
+
     """
 
     results: list[str] = Field(
@@ -35,7 +37,8 @@ class GoogleFinanceResult(BaseModel):
 
 
 def initialize_google_finance():
-    """Initialize the Google Finance API wrapper with credentials from environment variables.
+    """Initialize the Google Finance API wrapper with credentials from environment
+    variables.
 
     This function loads environment variables and configures the Google Finance API client.
 
@@ -44,6 +47,7 @@ def initialize_google_finance():
 
     Raises:
         ValueError: If required environment variables are not set.
+
     """
     # Load environment variables from the .env file
     load_dotenv(".env")

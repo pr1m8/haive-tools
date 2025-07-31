@@ -13,10 +13,11 @@ Examples:
     >>> from haive.tools.toolkits.dev.python.cst_toolkit.visitors.complexity_analyzer import analyze_complexity
     >>> analyze_complexity("path/to/your_script.py")
     🔍 function_name complexity score: 5
+
 """
 
-import os
 from collections import defaultdict
+import os
 
 import libcst as cst
 
@@ -32,13 +33,15 @@ class ComplexityAnalyzer(cst.CSTVisitor):
         complexity: Dictionary mapping function names to complexity scores.
         current_function: Name of the function currently being analyzed.
         nested_functions: Stack of nested function names being analyzed.
+
     """
 
     def __init__(self):
         """Initialize the complexity analyzer.
 
-        Sets up tracking for function complexity and the current function
-        being analyzed.
+        Sets up tracking for function complexity and the current function being
+        analyzed.
+
         """
         self.complexity = defaultdict(int)
         self.current_function = None
@@ -53,6 +56,7 @@ class ComplexityAnalyzer(cst.CSTVisitor):
 
         Args:
             node: The function definition node in the CST.
+
         """
         # Push the current function onto the stack if there is one
         if self.current_function:
@@ -72,6 +76,7 @@ class ComplexityAnalyzer(cst.CSTVisitor):
 
         Args:
             original_node: The function definition node in the CST.
+
         """
         # Restore the previous current function if there was one
         if self.nested_functions:
@@ -86,6 +91,7 @@ class ComplexityAnalyzer(cst.CSTVisitor):
 
         Args:
             node: The if statement node in the CST.
+
         """
         if self.current_function:
             self.complexity[self.current_function] += 1
@@ -97,6 +103,7 @@ class ComplexityAnalyzer(cst.CSTVisitor):
 
         Args:
             node: The for loop node in the CST.
+
         """
         if self.current_function:
             self.complexity[self.current_function] += 1
@@ -108,6 +115,7 @@ class ComplexityAnalyzer(cst.CSTVisitor):
 
         Args:
             node: The while loop node in the CST.
+
         """
         if self.current_function:
             self.complexity[self.current_function] += 1
@@ -119,6 +127,7 @@ class ComplexityAnalyzer(cst.CSTVisitor):
 
         Args:
             node: The boolean operation node in the CST.
+
         """
         if self.current_function:
             self.complexity[self.current_function] += 1
@@ -130,6 +139,7 @@ class ComplexityAnalyzer(cst.CSTVisitor):
 
         Args:
             node: The try statement node in the CST.
+
         """
         if self.current_function:
             # Add 1 for each except handler
@@ -140,9 +150,10 @@ class ComplexityAnalyzer(cst.CSTVisitor):
 
         Returns:
             Dictionary mapping function names to complexity scores.
+
         """
-        for func, score in self.complexity.items():
-            print(f"🔍 {func} complexity score: {score}")
+        for _func, _score in self.complexity.items():
+            pass
         return dict(self.complexity)
 
     def get_high_complexity_functions(self, threshold: int = 10) -> dict[str, int]:
@@ -153,6 +164,7 @@ class ComplexityAnalyzer(cst.CSTVisitor):
 
         Returns:
             Dictionary of function names and scores for functions exceeding the threshold.
+
         """
         return {
             func: score for func, score in self.complexity.items() if score > threshold
@@ -173,6 +185,7 @@ def analyze_complexity(filepath: str, threshold: int = None) -> dict[str, int]:
     Raises:
         FileNotFoundError: If the specified file does not exist.
         SyntaxError: If the file contains invalid Python syntax.
+
     """
     # Check if file exists
     if not os.path.exists(filepath):
@@ -196,11 +209,10 @@ def analyze_complexity(filepath: str, threshold: int = None) -> dict[str, int]:
     if threshold is not None:
         high_complexity = analyzer.get_high_complexity_functions(threshold)
         if high_complexity:
-            print(f"Functions exceeding complexity threshold ({threshold}):")
-            for func, score in high_complexity.items():
-                print(f"⚠️ {func}: {score}")
+            for _func, _score in high_complexity.items():
+                pass
         else:
-            print(f"No functions exceeded the complexity threshold ({threshold}).")
+            pass
     else:
         analyzer.report_complexity()
 

@@ -9,11 +9,12 @@ Examples:
     >>> result = get_random_corporate_bs()
     >>> print(result.phrase)
     'synergize scalable paradigms'
+
 """
 
-import requests
 from langchain_core.tools import StructuredTool
 from pydantic import BaseModel, Field
+import requests
 
 
 class CorporateBS(BaseModel):
@@ -21,6 +22,7 @@ class CorporateBS(BaseModel):
 
     Attributes:
         phrase (str): A randomly generated corporate buzz phrase.
+
     """
 
     phrase: str = Field(..., description="Randomly generated corporate buzz phrase")
@@ -34,6 +36,7 @@ def get_random_corporate_bs() -> CorporateBS:
 
     Raises:
         requests.RequestException: If the API request fails.
+
     """
     res = requests.get("https://corporatebs-generator.sameerkumar.website/")
     res.raise_for_status()

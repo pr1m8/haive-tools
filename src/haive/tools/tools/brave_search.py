@@ -14,9 +14,11 @@ Example:
 Note:
     Requires a Brave Search API key in your environment or configuration.
     See: https://python.langchain.com/api_reference/_modules/langchain_community/utilities/brave_search.html#BraveSearchWrapper
+
 """
 
 from langchain_community.agent_toolkits import load_tools
+
 
 # Initialize the Brave Search tool
 brave_search_tool = load_tools(["brave-search"])

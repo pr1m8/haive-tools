@@ -20,12 +20,13 @@ Examples:
     >>> random_card = yugioh_api_toolkit[3].invoke()
     >>> print(random_card['name'])
     'Blue-Eyes White Dragon'
+
 """
 
-import requests
 from langchain.agents import Tool
 from langchain_core.tools import StructuredTool
 from pydantic.v1 import BaseModel, Field
+import requests
 
 
 # Schema for querying card info
@@ -42,6 +43,7 @@ class GetCardInfoInput(BaseModel):
         cardset (Optional[str]): Filter by card set name.
         format (Optional[str]): Filter by card format (TCG, OCG, Speed Duel, etc).
         misc (Optional[bool]): Include additional metadata in the response.
+
     """
 
     name: str | None = Field(None, description="Exact card name")
@@ -68,6 +70,7 @@ def get_card_info(input_data: GetCardInfoInput) -> dict:
 
     Raises:
         requests.RequestException: If the API request fails or the parameters are invalid.
+
     """
     base_url = "https://db.ygoprodeck.com/api/v7/cardinfo.php"
     params = {k: v for k, v in input_data.dict().items() if v is not None}
@@ -96,6 +99,7 @@ def get_card_sets() -> list[dict]:
 
     Raises:
         requests.RequestException: If the API request fails.
+
     """
     return requests.get("https://db.ygoprodeck.com/api/v7/cardsets.php").json()
 
@@ -108,6 +112,7 @@ def get_archetypes() -> list[dict]:
 
     Raises:
         requests.RequestException: If the API request fails.
+
     """
     return requests.get("https://db.ygoprodeck.com/api/v7/archetypes.php").json()
 
@@ -120,6 +125,7 @@ def get_random_card() -> dict:
 
     Raises:
         requests.RequestException: If the API request fails.
+
     """
     return requests.get("https://db.ygoprodeck.com/api/v7/randomcard.php").json()
 
@@ -132,6 +138,7 @@ def get_database_version() -> dict:
 
     Raises:
         requests.RequestException: If the API request fails.
+
     """
     return requests.get("https://db.ygoprodeck.com/api/v7/checkDBVer.php").json()
 

@@ -23,14 +23,12 @@ Typical usage:
         "url": "https://api.example.com/submit",
         "data": {"key": "value"}
     })
+
 """
 
 from typing import Any
 
-from langchain_community.tools.requests.tool import (
-    RequestsGetTool,
-    RequestsPostTool,
-)
+from langchain_community.tools.requests.tool import RequestsGetTool, RequestsPostTool
 from langchain_core.tools import StructuredTool
 from pydantic import BaseModel, Field
 

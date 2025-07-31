@@ -27,6 +27,7 @@ Note:
     - Usage is subject to Merriam-Webster's terms of service and rate limits
     - Documentation for the Merriam-Webster API is available at:
       https://dictionaryapi.com/products/api-collegiate-dictionary
+
 """
 
 # This file is currently a placeholder for the Merriam-Webster dictionary API integration.

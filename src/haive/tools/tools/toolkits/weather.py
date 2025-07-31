@@ -23,6 +23,7 @@ Examples:
     >>> weather = get_weather_by_city_country("New York", "us", parse=True, temperature_unit="fahrenheit")
     >>> print(f"Feels like: {weather['temp_feels_like_c']}°F")
     Feels like: 46.58°F
+
 """
 
 import getpass
@@ -30,10 +31,11 @@ import os
 import re
 from typing import Literal
 
-from haive.config.config import Config
 from langchain_community.agent_toolkits.load_tools import load_tools
 from langchain_core.tools import StructuredTool
 from pydantic import BaseModel, Field
+
+from haive.config.config import Config
 
 
 class CityCountryWeatherInput(BaseModel):
@@ -47,6 +49,7 @@ class CityCountryWeatherInput(BaseModel):
         country (str): The 2-letter ISO country code in lowercase.
         parse (bool): Whether to return structured data or raw API response.
         temperature_unit (str): Unit for temperature values (celsius or fahrenheit).
+
     """
 
     city: str = Field(..., description="City name, e.g. 'Tokyo'")
@@ -80,6 +83,7 @@ class WeatherData(BaseModel):
         temp_feels_like_c (Optional[float]): "Feels like" temperature in Celsius.
         rain_mm_last_hour (Optional[float]): Rainfall in millimeters over the last hour.
         cloud_cover_percent (Optional[int]): Cloud coverage percentage.
+
     """
 
     location: str | None = Field(
@@ -119,6 +123,7 @@ class WeatherData(BaseModel):
 
         Returns:
             WeatherData: A new WeatherData instance with temperatures in Fahrenheit.
+
         """
 
         def c_to_f(c: float | None) -> float | None:
@@ -151,6 +156,7 @@ class WeatherData(BaseModel):
 
         Returns:
             WeatherData: Structured weather data extracted from the response.
+
         """
         data = {}
 
@@ -215,6 +221,7 @@ def get_weather_by_city_country(
     Raises:
         ValueError: If the API key is not provided and the user cancels the prompt.
         Exception: If the weather API request fails.
+
     """
     if not Config.OPENWEATHERMAP_API_KEY:
         os.environ["OPENWEATHERMAP_API_KEY"] = getpass.getpass(

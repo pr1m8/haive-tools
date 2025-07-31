@@ -8,6 +8,7 @@ Classes:
 Functions:
     connect: Connect functionality.
     run_remote: Run Remote functionality.
+
 """
 
 import paramiko
@@ -45,5 +46,4 @@ class RemoteExecutor:
 # Example Usage:
 remote_executor = RemoteExecutor("192.168.1.100", "user", "~/.ssh/id_rsa")
 remote_executor.connect()
-print(remote_executor.run_remote("uname -a"))
 remote_executor.close()

@@ -22,11 +22,13 @@ Example:
 Note:
     Requires ClickUp API credentials to be set in the application configuration.
     You'll need a valid API key, client ID, client secret, and redirect URI.
+
 """
 
-from haive.config.config import Config
 from langchain_community.agent_toolkits.clickup.toolkit import ClickupToolkit
 from langchain_community.utilities.clickup import ClickupAPIWrapper
+
+from haive.config.config import Config
 
 
 def get_clickup_toolkit() -> ClickupToolkit:
@@ -41,6 +43,7 @@ def get_clickup_toolkit() -> ClickupToolkit:
 
     Raises:
         ValueError: If required ClickUp credentials are missing from configuration
+
     """
     clickup_api_wrapper = ClickupAPIWrapper(
         api_key=Config.CLICKUP_API_KEY,

@@ -14,6 +14,7 @@ Examples:
     >>> result = google_job_search_tool[0].invoke("software engineer positions in San Francisco")
     >>> print(result)
     ['Senior Software Engineer at Tech Co. - San Francisco, CA...']
+
 """
 
 import os
@@ -29,6 +30,7 @@ class GoogleJobsResult(BaseModel):
 
     Attributes:
         results (List[Dict[str, Any]]): A list of job listings from Google Jobs API.
+
     """
 
     results: list[dict[str, Any]] = Field(
@@ -41,6 +43,7 @@ class GoogleJobsInput(BaseModel):
 
     Attributes:
         query (str): The job search query string.
+
     """
 
     query: str = Field(
@@ -49,7 +52,8 @@ class GoogleJobsInput(BaseModel):
 
 
 def initialize_google_jobs():
-    """Initialize the Google Jobs API wrapper with credentials from environment variables.
+    """Initialize the Google Jobs API wrapper with credentials from environment
+    variables.
 
     This function loads environment variables and configures the Google Jobs API client.
 
@@ -58,6 +62,7 @@ def initialize_google_jobs():
 
     Raises:
         ValueError: If required environment variables are not set.
+
     """
     # Load environment variables from the .env file
     load_dotenv(".env")

@@ -17,11 +17,12 @@ Examples:
     ...     print(result.stdout)
     ... else:
     ...     print(f"Error: {result.error}")
+
 """
 
+from pathlib import Path
 import shlex
 import subprocess
-from pathlib import Path
 
 from pydantic import BaseModel, Field
 
@@ -41,6 +42,7 @@ class CommandExecutionResult(BaseModel):
         stderr (str): Standard error output captured from the command execution.
         exit_code (int): The exit code returned by the command (0 typically means success).
         error (str): Human-readable error message if the command failed.
+
     """
 
     success: bool = Field(
@@ -62,13 +64,15 @@ class SecureShellExecutor:
 
     Attributes:
         permissions_manager (PermissionsManager): Manager that handles path permissions.
+
     """
 
     def __init__(self):
         """Initialize a new SecureShellExecutor with default permissions.
 
-        Creates a new shell executor with a default PermissionsManager instance
-        to handle security restrictions.
+        Creates a new shell executor with a default PermissionsManager instance to
+        handle security restrictions.
+
         """
         self.permissions_manager = PermissionsManager()
 
@@ -83,6 +87,7 @@ class SecureShellExecutor:
 
         Returns:
             List[str]: A list of file paths found in the command.
+
         """
         args = shlex.split(command)
         return [arg for arg in args if Path(arg).exists()]
@@ -102,6 +107,7 @@ class SecureShellExecutor:
 
         Raises:
             No exceptions are raised; all errors are captured in the result object.
+
         """
         paths = self._extract_paths(command)
 

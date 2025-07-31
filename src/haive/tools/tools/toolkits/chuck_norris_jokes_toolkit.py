@@ -14,11 +14,12 @@ Examples:
     >>> categories = get_available_categories()
     >>> print(categories)
     ['animal', 'career', 'celebrity', ...]
+
 """
 
-import requests
 from langchain_core.tools import StructuredTool
 from pydantic import BaseModel, Field
+import requests
 
 
 class Joke(BaseModel):
@@ -29,6 +30,7 @@ class Joke(BaseModel):
         icon_url (str): URL to the Chuck Norris icon image.
         value (str): The actual joke text content.
         url (Optional[str]): Optional URL to the joke on the Chuck Norris API website.
+
     """
 
     id: str = Field(..., description="Unique identifier for the joke")
@@ -45,6 +47,7 @@ def get_random_joke() -> Joke:
 
     Raises:
         requests.RequestException: If the API request fails.
+
     """
     res = requests.get("https://api.chucknorris.io/jokes/random")
     res.raise_for_status()
@@ -63,6 +66,7 @@ def get_random_joke_by_category(category: str) -> Joke:
 
     Raises:
         requests.RequestException: If the API request fails or the category is invalid.
+
     """
     res = requests.get(f"https://api.chucknorris.io/jokes/random?category={category}")
     res.raise_for_status()
@@ -77,6 +81,7 @@ def get_available_categories() -> list[str]:
 
     Raises:
         requests.RequestException: If the API request fails.
+
     """
     res = requests.get("https://api.chucknorris.io/jokes/categories")
     res.raise_for_status()
@@ -94,6 +99,7 @@ def search_jokes(query: str) -> list[Joke]:
 
     Raises:
         requests.RequestException: If the API request fails.
+
     """
     res = requests.get(f"https://api.chucknorris.io/jokes/search?query={query}")
     res.raise_for_status()

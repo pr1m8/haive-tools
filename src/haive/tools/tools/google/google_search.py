@@ -13,6 +13,7 @@ Examples:
     >>> result = google_search_tool[0].invoke("quantum computing advances")
     >>> print(result)
     ['Recent advances in quantum computing include...']
+
 """
 
 import os
@@ -27,6 +28,7 @@ class GoogleSearchResult(BaseModel):
 
     Attributes:
         results (List[str]): A list of search result snippets from Google.
+
     """
 
     results: list[str] = Field(
@@ -35,7 +37,8 @@ class GoogleSearchResult(BaseModel):
 
 
 def initialize_google_search():
-    """Initialize the Google Search API wrapper with credentials from environment variables.
+    """Initialize the Google Search API wrapper with credentials from environment
+    variables.
 
     This function loads environment variables and configures the Google Search API client.
 
@@ -44,6 +47,7 @@ def initialize_google_search():
 
     Raises:
         ValueError: If required environment variables are not set.
+
     """
     # Load environment variables from the .env file
     load_dotenv(".env")

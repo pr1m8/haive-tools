@@ -21,6 +21,7 @@ Example:
     >>> # Write updated code back to file
     >>> with open("script.py", "w") as f:
     >>>     f.write(modified_tree.code)
+
 """
 
 import libcst as cst
@@ -35,6 +36,7 @@ class RenameTransformer(cst.CSTTransformer):
 
     Attributes:
         rename_map (dict): A dictionary mapping old names to new names
+
     """
 
     def __init__(self, rename_map):
@@ -43,6 +45,7 @@ class RenameTransformer(cst.CSTTransformer):
         Args:
             rename_map (dict): A dictionary mapping old names to new names
                 in the format {old_name: new_name}
+
         """
         super().__init__()
         self.rename_map = rename_map  # {old_name: new_name}
@@ -57,6 +60,7 @@ class RenameTransformer(cst.CSTTransformer):
         Returns:
             cst.FunctionDef: The function definition with the updated name if it's in
                 the rename map, otherwise the original node
+
         """
         if original_node.name.value in self.rename_map:
             return updated_node.with_changes(
@@ -74,6 +78,7 @@ class RenameTransformer(cst.CSTTransformer):
         Returns:
             cst.ClassDef: The class definition with the updated name if it's in
                 the rename map, otherwise the original node
+
         """
         if original_node.name.value in self.rename_map:
             return updated_node.with_changes(
@@ -91,6 +96,7 @@ class RenameTransformer(cst.CSTTransformer):
         Returns:
             cst.Name: The name node with the updated value if it's in
                 the rename map, otherwise the original node
+
         """
         if original_node.value in self.rename_map:
             return updated_node.with_changes(value=self.rename_map[original_node.value])

@@ -13,12 +13,14 @@ Example:
 
 Attributes:
     None
+
 """
 
-import requests
 from langchain_core.tools import StructuredTool
 from langchain_core.tools.base import BaseToolkit
 from pydantic import BaseModel, Field
+import requests
+
 
 # --- Linked Data Tool ---
 
@@ -28,6 +30,7 @@ class CitySDKLinkedDataQueryInput(BaseModel):
 
     Args:
         query: SPARQL query to execute against the CitySDK Linked Data endpoint
+
     """
 
     query: str = Field(
@@ -46,6 +49,7 @@ def run_citysdk_linkeddata_query(query: str) -> dict:
 
     Raises:
         HTTPError: If the request fails or returns an error status code
+
     """
     endpoint = "https://citysdk.dm.fhnw.ch/sparql"
     headers = {"Accept": "application/sparql-results+json"}
@@ -70,6 +74,7 @@ class CitySDKTourismPOIInput(BaseModel):
     Args:
         bbox: Bounding box coordinates to filter POIs geographically
         city: City name to filter POIs by location
+
     """
 
     bbox: str | None = Field(
@@ -91,6 +96,7 @@ def get_tourism_pois(bbox: str | None = None, city: str | None = None) -> dict:
 
     Raises:
         HTTPError: If the request fails or returns an error status code
+
     """
     endpoint = "https://tourism-api.citysdk.cm-lisboa.pt/resources/pois"
     params = {}
@@ -116,8 +122,9 @@ citysdk_tourism_poi_tool = StructuredTool.from_function(
 class CitySDKToolkit(BaseToolkit):
     """Toolkit for accessing CitySDK APIs for city-related data.
 
-    This toolkit provides tools for working with different CitySDK APIs,
-    including SPARQL queries for linked data and tourism POI information.
+    This toolkit provides tools for working with different CitySDK APIs, including
+    SPARQL queries for linked data and tourism POI information.
+
     """
 
     def get_tools(self) -> list[StructuredTool]:
@@ -125,5 +132,6 @@ class CitySDKToolkit(BaseToolkit):
 
         Returns:
             List[StructuredTool]: A list of tools for working with CitySDK APIs
+
         """
         return [citysdk_linked_data_tool, citysdk_tourism_poi_tool]

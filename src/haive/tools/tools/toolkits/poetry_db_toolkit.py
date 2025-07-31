@@ -12,11 +12,13 @@ Example:
 
 Attributes:
     BASE_URL: The base URL for the PoetryDB API
+
 """
 
-import requests
 from langchain_core.tools import StructuredTool
 from pydantic import BaseModel, Field
+import requests
+
 
 BASE_URL = "https://poetrydb.org"
 
@@ -27,6 +29,7 @@ class AuthorSearchInput(BaseModel):
 
     Args:
         author: Name of the poet to search for
+
     """
 
     author: str = Field(..., description="Name of the poet to search for")
@@ -43,6 +46,7 @@ def search_poems_by_author(author: str) -> list[dict]:
 
     Raises:
         HTTPError: If the request fails or returns an error status code
+
     """
     url = f"{BASE_URL}/author/{author}"
     res = requests.get(url)
@@ -65,6 +69,7 @@ class TitleSearchInput(BaseModel):
 
     Args:
         title: Title of the poem to search for
+
     """
 
     title: str = Field(..., description="Title of the poem")
@@ -82,6 +87,7 @@ def search_poem_by_title(title: str) -> dict:
     Raises:
         HTTPError: If the request fails or returns an error status code
         IndexError: If no poems match the given title
+
     """
     url = f"{BASE_URL}/title/{title}"
     res = requests.get(url)
@@ -103,6 +109,7 @@ class RandomPoemInput(BaseModel):
 
     Args:
         count: Number of random poems to retrieve
+
     """
 
     count: int = Field(..., description="Number of random poems to fetch")
@@ -119,6 +126,7 @@ def get_random_poems(count: int) -> list[dict]:
 
     Raises:
         HTTPError: If the request fails or returns an error status code
+
     """
     url = f"{BASE_URL}/random/{count}"
     res = requests.get(url)
@@ -140,6 +148,7 @@ class LineSearchInput(BaseModel):
 
     Args:
         phrase: Line or text fragment to search for in poems
+
     """
 
     phrase: str = Field(..., description="Line or phrase to search for in poems")
@@ -156,6 +165,7 @@ def search_by_line_fragment(phrase: str) -> list[dict]:
 
     Raises:
         HTTPError: If the request fails or returns an error status code
+
     """
     url = f"{BASE_URL}/lines/{phrase}"
     res = requests.get(url)
@@ -177,6 +187,7 @@ def get_poetry_toolkit() -> list[StructuredTool]:
 
     Returns:
         List[StructuredTool]: A list of tools for searching and retrieving poetry
+
     """
     return [
         search_poems_by_author_tool,

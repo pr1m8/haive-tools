@@ -10,13 +10,14 @@ Examples:
     >>> result = get_fruit_info(input)
     >>> print(result["name"])
     'Banana'
+
 """
 
 from typing import Any
 
-import requests
 from langchain_core.tools import StructuredTool
 from pydantic import BaseModel, Field
+import requests
 
 
 class FruitNameInput(BaseModel):
@@ -24,19 +25,20 @@ class FruitNameInput(BaseModel):
 
     Attributes:
         name (str): The name of the fruit to retrieve data for.
+
     """
 
     name: str = Field(..., description="Name of the fruit to retrieve data for")
 
 
-def get_fruit_info(input: FruitNameInput) -> dict[str, Any]:
+def get_fruit_info(fruit_input: FruitNameInput) -> dict[str, Any]:
     """Fetch detailed information about a specific fruit from the Fruityvice API.
 
     The information returned typically includes nutritional data (calories, fat, sugar, etc.),
     family, genus, and other taxonomic details.
 
     Args:
-        input (FruitNameInput): Object containing the name of the fruit to look up.
+        fruit_input (FruitNameInput): Object containing the name of the fruit to look up.
 
     Returns:
         Dict[str, Any]: A dictionary containing the fruit's details and nutritional information.
@@ -44,12 +46,13 @@ def get_fruit_info(input: FruitNameInput) -> dict[str, Any]:
 
     Raises:
         requests.HTTPError: If the API request fails for reasons other than a 404.
+
     """
     response = requests.get(
-        f"https://www.fruityvice.com/api/fruit/{input.name.lower()}"
+        f"https://www.fruityvice.com/api/fruit/{fruit_input.name.lower()}"
     )
     if response.status_code == 404:
-        return {"error": f"Fruit '{input.name}' not found"}
+        return {"error": f"Fruit '{fruit_input.name}' not found"}
     response.raise_for_status()
     return response.json()
 

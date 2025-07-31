@@ -9,11 +9,12 @@ Examples:
     >>> joke = get_geek_joke(GetGeekJokeInput())
     >>> print(joke)
     'Why do programmers always mix up Christmas and Halloween? Because Oct 31 == Dec 25'
+
 """
 
-import requests
 from langchain_core.tools import StructuredTool
 from pydantic import BaseModel, Field
+import requests
 
 
 class GetGeekJokeInput(BaseModel):
@@ -25,6 +26,7 @@ class GetGeekJokeInput(BaseModel):
     Attributes:
         dummy (Optional[str]): An unused field that maintains compatibility with
             LangChain's requirement for an input schema.
+
     """
 
     dummy: str | None = Field(
@@ -47,6 +49,7 @@ def get_geek_joke(_: GetGeekJokeInput) -> str:
 
     Raises:
         requests.RequestException: If the API request fails.
+
     """
     url = "https://geek-jokes.sameerkumar.website/api?format=json"
     response = requests.get(url)

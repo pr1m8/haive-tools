@@ -13,9 +13,11 @@ Example:
 Attributes:
     ionic_tool: Configured Ionic Commerce shopping tool
     tools: List containing the Ionic tool for easy integration
+
 """
 
 from ionic_langchain.tool import IonicTool
+
 
 # Initialize the Ionic Commerce shopping tool
 ionic_tool = IonicTool().tool()

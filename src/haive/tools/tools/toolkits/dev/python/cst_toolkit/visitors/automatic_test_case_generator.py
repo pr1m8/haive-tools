@@ -14,6 +14,7 @@ Example:
     def test_format_currency():
         # TODO: Add assertions
         assert format_currency(value, currency_symbol) is not None
+
 """
 
 import libcst as cst
@@ -28,6 +29,7 @@ class TestGenerator(cst.CSTVisitor):
 
     Attributes:
         tests (List[str]): List of generated test case function strings
+
     """
 
     def __init__(self):
@@ -36,13 +38,15 @@ class TestGenerator(cst.CSTVisitor):
         self.tests: list[str] = []
 
     def visit_FunctionDef(self, node: cst.FunctionDef) -> None:
-        """Generate a basic test function based on function signature during the AST traversal.
+        """Generate a basic test function based on function signature during the AST
+        traversal.
 
         This method analyzes a function definition and creates a test function template
         with a basic assertion for the function, based on its parameters.
 
         Args:
             node (cst.FunctionDef): The function definition node being visited
+
         """
         # Skip private methods and special methods
         if node.name.value.startswith("_"):
@@ -64,9 +68,9 @@ class TestGenerator(cst.CSTVisitor):
 
         Returns:
             str: String containing all generated test function templates
+
         """
         test_code = "\n".join(self.tests)
-        print(test_code)
         return test_code
 
     def get_tests(self) -> list[str]:
@@ -74,6 +78,7 @@ class TestGenerator(cst.CSTVisitor):
 
         Returns:
             List[str]: List of generated test function templates
+
         """
         return self.tests
 
@@ -94,6 +99,7 @@ def generate_tests(filepath: str) -> str:
     Raises:
         FileNotFoundError: If the specified file does not exist
         IOError: If there are issues reading from the file
+
     """
     with open(filepath) as f:
         tree = cst.parse_module(f.read())

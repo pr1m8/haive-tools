@@ -7,6 +7,7 @@ them to maintain consistency throughout a codebase.
 Example:
     >>> from haive.tools.toolkits.dev.python.cst_toolkit.transformers.multi_file_rename import rename_function_in_files
     >>> rename_function_in_files("/path/to/directory", "old_function_name", "new_function_name")
+
 """
 
 import os
@@ -24,6 +25,7 @@ class MultiFileRenameTransformer(cst.CSTTransformer):
     Attributes:
         old_name (str): The current name of the function to rename
         new_name (str): The new name to give the function
+
     """
 
     def __init__(self, old_name: str, new_name: str):
@@ -32,6 +34,7 @@ class MultiFileRenameTransformer(cst.CSTTransformer):
         Args:
             old_name (str): The current name of the function to rename
             new_name (str): The new name to give the function
+
         """
         self.old_name = old_name
         self.new_name = new_name
@@ -48,6 +51,7 @@ class MultiFileRenameTransformer(cst.CSTTransformer):
         Returns:
             cst.FunctionDef: The function definition with the updated name if it matches
                 the target function, otherwise the original node
+
         """
         if original_node.name.value == self.old_name:
             return updated_node.with_changes(name=cst.Name(value=self.new_name))
@@ -63,6 +67,7 @@ class MultiFileRenameTransformer(cst.CSTTransformer):
         Returns:
             cst.Call: The function call with the updated name if it matches
                 the target function, otherwise the original node
+
         """
         if (
             isinstance(original_node.func, Name)
@@ -87,6 +92,7 @@ def rename_function_in_files(directory: str, old_name: str, new_name: str):
     Raises:
         FileNotFoundError: If the specified directory does not exist
         IOError: If there are issues reading from or writing to the files
+
     """
     for root, _, files in os.walk(directory):
         for file in files:

@@ -22,14 +22,16 @@ Examples:
     >>> for obs in gdp_data['observations'][:3]:
     ...     print(f"Date: {obs['date']}, Value: ${obs['value']} billion")
     Date: 2020-01-01, Value: $21477.597 billion
+
 """
 
 import os
 from typing import Any
 
-import requests
 from langchain_core.tools import BaseToolkit, StructuredTool
 from pydantic import BaseModel, Field
+import requests
+
 
 # Environment configuration
 FRED_API_KEY = os.getenv("FRED_API_KEY")
@@ -52,6 +54,7 @@ def fred_get(endpoint: str, params: dict[str, Any]) -> dict[str, Any]:
     Raises:
         requests.RequestException: If the API request fails.
         ValueError: If FRED_API_KEY is not set in the environment.
+
     """
     if not FRED_API_KEY:
         raise ValueError("FRED_API_KEY environment variable must be set")
@@ -105,6 +108,7 @@ def get_category(category_id: int) -> dict[str, Any]:
 
     Raises:
         requests.RequestException: If the API request fails.
+
     """
     return fred_get("category", {"category_id": category_id})
 
@@ -123,6 +127,7 @@ def get_category_children(category_id: int) -> dict[str, Any]:
 
     Raises:
         requests.RequestException: If the API request fails.
+
     """
     return fred_get("category/children", {"category_id": category_id})
 
@@ -141,6 +146,7 @@ def get_category_series(category_id: int) -> dict[str, Any]:
 
     Raises:
         requests.RequestException: If the API request fails.
+
     """
     return fred_get("category/series", {"category_id": category_id})
 
@@ -159,6 +165,7 @@ def get_series(series_id: str) -> dict[str, Any]:
 
     Raises:
         requests.RequestException: If the API request fails.
+
     """
     return fred_get("series", {"series_id": series_id})
 
@@ -181,6 +188,7 @@ def get_series_observations(
 
     Raises:
         requests.RequestException: If the API request fails.
+
     """
     params = {"series_id": series_id}
     if start_date:
@@ -193,11 +201,13 @@ def get_series_observations(
 class FREDToolkit(BaseToolkit):
     """Toolkit for accessing Federal Reserve Economic Data (FRED).
 
-    This toolkit provides a collection of tools for interacting with the FRED API
-    to retrieve economic data series, categories, and related information.
+    This toolkit provides a collection of tools for interacting with the FRED API to
+    retrieve economic data series, categories, and related information.
 
-    The Federal Reserve Economic Data (FRED) database contains hundreds of thousands
-    of economic time series from dozens of national, international, public, and private sources.
+    The Federal Reserve Economic Data (FRED) database contains hundreds of thousands of
+    economic time series from dozens of national, international, public, and private
+    sources.
+
     """
 
     def get_tools(self) -> list[StructuredTool]:
@@ -205,6 +215,7 @@ class FREDToolkit(BaseToolkit):
 
         Returns:
             List[StructuredTool]: A list of tools for interacting with the FRED API.
+
         """
         return [
             StructuredTool.from_function(

@@ -8,6 +8,7 @@ Example:
     >>> from haive.tools.toolkits.dev.python.cst_toolkit.visitors.dependency_analyzer import analyze_dependencies
     >>> analyze_dependencies("/path/to/file.py")
     Dependencies in /path/to/file.py: {'os', 'sys', 'pandas', 'numpy', 'myproject.utils'}
+
 """
 
 from collections import defaultdict
@@ -25,6 +26,7 @@ class DependencyAnalyzer(cst.CSTVisitor):
     Attributes:
         imports (Dict[str, Set[str]]): Dictionary mapping file paths to sets of imported modules
         current_file (str): Path of the file currently being analyzed
+
     """
 
     def __init__(self, file_path: str | None = None):
@@ -33,6 +35,7 @@ class DependencyAnalyzer(cst.CSTVisitor):
         Args:
             file_path (Optional[str]): Path of the file to be analyzed. If not provided,
                 'current_file' is used as a placeholder key.
+
         """
         super().__init__()
         self.imports = defaultdict(set)
@@ -46,6 +49,7 @@ class DependencyAnalyzer(cst.CSTVisitor):
 
         Args:
             node (cst.Import): The import node being visited
+
         """
         for alias in node.names:
             self.imports[self.current_file].add(alias.name.value)
@@ -58,6 +62,7 @@ class DependencyAnalyzer(cst.CSTVisitor):
 
         Args:
             node (cst.ImportFrom): The import-from node being visited
+
         """
         if node.module:
             self.imports[self.current_file].add(node.module.value)
@@ -67,6 +72,7 @@ class DependencyAnalyzer(cst.CSTVisitor):
 
         Returns:
             Set[str]: Set of module names imported in the current file
+
         """
         return self.imports[self.current_file]
 
@@ -86,6 +92,7 @@ def analyze_dependencies(filepath: str) -> set[str]:
     Raises:
         FileNotFoundError: If the specified file does not exist
         IOError: If there are issues reading from the file
+
     """
     with open(filepath) as f:
         tree = cst.parse_module(f.read())
@@ -94,7 +101,6 @@ def analyze_dependencies(filepath: str) -> set[str]:
     tree.visit(analyzer)
 
     dependencies = analyzer.get_dependencies()
-    print(f"Dependencies in {filepath}: {dependencies}")
 
     return dependencies
 

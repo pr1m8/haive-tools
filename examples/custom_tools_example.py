@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Custom Tools Example - Creating and using custom tools with agents.
+"""Custom Tools Example - Creating and using custom tools with agents.
 
 This example demonstrates how to create custom tools and integrate
 them with Haive agents for specialized functionality.
@@ -8,12 +7,14 @@ them with Haive agents for specialized functionality.
 
 import asyncio
 from datetime import datetime
-from typing import Any, Dict, List
+from typing import Any
+
+from langchain_core.tools import tool
+from pydantic import BaseModel, Field
 
 from haive.agents.react import ReactAgent
 from haive.core.engine.aug_llm import AugLLMConfig
-from langchain_core.tools import tool
-from pydantic import BaseModel, Field
+
 
 # === CUSTOM TOOL EXAMPLES ===
 
@@ -73,7 +74,7 @@ class TaskInput(BaseModel):
 
 
 # Global task storage for this example
-TASK_LIST: List[Dict[str, Any]] = []
+TASK_LIST: list[dict[str, Any]] = []
 
 
 @tool(args_schema=TaskInput)

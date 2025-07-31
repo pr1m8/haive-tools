@@ -16,11 +16,12 @@ Examples:
     >>> result = estimate_age("John", country_id="US")
     >>> print(f"The estimated age for John in the US is {result.age} years old")
     The estimated age for John in the US is 69 years old
+
 """
 
-import requests
 from langchain_core.tools import StructuredTool
 from pydantic import BaseModel, Field
+import requests
 
 
 class AgifyResponse(BaseModel):
@@ -34,6 +35,7 @@ class AgifyResponse(BaseModel):
         age (int): The estimated average age for people with this name.
         count (int): The number of people with this name in the dataset.
         country_id (Optional[str]): The country code used to filter results, if provided.
+
     """
 
     name: str = Field(description="The name to estimate age for")
@@ -58,6 +60,7 @@ def estimate_age(name: str, country_id: str | None = None) -> AgifyResponse:
 
     Raises:
         requests.RequestException: If the API request fails.
+
     """
     url = "https://api.agify.io"
     params = {"name": name}

@@ -8,6 +8,10 @@ from haive.tools.tools.domain_search_tool import (
     DomainSearchInput,
     search_registered_domains,
 )
+from haive.tools.tools.duckduckgo_search import (
+    duckduckgo_search_results,
+    duckduckgo_search_tool,
+)
 from haive.tools.tools.fruityvice_tool import FruitNameInput, get_fruit_info
 from haive.tools.tools.geek_jokes_tool import GetGeekJokeInput, get_geek_joke
 from haive.tools.tools.genderize_tool import GenderizeResponse, predict_gender
@@ -35,7 +39,6 @@ from haive.tools.tools.techy_phrase_tool import (
     get_techy_phrase_text,
 )
 from haive.tools.tools.translate_tools import DeepLInput, DeepLTranslateTool
-
 
 __all__ = [
     "AgifyResponse",

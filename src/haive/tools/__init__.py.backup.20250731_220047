@@ -76,31 +76,23 @@ Each tool includes:
 - Performance monitoring and metrics
 """
 
-import lazy_loader as lazy
-
-# Define submodules to lazy load
-submodules = ["tools", "toolkits"]
-
-# Define specific attributes from submodules to expose
-submod_attrs = {
-    "tools": [
-        "arxiv_query_tool",
-        "duckduckgo_search_results",
-        "duckduckgo_search_tool",
-        "google_search_tool",
-    ],
-    "toolkits": [],  # Heavy toolkits are fully lazy loaded
-}
-
-# Attach lazy loading - this creates __getattr__, __dir__, and __all__
-__getattr__, __dir__, __all__ = lazy.attach(
-    __name__, submodules=submodules, submod_attrs=submod_attrs
+from haive.tools.tools.arxiv import arxiv_query_tool
+from haive.tools.tools.duckduckgo_search import (
+    duckduckgo_search_results,
+    duckduckgo_search_tool,
 )
+from haive.tools.tools.google.google_search import google_search_tool
 
-# Add version and other lightweight imports
+
 __version__ = "0.1.0"
 
-# Add eager imports to __all__
-__all__ += ["__version__"]
 
-# Note: Heavy toolkits and specialized tools are lazy loaded for performance
+# Import commonly used tools for convenience
+
+__all__ = [
+    "__version__",
+    "arxiv_query_tool",
+    "duckduckgo_search_results",
+    "duckduckgo_search_tool",
+    "google_search_tool",
+]

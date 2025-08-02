@@ -51,5 +51,18 @@ def initialize_google_trends():
     return [GoogleTrendsQueryRun(api_wrapper=GoogleTrendsAPIWrapper())]
 
 
-# Initialize the Google Trends tool
-google_trends_tool = initialize_google_trends()
+# Initialize the Google Trends tool with error handling
+try:
+    google_trends_tool = initialize_google_trends()
+except (ImportError, ValueError) as e:
+    # If initialization fails, create a dummy tool that raises an error when used
+    import logging
+    logging.warning(f"Failed to initialize Google Trends tool: {e}")
+    
+    def _dummy_google_trends(*args, **kwargs):
+        raise RuntimeError(
+            "Google Trends tool is not available. "
+            "Please install google-search-results and set GOOGLE_API_KEY."
+        )
+    
+    google_trends_tool = [_dummy_google_trends]

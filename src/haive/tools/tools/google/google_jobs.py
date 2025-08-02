@@ -77,5 +77,18 @@ def initialize_google_jobs():
     return load_tools(["google-jobs"])
 
 
-# Initialize the Google Jobs tool
-google_job_search_tool = initialize_google_jobs()
+# Initialize the Google Jobs tool with error handling
+try:
+    google_job_search_tool = initialize_google_jobs()
+except (ImportError, ValueError) as e:
+    # If initialization fails, create a dummy tool that raises an error when used
+    import logging
+    logging.warning(f"Failed to initialize Google Jobs tool: {e}")
+    
+    def _dummy_google_jobs(*args, **kwargs):
+        raise RuntimeError(
+            "Google Jobs tool is not available. "
+            "Please install google-search-results and set GOOGLE_API_KEY."
+        )
+    
+    google_job_search_tool = [_dummy_google_jobs]

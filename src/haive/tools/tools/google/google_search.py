@@ -62,5 +62,18 @@ def initialize_google_search():
     return load_tools(["google-search"])
 
 
-# Initialize the Google Search tool
-google_search_tool = initialize_google_search()
+# Initialize the Google Search tool with error handling
+try:
+    google_search_tool = initialize_google_search()
+except (ImportError, ValueError) as e:
+    # If initialization fails, create a dummy tool that raises an error when used
+    import logging
+    logging.warning(f"Failed to initialize Google Search tool: {e}")
+    
+    def _dummy_google_search(*args, **kwargs):
+        raise RuntimeError(
+            "Google Search tool is not available. "
+            "Please install google-search-results and set GOOGLE_API_KEY and GOOGLE_CSE_ID."
+        )
+    
+    google_search_tool = [_dummy_google_search]

@@ -1,6 +1,7 @@
 """Module exports."""
 
 from haive.tools.tools.agify_tool import AgifyResponse, estimate_age
+from haive.tools.tools.arxiv import arxiv_query_tool
 from haive.tools.tools.binlist_lookup import BinLookupInput, lookup_bin
 from haive.tools.tools.corporate_bs_tool import CorporateBS, get_random_corporate_bs
 from haive.tools.tools.dev_tools import python_repl_tool
@@ -15,6 +16,7 @@ from haive.tools.tools.duckduckgo_search import (
 from haive.tools.tools.fruityvice_tool import FruitNameInput, get_fruit_info
 from haive.tools.tools.geek_jokes_tool import GetGeekJokeInput, get_geek_joke
 from haive.tools.tools.genderize_tool import GenderizeResponse, predict_gender
+from haive.tools.tools.google.google_search import google_search_tool
 from haive.tools.tools.open_food_tool import GetProductInfoInput, get_product_info
 from haive.tools.tools.openaq_tool import get_openaq_location
 from haive.tools.tools.pokebase_tool import PokeBaseQueryInput, query_pokebase_resource
@@ -55,6 +57,9 @@ __all__ = [
     "GetReportsByCategoryInput",
     "GetReportsByDateRangeInput",
     "PokeBaseQueryInput",
+    "arxiv_query_tool",
+    "duckduckgo_search_results",
+    "duckduckgo_search_tool",
     "estimate_age",
     "get_all_reports",
     "get_fruit_info",
@@ -66,6 +71,7 @@ __all__ = [
     "get_reports_by_date_range",
     "get_techy_phrase_json",
     "get_techy_phrase_text",
+    "google_search_tool",
     "lookup_bin",
     "predict_gender",
     "python_repl_tool",

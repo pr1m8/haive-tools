@@ -34,19 +34,45 @@ Note:
 """
 
 
-# -----------------------------
-# ✅ Load credentials
-# -----------------------------
-load_dotenv(".env")
+def initialize_reddit_search():
+    """Initialize the Reddit Search API wrapper with credentials from environment variables.
 
-for var in ["REDDIT_CLIENT_ID", "REDDIT_CLIENT_SECRET", "REDDIT_USER_AGENT"]:
-    if not os.getenv(var):
-        raise ValueError(f"❌ {var} is not set in .env")
+    Returns:
+        RedditSearchAPIWrapper: Configured Reddit API wrapper.
 
-# -----------------------------
-# ✅ Define function + wrapper
-# -----------------------------
-reddit_api = RedditSearchAPIWrapper()
+    Raises:
+        ValueError: If required environment variables are not set.
+    """
+    load_dotenv(".env")
+
+    required_vars = ["REDDIT_CLIENT_ID", "REDDIT_CLIENT_SECRET", "REDDIT_USER_AGENT"]
+    missing_vars = [var for var in required_vars if not os.getenv(var)]
+
+    if missing_vars:
+        raise ValueError(
+            f"Reddit Search requires the following environment variables: {', '.join(missing_vars)}"
+        )
+
+    return RedditSearchAPIWrapper()
+
+
+# Initialize the Reddit API wrapper with error handling
+try:
+    reddit_api = initialize_reddit_search()
+except (ImportError, ValueError) as e:
+    # If initialization fails, create a dummy wrapper that raises an error when used
+    import logging
+
+    logging.warning(f"Failed to initialize Reddit Search tool: {e}")
+
+    class _DummyRedditAPI:
+        def search(self, *args, **kwargs):
+            raise RuntimeError(
+                "Reddit Search tool is not available. "
+                "Please set REDDIT_CLIENT_ID, REDDIT_CLIENT_SECRET, and REDDIT_USER_AGENT environment variables."
+            )
+
+    reddit_api = _DummyRedditAPI()
 
 
 def search_reddit(

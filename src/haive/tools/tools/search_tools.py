@@ -23,9 +23,15 @@ from tavily import TavilyClient
 
 load_dotenv(dotenv_path=".env")
 
-TAVILY_API_KEY = os.getenv("TAVILY_API_KEY")
 
-client = TavilyClient(api_key=TAVILY_API_KEY)
+def _get_tavily_client():
+    """Get Tavily client, initializing it lazily to avoid import-time API key errors."""
+    tavily_api_key = os.getenv("TAVILY_API_KEY")
+    if not tavily_api_key:
+        raise ValueError(
+            "TAVILY_API_KEY environment variable is required for Tavily search tools"
+        )
+    return TavilyClient(api_key=tavily_api_key)
 
 
 @tool
@@ -66,6 +72,7 @@ def tavily_qna(
         Exception: If the Tavily API request fails.
 
     """
+    client = _get_tavily_client()
     response = client.qna_search(
         query=query,
         search_depth=search_depth,
@@ -97,6 +104,7 @@ def tavily_extract(urls: list[str], **kwargs) -> dict:
         Exception: If the URL extraction fails or if the API request encounters an error.
 
     """
+    client = _get_tavily_client()
     response = client.extract(urls=urls, **kwargs)
     return response
 
@@ -141,6 +149,7 @@ def tavily_search_context(
         Exception: If the API request fails.
 
     """
+    client = _get_tavily_client()
     response = client.get_search_context(
         query=query,
         search_depth=search_depth,

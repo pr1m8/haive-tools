@@ -1,11 +1,11 @@
 """Module exports."""
 
-from haive.tools.toolkits.alpha_vantage import (
+from haive.tools.tools.toolkits.alpha_vantage import (
     AlphaVantageConfig,
     get_alpha_vantage_tools,
     get_client,
 )
-from haive.tools.toolkits.amadues_toolkit import (
+from haive.tools.tools.toolkits.amadues_toolkit import (
     AmadeusToolkit,
     AmadeusToolkitConfig,
     create_client,
@@ -13,20 +13,20 @@ from haive.tools.toolkits.amadues_toolkit import (
     from_config,
     get_tools,
 )
-from haive.tools.toolkits.base import (
+from haive.tools.tools.toolkits.base import (
     HaiveToolkit,
     HaiveToolkitConfig,
     from_config,
     get_tools,
 )
-from haive.tools.toolkits.chuck_norris_jokes_toolkit import (
+from haive.tools.tools.toolkits.chuck_norris_jokes_toolkit import (
     Joke,
     get_available_categories,
     get_random_joke,
     get_random_joke_by_category,
     search_jokes,
 )
-from haive.tools.toolkits.citydsk_toolkit import (
+from haive.tools.tools.toolkits.citydsk_toolkit import (
     CitySDKLinkedDataQueryInput,
     CitySDKToolkit,
     CitySDKTourismPOIInput,
@@ -34,13 +34,13 @@ from haive.tools.toolkits.citydsk_toolkit import (
     get_tourism_pois,
     run_citysdk_linkeddata_query,
 )
-from haive.tools.toolkits.clickup_toolkit import get_clickup_toolkit
-from haive.tools.toolkits.financialdatasets_toolkit import (
+from haive.tools.tools.toolkits.clickup_toolkit import get_clickup_toolkit
+from haive.tools.tools.toolkits.financialdatasets_toolkit import (
     FinancialDatasetsConfig,
     get_client,
     get_financial_datasets_tools,
 )
-from haive.tools.toolkits.fred_toolkit import (
+from haive.tools.tools.toolkits.fred_toolkit import (
     CategoryInput,
     FREDToolkit,
     SeriesInput,
@@ -53,7 +53,7 @@ from haive.tools.toolkits.fred_toolkit import (
     get_series_observations,
     get_tools,
 )
-from haive.tools.toolkits.free_to_game_toolkit import (
+from haive.tools.tools.toolkits.free_to_game_toolkit import (
     FilterGamesByTagsInput,
     FreeToGameToolkit,
     GetAllGamesInput,
@@ -63,19 +63,19 @@ from haive.tools.toolkits.free_to_game_toolkit import (
     get_game_details,
     get_tools,
 )
-from haive.tools.toolkits.google_calendar import (
+from haive.tools.tools.toolkits.google_calendar import (
     CalendarEvent,
     CalendarResponse,
     initialize_google_calendar_toolkit,
 )
-from haive.tools.toolkits.jira_toolkit import (
+from haive.tools.tools.toolkits.jira_toolkit import (
     JiraToolManager,
     create_agent,
     create_issue,
     get_projects,
     jql_search,
 )
-from haive.tools.toolkits.lcbo_toolkit import (
+from haive.tools.tools.toolkits.lcbo_toolkit import (
     GetLCBOProductInput,
     LCBOApiToolkit,
     SearchLCBOProductsInput,
@@ -83,15 +83,15 @@ from haive.tools.toolkits.lcbo_toolkit import (
     get_tools,
     search_lcbo_products,
 )
-from haive.tools.toolkits.mongodb_toolkit import get_mongodb_toolkit
-from haive.tools.toolkits.nla_toolkit import (
+from haive.tools.tools.toolkits.mongodb_toolkit import get_mongodb_toolkit
+from haive.tools.tools.toolkits.nla_toolkit import (
     NLAToolkitConfig,
     StructuredNLAToolkit,
     create_llm,
     from_config,
     get_tools,
 )
-from haive.tools.toolkits.openlibrary_toolkit import (
+from haive.tools.tools.toolkits.openlibrary_toolkit import (
     AuthorSearchInput,
     BookSearchInput,
     CoverInput,
@@ -99,7 +99,7 @@ from haive.tools.toolkits.openlibrary_toolkit import (
     search_authors,
     search_books,
 )
-from haive.tools.toolkits.poetry_db_toolkit import (
+from haive.tools.tools.toolkits.poetry_db_toolkit import (
     AuthorSearchInput,
     LineSearchInput,
     RandomPoemInput,
@@ -110,9 +110,9 @@ from haive.tools.toolkits.poetry_db_toolkit import (
     search_poem_by_title,
     search_poems_by_author,
 )
-from haive.tools.toolkits.polygon_toolkit import create_polygon_toolkit
-from haive.tools.toolkits.request_tools import RequestsGetInput, RequestsPostInput
-from haive.tools.toolkits.rick_and_morty_toolkit import (
+from haive.tools.tools.toolkits.polygon_toolkit import create_polygon_toolkit
+from haive.tools.tools.toolkits.request_tools import RequestsGetInput, RequestsPostInput
+from haive.tools.tools.toolkits.rick_and_morty_toolkit import (
     FilterCharactersInput,
     GetCharacterByIDInput,
     GraphQLCharactersQueryInput,
@@ -124,16 +124,16 @@ from haive.tools.toolkits.rick_and_morty_toolkit import (
     graphql_characters_query,
     graphql_location_by_id,
 )
-from haive.tools.toolkits.rps_101_toolkit import (
+from haive.tools.tools.toolkits.rps_101_toolkit import (
     ObjectNameInput,
     RPS101Toolkit,
     RPSMatchInput,
     get_tools,
 )
-from haive.tools.toolkits.slack_toolkit import get_slack_tools
-from haive.tools.toolkits.stack_exchange_toolkit import get_stackexchange_tools
-from haive.tools.toolkits.stripe_toolkit import create_stripe_toolkit
-from haive.tools.toolkits.trip_advisor_toolkit import (
+from haive.tools.tools.toolkits.slack_toolkit import get_slack_tools
+from haive.tools.tools.toolkits.stack_exchange_toolkit import get_stackexchange_tools
+from haive.tools.tools.toolkits.stripe_toolkit import create_stripe_toolkit
+from haive.tools.tools.toolkits.trip_advisor_toolkit import (
     LocationDetailsInput,
     LocationPhotosInput,
     LocationReviewsInput,
@@ -146,13 +146,13 @@ from haive.tools.toolkits.trip_advisor_toolkit import (
     search_locations,
     tripadvisor_get,
 )
-from haive.tools.toolkits.twilio_toolkit import get_twilio_tools
-from haive.tools.toolkits.useless_facts_toolkit import (
+from haive.tools.tools.toolkits.twilio_toolkit import get_twilio_tools
+from haive.tools.tools.toolkits.useless_facts_toolkit import (
     FactInput,
     get_random_fact,
     get_todays_fact,
 )
-from haive.tools.toolkits.vbible_toolkit import (
+from haive.tools.tools.toolkits.vbible_toolkit import (
     BibleQueryInput,
     ChapterVersesInput,
     RandomVerseInput,
@@ -169,7 +169,7 @@ from haive.tools.toolkits.vbible_toolkit import (
     test_query_multi_verse,
     test_query_single_verse,
 )
-from haive.tools.toolkits.weather import (
+from haive.tools.tools.toolkits.weather import (
     CityCountryWeatherInput,
     WeatherData,
     c_to_f,
@@ -177,7 +177,7 @@ from haive.tools.toolkits.weather import (
     from_openweather_response,
     get_weather_by_city_country,
 )
-from haive.tools.toolkits.yugiioh_toolkit import (
+from haive.tools.tools.toolkits.yugiioh_toolkit import (
     GetCardInfoInput,
     get_archetypes,
     get_card_info,
@@ -185,7 +185,6 @@ from haive.tools.toolkits.yugiioh_toolkit import (
     get_database_version,
     get_random_card,
 )
-
 
 __all__ = [
     "AlphaVantageConfig",

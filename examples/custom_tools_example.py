@@ -164,8 +164,8 @@ def text_analyzer(text: str) -> str:
    • Shortest word: "{shortest_word}" ({len(shortest_word)} chars)
 
 📈 Readability:
-   • Words per sentence: {word_count/sentence_count:.1f}
-   • Characters per word: {char_count/word_count:.1f}"""
+   • Words per sentence: {word_count / sentence_count:.1f}
+   • Characters per word: {char_count / word_count:.1f}"""
 
     return analysis
 
@@ -210,7 +210,6 @@ async def main():
     ]
 
     for _i, task in enumerate(tasks, 1):
-
         with contextlib.suppress(Exception):
             await agent.arun(task)
 

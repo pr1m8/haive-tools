@@ -163,3 +163,24 @@ if __name__ == "__main__":
 
     for _tool in tools:
         pass
+
+
+# Module-level functions for backward compatibility
+def create_client(config: AmadeusToolkitConfig) -> Client:
+    """Create an Amadeus client from config."""
+    return config.create_client()
+
+
+def create_llm(config: AmadeusToolkitConfig) -> BaseLanguageModel | None:
+    """Create an LLM from config."""
+    return config.create_llm()
+
+
+def from_config(config: AmadeusToolkitConfig) -> AmadeusToolkit:
+    """Create an AmadeusToolkit from config."""
+    return AmadeusToolkit.from_config(config)
+
+
+def get_tools(toolkit: AmadeusToolkit) -> list[BaseTool]:
+    """Get tools from toolkit."""
+    return toolkit.get_tools()

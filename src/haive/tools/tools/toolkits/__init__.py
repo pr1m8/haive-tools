@@ -3,7 +3,6 @@
 from haive.tools.tools.toolkits.alpha_vantage import (
     AlphaVantageConfig,
     get_alpha_vantage_tools,
-    get_client,
 )
 from haive.tools.tools.toolkits.amadues_toolkit import (
     AmadeusToolkit,

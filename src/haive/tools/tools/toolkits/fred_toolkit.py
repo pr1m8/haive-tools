@@ -28,10 +28,9 @@ Examples:
 import os
 from typing import Any
 
+import requests
 from langchain_core.tools import BaseToolkit, StructuredTool
 from pydantic import BaseModel, Field
-import requests
-
 
 # Environment configuration
 FRED_API_KEY = os.getenv("FRED_API_KEY")

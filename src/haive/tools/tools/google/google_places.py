@@ -68,12 +68,13 @@ try:
 except (ImportError, ValueError) as e:
     # If initialization fails, create a dummy tool that raises an error when used
     import logging
+
     logging.warning(f"Failed to initialize Google Places tool: {e}")
-    
+
     def _dummy_google_places(*args, **kwargs):
         raise RuntimeError(
             "Google Places tool is not available. "
             "Please install google-search-results and set GOOGLE_API_KEY."
         )
-    
+
     google_places_tool = [_dummy_google_places]

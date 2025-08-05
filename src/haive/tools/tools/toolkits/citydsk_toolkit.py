@@ -16,11 +16,10 @@ Attributes:
 
 """
 
+import requests
 from langchain_core.tools import StructuredTool
 from langchain_core.tools.base import BaseToolkit
 from pydantic import BaseModel, Field
-import requests
-
 
 # --- Linked Data Tool ---
 

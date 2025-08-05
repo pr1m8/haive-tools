@@ -26,9 +26,9 @@ Note:
 
 """
 
+import requests
 from langchain_core.tools import StructuredTool
 from pydantic import AnyUrl, BaseModel, Field
-import requests
 
 
 class DomainSearchInput(BaseModel):

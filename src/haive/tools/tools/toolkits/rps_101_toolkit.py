@@ -26,10 +26,9 @@ Examples:
 
 """
 
+import requests
 from langchain_core.tools import BaseToolkit, StructuredTool
 from pydantic import BaseModel, Field
-import requests
-
 
 BASE_URL = "https://rps101.pythonanywhere.com/api/v1"
 

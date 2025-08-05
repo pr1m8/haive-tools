@@ -19,8 +19,8 @@ Examples:
 import base64
 from typing import Any
 
-from pydantic import BaseModel, Field
 import requests
+from pydantic import BaseModel, Field
 
 
 class RepositorySettings(BaseModel):

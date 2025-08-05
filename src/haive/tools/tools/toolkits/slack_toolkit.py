@@ -26,10 +26,9 @@ Typical usage:
 import getpass
 import os
 
+from haive.config.config import Config
 from langchain_community.agent_toolkits import SlackToolkit
 from langchain_core.tools import BaseTool
-
-from haive.config.config import Config
 
 
 def get_slack_tools() -> list[BaseTool]:

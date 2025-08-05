@@ -11,11 +11,10 @@ Requires a TripAdvisor API key set as TRIPADVISOR_API_KEY in environment variabl
 
 import os
 
+import requests
 from dotenv import load_dotenv
 from langchain_core.tools import tool
 from pydantic import BaseModel, Field
-import requests
-
 
 load_dotenv()
 TRIPADVISOR_API_KEY = os.getenv("TRIPADVISOR_API_KEY")

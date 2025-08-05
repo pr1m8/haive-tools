@@ -33,11 +33,9 @@ import getpass
 import os
 
 from dotenv import load_dotenv
+from haive.config.config import Config
 from langchain_community.agent_toolkits.load_tools import load_tools
 from langchain_community.utilities.wolfram_alpha import WolframAlphaAPIWrapper
-
-from haive.config.config import Config
-
 
 # Load environment variables
 load_dotenv(".env")

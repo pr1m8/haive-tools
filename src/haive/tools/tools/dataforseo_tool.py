@@ -17,11 +17,9 @@ Requires:
 
 """
 
+from haive.config.config import Config
 from langchain_community.agent_toolkits.load_tools import load_tools
 from langchain_community.utilities.dataforseo_api_search import DataForSeoAPIWrapper
-
-from haive.config.config import Config
-
 
 if not Config.DATAFORSEO_LOGIN or not Config.DATAFORSEO_PASSWORD:
     raise ValueError("DATAFORSEO_LOGIN and DATAFORSEO_PASSWORD must be set")

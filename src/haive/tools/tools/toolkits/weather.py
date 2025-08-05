@@ -31,11 +31,10 @@ import os
 import re
 from typing import Literal
 
+from haive.config.config import Config
 from langchain_community.agent_toolkits.load_tools import load_tools
 from langchain_core.tools import StructuredTool
 from pydantic import BaseModel, Field
-
-from haive.config.config import Config
 
 
 class CityCountryWeatherInput(BaseModel):

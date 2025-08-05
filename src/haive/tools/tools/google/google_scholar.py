@@ -65,12 +65,13 @@ try:
 except (ImportError, ValueError) as e:
     # If initialization fails, create a dummy tool that raises an error when used
     import logging
+
     logging.warning(f"Failed to initialize Google Scholar tool: {e}")
-    
+
     def _dummy_google_scholar(*args, **kwargs):
         raise RuntimeError(
             "Google Scholar tool is not available. "
             "Please install google-search-results and set SERP_API_KEY."
         )
-    
+
     google_scholar_tool = [_dummy_google_scholar]

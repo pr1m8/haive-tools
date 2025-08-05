@@ -16,9 +16,9 @@ Attributes:
 
 """
 
+import requests
 from langchain_core.tools import StructuredTool
 from pydantic import BaseModel, Field
-import requests
 
 from haive.haive.toolkits.vbible_toolkit import (
     get_chapter_verses,
@@ -27,7 +27,6 @@ from haive.haive.toolkits.vbible_toolkit import (
     list_translations,
     query_bible_by_reference,
 )
-
 
 BASE_URL = "https://bible-api.com"
 DATA_URL = "https://bible-api.com/data"

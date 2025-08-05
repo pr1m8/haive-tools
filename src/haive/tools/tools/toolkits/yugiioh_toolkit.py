@@ -23,10 +23,10 @@ Examples:
 
 """
 
+import requests
 from langchain.agents import Tool
 from langchain_core.tools import StructuredTool
 from pydantic.v1 import BaseModel, Field
-import requests
 
 
 # Schema for querying card info

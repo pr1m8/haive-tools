@@ -10,11 +10,11 @@ from haive.tools.tools.duckduckgo_search import (
 )
 from haive.tools.tools.google.google_search import google_search_tool
 from haive.tools.tools.search_tools import (
-    tavily_search_tool,
-    tavily_search_context,
-    tavily_qna,
-    tavily_extract,
     scrape_webpages,
+    tavily_extract,
+    tavily_qna,
+    tavily_search_context,
+    tavily_search_tool,
 )
 
 # Alias for documentation compatibility

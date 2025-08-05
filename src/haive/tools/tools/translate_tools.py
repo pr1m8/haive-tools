@@ -32,7 +32,6 @@ import dotenv
 from langchain_core.tools import BaseTool
 from pydantic import BaseModel, Field
 
-
 dotenv.load_dotenv(".env")
 
 # DeepL-supported languages

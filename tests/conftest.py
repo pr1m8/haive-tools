@@ -103,24 +103,18 @@ class MockInvokableEngine(InvokableEngine):
 
     engine_type: EngineType = EngineType.LLM
     id: str = Field(default_factory=lambda: generate_test_id("mock-invokable"))
-    name: str = Field(
-        default_factory=lambda: f"mock_invokable_engine_{uuid.uuid4().hex[:4]}"
-    )
+    name: str = Field(default_factory=lambda: f"mock_invokable_engine_{uuid.uuid4().hex[:4]}")
 
     def create_runnable(self, runnable_config: RunnableConfig | None = None) -> Any:
         return self  # Runnable is the engine itself for testing
 
-    def invoke(
-        self, input_data: Any, runnable_config: RunnableConfig | None = None
-    ) -> Any:
+    def invoke(self, input_data: Any, runnable_config: RunnableConfig | None = None) -> Any:
         # Return input data plus a marker
         if isinstance(input_data, dict):
             return {**input_data, "invoked_by": self.name}
         return {"result": input_data, "invoked_by": self.name}
 
-    async def ainvoke(
-        self, input_data: Any, runnable_config: RunnableConfig | None = None
-    ) -> Any:
+    async def ainvoke(self, input_data: Any, runnable_config: RunnableConfig | None = None) -> Any:
         # Async version of invoke
         return self.invoke(input_data, runnable_config)
 
@@ -130,9 +124,7 @@ class MockNonInvokableEngine(NonInvokableEngine):
 
     engine_type: EngineType = EngineType.EMBEDDINGS
     id: str = Field(default_factory=lambda: generate_test_id("mock-non-invokable"))
-    name: str = Field(
-        default_factory=lambda: f"mock_non_invokable_engine_{uuid.uuid4().hex[:4]}"
-    )
+    name: str = Field(default_factory=lambda: f"mock_non_invokable_engine_{uuid.uuid4().hex[:4]}")
 
     def create_runnable(self, runnable_config: RunnableConfig | None = None) -> Any:
         # Return a simple dictionary indicating creation
@@ -207,9 +199,7 @@ def real_aug_llm_engine() -> AugLLMConfig:
 def real_embeddings_engine() -> EmbeddingsEngineConfig:
     """Provides a real Embeddings engine config instance."""
     # Using HuggingFace embeddings as it's often locally runnable
-    hf_config = HuggingFaceEmbeddingConfig(
-        model="sentence-transformers/all-MiniLM-L6-v2"
-    )
+    hf_config = HuggingFaceEmbeddingConfig(model="sentence-transformers/all-MiniLM-L6-v2")
     return EmbeddingsEngineConfig(
         id=generate_test_id("real-embeddings"),
         name=f"real_embeddings_{uuid.uuid4().hex[:4]}",

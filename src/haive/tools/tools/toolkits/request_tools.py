@@ -12,7 +12,8 @@ The module includes tools for:
 For detailed documentation on the underlying implementation, see:
 https://python.langchain.com/docs/integrations/tools/requests/
 
-Typical usage:
+Typical usage::
+
     from haive.tools.toolkits.request_tools import requests_get, requests_post
 
     # Make a GET request

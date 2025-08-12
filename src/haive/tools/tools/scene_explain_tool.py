@@ -19,11 +19,26 @@ Note:
 """
 
 from dotenv import load_dotenv
-from langchain_community.agent_toolkits.load_tools import load_tools
-
+from langchain.agents import load_tools
 
 # Load environment variables from .env file
 load_dotenv(".env")
 
+
+def get_scene_explain_tool():
+    """Get SceneXplain tool with proper error handling for missing credentials.
+
+    Returns:
+        list: List containing SceneXplain tool if credentials are available,
+              empty list otherwise.
+    """
+    try:
+        return load_tools(["sceneXplain"])
+    except Exception as e:
+        # Return empty list if credentials are missing or other issues occur
+        print(f"Warning: SceneXplain tool unavailable: {e}")
+        return []
+
+
 # Load the SceneXplain tool
-scene_explain_tool = load_tools(["sceneXplain"])
+scene_explain_tool = get_scene_explain_tool()

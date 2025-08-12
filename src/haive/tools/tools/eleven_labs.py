@@ -24,11 +24,26 @@ Example:
 """
 
 from dotenv import load_dotenv
-from langchain_community.agent_toolkits.load_tools import load_tools
-
+from langchain.agents import load_tools
 
 # Load environment variables from .env file
 load_dotenv(".env")
 
+
+def get_eleven_labs_text2speech_tool():
+    """Get Eleven Labs text-to-speech tool with proper error handling for missing credentials.
+
+    Returns:
+        list: List containing Eleven Labs text-to-speech tool if credentials are available,
+              empty list otherwise.
+    """
+    try:
+        return load_tools(["eleven_labs_text2speech"])
+    except Exception as e:
+        # Return empty list if credentials are missing or other issues occur
+        print(f"Warning: Eleven Labs text-to-speech tool unavailable: {e}")
+        return []
+
+
 # Initialize the Eleven Labs text-to-speech tool
-eleven_labs_text2speech_tool = load_tools(["eleven_labs_text2speech"])
+eleven_labs_text2speech_tool = get_eleven_labs_text2speech_tool()

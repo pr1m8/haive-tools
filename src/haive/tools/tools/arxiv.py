@@ -11,11 +11,24 @@ Examples:
 
 """
 
-from langchain_community.agent_toolkits.load_tools import load_tools
+from langchain.agents import load_tools
+
+
+def get_arxiv_query_tool():
+    """Get ArXiv query tool with proper error handling for missing dependencies.
+
+    Returns:
+        list: List containing ArXiv query tool if available,
+              empty list otherwise.
+    """
+    try:
+        return load_tools(["arxiv"])
+    except Exception as e:
+        # Return empty list if dependencies are missing or other issues occur
+        print(f"Warning: ArXiv query tool unavailable: {e}")
+        return []
 
 
 # Load ArXiv tool from LangChain community tools
 # This provides capabilities to search and retrieve papers from arXiv.org
-arxiv_query_tool = load_tools(
-    ["arxiv"],
-)
+arxiv_query_tool = get_arxiv_query_tool()

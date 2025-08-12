@@ -31,8 +31,23 @@ Note:
 
 """
 
-from langchain_community.agent_toolkits.load_tools import load_tools
+from langchain.agents import load_tools
+
+
+def get_pubmed_tools():
+    """Get PubMed tools with proper error handling for missing credentials.
+
+    Returns:
+        list: List containing PubMed tools if available,
+              empty list otherwise.
+    """
+    try:
+        return load_tools(["pubmed"])
+    except Exception as e:
+        # Return empty list if credentials are missing or other issues occur
+        print(f"Warning: PubMed tools unavailable: {e}")
+        return []
 
 
 # Load PubMed tools from LangChain's available tools
-pubmed_tools = load_tools(["pubmed"])
+pubmed_tools = get_pubmed_tools()

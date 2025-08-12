@@ -18,20 +18,36 @@ Requires:
 """
 
 from haive.config.config import Config
-from langchain_community.agent_toolkits.load_tools import load_tools
+from langchain.agents import load_tools
 from langchain_community.utilities.dataforseo_api_search import DataForSeoAPIWrapper
 
-if not Config.DATAFORSEO_LOGIN or not Config.DATAFORSEO_PASSWORD:
-    raise ValueError("DATAFORSEO_LOGIN and DATAFORSEO_PASSWORD must be set")
 
+def get_dataforseo_tools():
+    """Get DataForSEO tools with proper error handling for missing credentials.
 
-# Initialize the DataForSEO API wrapper
-dataforseo = DataForSeoAPIWrapper()
+    Returns:
+        list: List containing DataForSEO tools if credentials are available,
+              empty list otherwise.
+    """
+    try:
+        if not Config.DATAFORSEO_LOGIN or not Config.DATAFORSEO_PASSWORD:
+            raise ValueError("DATAFORSEO_LOGIN and DATAFORSEO_PASSWORD must be set")
 
-# Test the DataForSEO API wrapper with a sample query
-result = dataforseo.run(
-    "https://python.langchain.com/docs/integrations/tools/dataforseo/"
-)
+        # Initialize the DataForSEO API wrapper
+        dataforseo = DataForSeoAPIWrapper()
+
+        # Test the DataForSEO API wrapper with a sample query
+        result = dataforseo.run(
+            "https://python.langchain.com/docs/integrations/tools/dataforseo/"
+        )
+
+        # Load the DataForSEO tools
+        return load_tools(["dataforseo-api"])
+    except Exception as e:
+        # Return empty list if credentials are missing or other issues occur
+        print(f"Warning: DataForSEO tools unavailable: {e}")
+        return []
+
 
 # Load the DataForSEO tools
-dataforseo_tools = load_tools(["dataforseo-api"])
+dataforseo_tools = get_dataforseo_tools()

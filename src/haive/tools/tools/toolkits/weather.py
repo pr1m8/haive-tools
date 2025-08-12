@@ -32,7 +32,7 @@ import re
 from typing import Literal
 
 from haive.config.config import Config
-from langchain_community.agent_toolkits.load_tools import load_tools
+from langchain.agents import load_tools
 from langchain_core.tools import StructuredTool
 from pydantic import BaseModel, Field
 
@@ -228,8 +228,11 @@ def get_weather_by_city_country(
         )
 
     location = f"{city},{country}"
-    tool = load_tools(["openweathermap-api"])[0]
-    result = tool.run(location)
+    try:
+        tool = load_tools(["openweathermap-api"])[0]
+        result = tool.run(location)
+    except Exception as e:
+        raise Exception(f"Weather API unavailable: {e}")
 
     if parse:
         data = WeatherData.from_openweather_response(result)

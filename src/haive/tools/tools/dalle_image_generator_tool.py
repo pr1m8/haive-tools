@@ -18,11 +18,26 @@ Note:
 """
 
 from dotenv import load_dotenv
-from langchain_community.agent_toolkits.load_tools import load_tools
-
+from langchain.agents import load_tools
 
 # Load environment variables from .env file
 load_dotenv(".env")
 
+
+def get_dalle_image_generator_tool():
+    """Get DALL-E image generator tool with proper error handling for missing credentials.
+
+    Returns:
+        list: List containing DALL-E image generator tool if credentials are available,
+              empty list otherwise.
+    """
+    try:
+        return load_tools(["dalle-image-generator"])
+    except Exception as e:
+        # Return empty list if credentials are missing or other issues occur
+        print(f"Warning: DALL-E image generator tool unavailable: {e}")
+        return []
+
+
 # Load the DALL-E image generator tool
-tools = load_tools(["dalle-image-generator"])
+tools = get_dalle_image_generator_tool()

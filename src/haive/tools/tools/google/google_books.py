@@ -19,7 +19,7 @@ Examples:
 import os
 
 from dotenv import load_dotenv
-from langchain_community.agent_toolkits.load_tools import load_tools
+from langchain.agents import load_tools
 from pydantic import BaseModel, Field
 
 

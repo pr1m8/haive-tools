@@ -17,7 +17,7 @@ Typical usage:
 
 """
 
-from langchain_community.agent_toolkits.load_tools import load_tools
+from langchain.agents import load_tools
 from langchain_core.tools import BaseTool
 
 
@@ -28,13 +28,16 @@ def get_stackexchange_tools() -> list[BaseTool]:
     particularly Stack Overflow, to find answers to technical questions.
 
     Returns:
-        A list of BaseTool instances for interacting with Stack Exchange.
-
-    Raises:
-        ValueError: If the STACKEXCHANGE_API_KEY environment variable is not set.
+        A list of BaseTool instances for interacting with Stack Exchange,
+        empty list if credentials are missing or other issues occur.
 
     """
-    return load_tools(["stackexchange"])
+    try:
+        return load_tools(["stackexchange"])
+    except Exception as e:
+        # Return empty list if credentials are missing or other issues occur
+        print(f"Warning: Stack Exchange tools unavailable: {e}")
+        return []
 
 
 # Export the tools for easy access

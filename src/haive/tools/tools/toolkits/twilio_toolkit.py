@@ -20,11 +20,10 @@ Typical usage:
 
 """
 
-from langchain_community.agent_toolkits.load_tools import load_tools
+from haive.config.config import Config
+from langchain.agents import load_tools
 from langchain_community.utilities.twilio import TwilioAPIWrapper
 from langchain_core.tools import BaseTool
-
-from haive.config.config import Config
 
 
 def get_twilio_tools() -> list[BaseTool]:
@@ -35,24 +34,40 @@ def get_twilio_tools() -> list[BaseTool]:
     in the environment.
 
     Returns:
-        A list of BaseTool instances for interacting with Twilio.
-
-    Raises:
-        ValueError: If TWILIO_ACCOUNT_SID or TWILIO_AUTH_TOKEN is not set.
+        A list of BaseTool instances for interacting with Twilio,
+        empty list if credentials are missing or other issues occur.
 
     """
-    # Check if Twilio credentials are set
-    if not Config.TWILIO_ACCOUNT_SID:
-        raise ValueError("TWILIO_ACCOUNT_SID is not set")
-    if not Config.TWILIO_AUTH_TOKEN:
-        raise ValueError("TWILIO_AUTH_TOKEN is not set")
+    try:
+        # Check if Twilio credentials are set
+        if not Config.TWILIO_ACCOUNT_SID:
+            raise ValueError("TWILIO_ACCOUNT_SID is not set")
+        if not Config.TWILIO_AUTH_TOKEN:
+            raise ValueError("TWILIO_AUTH_TOKEN is not set")
 
-    # Load the Twilio tools
-    return load_tools(["twilio"])
+        # Load the Twilio tools
+        return load_tools(["twilio"])
+    except Exception as e:
+        # Return empty list if credentials are missing or other issues occur
+        print(f"Warning: Twilio tools unavailable: {e}")
+        return []
+
+
+def get_twilio_wrapper():
+    """Get Twilio API wrapper with proper error handling.
+
+    Returns:
+        TwilioAPIWrapper instance if credentials are available, None otherwise.
+    """
+    try:
+        return TwilioAPIWrapper()
+    except Exception as e:
+        print(f"Warning: Twilio wrapper unavailable: {e}")
+        return None
 
 
 # Create the Twilio API wrapper
-twilio_wrapper = TwilioAPIWrapper()
+twilio_wrapper = get_twilio_wrapper()
 
 # Load the Twilio tools
 twilio_toolkit = get_twilio_tools()

@@ -34,34 +34,59 @@ import os
 
 from dotenv import load_dotenv
 from haive.config.config import Config
-from langchain_community.agent_toolkits.load_tools import load_tools
+from langchain.agents import load_tools
 from langchain_community.utilities.wolfram_alpha import WolframAlphaAPIWrapper
 
 # Load environment variables
 load_dotenv(".env")
 
-# Ensure the Wolfram Alpha App ID is available
-if not Config.WOLFRAM_ALPHA_APPID:
-    try:
-        os.environ["WOLFRAM_ALPHA_APPID"] = getpass.getpass(
-            "Enter your Wolfram Alpha App ID: "
-        )
-    except Exception:
-        raise ValueError(
-            "WOLFRAM_ALPHA_APPID is required to use the Wolfram Alpha tool"
-        )
 
-# Initialize the Wolfram Alpha API wrapper
-wolfram = WolframAlphaAPIWrapper()
+def get_wolfram_alpha_tools():
+    """Get Wolfram Alpha tools with proper error handling for missing credentials.
+
+    Returns:
+        list: List containing Wolfram Alpha tools if credentials are available,
+              empty list otherwise.
+    """
+    try:
+        # Ensure the Wolfram Alpha App ID is available
+        if not Config.WOLFRAM_ALPHA_APPID:
+            try:
+                os.environ["WOLFRAM_ALPHA_APPID"] = getpass.getpass(
+                    "Enter your Wolfram Alpha App ID: "
+                )
+            except Exception:
+                raise ValueError(
+                    "WOLFRAM_ALPHA_APPID is required to use the Wolfram Alpha tool"
+                )
+
+        # Initialize the Wolfram Alpha API wrapper
+        wolfram = WolframAlphaAPIWrapper()
+
+        # Load the Wolfram Alpha tools from LangChain
+        tools = load_tools(["wolfram-alpha"])
+
+        # Update tool metadata for clarity
+        if tools and len(tools) > 0:
+            tools[0].name = "wolfram_alpha"
+            tools[0].description = (
+                "Use Wolfram Alpha to solve mathematical, scientific, and computational questions. "
+                "Useful for calculations, solving equations, unit conversions, and factual queries "
+                "that require precise answers. Input should be a clear, specific question."
+            )
+
+        return tools
+    except Exception as e:
+        # Return empty list if credentials are missing or other issues occur
+        print(f"Warning: Wolfram Alpha tools unavailable: {e}")
+        return []
+
 
 # Load the Wolfram Alpha tools from LangChain
-wolfram_alpha_tools = load_tools(["wolfram-alpha"])
+wolfram_alpha_tools = get_wolfram_alpha_tools()
 
-# Update tool metadata for clarity
-if wolfram_alpha_tools and len(wolfram_alpha_tools) > 0:
-    wolfram_alpha_tools[0].name = "wolfram_alpha"
-    wolfram_alpha_tools[0].description = (
-        "Use Wolfram Alpha to solve mathematical, scientific, and computational questions. "
-        "Useful for calculations, solving equations, unit conversions, and factual queries "
-        "that require precise answers. Input should be a clear, specific question."
-    )
+# Initialize the Wolfram Alpha API wrapper for direct use
+try:
+    wolfram = WolframAlphaAPIWrapper()
+except Exception:
+    wolfram = None

@@ -17,8 +17,23 @@ Note:
 
 """
 
-from langchain_community.agent_toolkits import load_tools
+from langchain.agents import load_tools
 
 
-# Initialize the Brave Search tool
-brave_search_tool = load_tools(["brave-search"])
+def get_brave_search_tool():
+    """Get Brave Search tool with proper error handling for missing credentials.
+
+    Returns:
+        list: List containing Brave Search tool if credentials are available,
+              empty list otherwise.
+    """
+    try:
+        return load_tools(["brave-search"])
+    except Exception as e:
+        # Return empty list if credentials are missing or other issues occur
+        print(f"Warning: Brave Search tool unavailable: {e}")
+        return []
+
+
+# Initialize the Brave Search tool only if credentials are available
+brave_search_tool = get_brave_search_tool()

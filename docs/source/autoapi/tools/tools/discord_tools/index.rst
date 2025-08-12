@@ -1,0 +1,38 @@
+
+:py:mod:`tools.tools.discord_tools`
+===================================
+
+.. py:module:: tools.tools.discord_tools
+
+Discord integration toolkit for Haive agents.
+
+This module provides a toolkit for interacting with Discord through the LangChain
+Discord integration. It allows agents to perform various Discord operations like
+sending messages, reading channels, and managing server content.
+
+The module loads necessary environment variables from a .env file and initializes
+the Discord toolkit, making it available for use in agent workflows.
+
+Requires:
+    - Discord bot token and permissions set in environment variables
+    - langchain_discord_shikenso package
+    - python-dotenv package
+    - Proper Discord application setup with API access
+
+.. rubric:: Example
+
+To use the Discord tools in an agent:
+```python
+from haive.tools.tools.discord_tools import discord_tools
+
+# Add to your agent's toolkit
+agent = Agent(tools=discord_tools)
+```
+
+
+.. autolink-examples:: tools.tools.discord_tools
+   :collapse:
+
+
+
+

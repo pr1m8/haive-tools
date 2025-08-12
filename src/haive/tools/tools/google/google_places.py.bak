@@ -39,7 +39,7 @@ class GooglePlacesResult(BaseModel):
 
 
 def initialize_google_places():
-    """Initialize the Google Places API wrapper with credentials from environment.
+    """Initialize the Google Places API wrapper with credentials from environment
     variables.
 
     This function loads environment variables and configures the Google Places API client.

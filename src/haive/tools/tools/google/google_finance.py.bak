@@ -37,7 +37,7 @@ class GoogleFinanceResult(BaseModel):
 
 
 def initialize_google_finance():
-    """Initialize the Google Finance API wrapper with credentials from environment.
+    """Initialize the Google Finance API wrapper with credentials from environment
     variables.
 
     This function loads environment variables and configures the Google Finance API client.

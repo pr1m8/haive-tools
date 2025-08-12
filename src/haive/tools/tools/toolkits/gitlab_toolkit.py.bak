@@ -1,4 +1,4 @@
-"""Gitlab Toolkit The Gitlab toolkit contains tools that enable an LLM agent to interact.
+"""Gitlab Toolkit The Gitlab toolkit contains tools that enable an LLM agent to interact
 with a gitlab repository. The tool is a wrapper for the python-gitlab library.
 
 Quickstart
@@ -53,6 +53,7 @@ from langchain.agents import AgentType, initialize_agent
 from langchain_community.agent_toolkits.gitlab.toolkit import GitLabToolkit
 from langchain_community.utilities.gitlab import GitLabAPIWrapper
 from langchain_openai import OpenAI
+
 
 # API Reference: AgentType | initialize_agent | GitLabToolkit |
 # GitLabAPIWrapper | OpenAI

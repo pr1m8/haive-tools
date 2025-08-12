@@ -51,7 +51,7 @@ class GoogleLensInput(BaseModel):
 
 
 def initialize_google_lens():
-    """Initialize the Google Lens API wrapper with credentials from environment.
+    """Initialize the Google Lens API wrapper with credentials from environment
     variables.
 
     This function loads environment variables and configures the Google Lens API client.

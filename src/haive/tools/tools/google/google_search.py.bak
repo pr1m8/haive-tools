@@ -37,7 +37,7 @@ class GoogleSearchResult(BaseModel):
 
 
 def initialize_google_search():
-    """Initialize the Google Search API wrapper with credentials from environment.
+    """Initialize the Google Search API wrapper with credentials from environment
     variables.
 
     This function loads environment variables and configures the Google Search API client.

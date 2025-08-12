@@ -42,7 +42,7 @@ load_dotenv(".env")
 # 🔧 Amadeus Config (Serializable)
 # -----------------------------
 class AmadeusToolkitConfig(BaseModel):
-    """JSON-serializable config for instantiating the Amadeus toolkit and its.
+    """JSON-serializable config for instantiating the Amadeus toolkit and its
     dependencies.
 
     This configuration class holds the authentication credentials for the Amadeus API

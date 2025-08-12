@@ -38,7 +38,7 @@ class TestGenerator(cst.CSTVisitor):
         self.tests: list[str] = []
 
     def visit_FunctionDef(self, node: cst.FunctionDef) -> None:
-        """Generate a basic test function based on function signature during the AST.
+        """Generate a basic test function based on function signature during the AST
         traversal.
 
         This method analyzes a function definition and creates a test function template

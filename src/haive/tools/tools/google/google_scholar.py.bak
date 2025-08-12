@@ -36,7 +36,7 @@ class GoogleScholarResult(BaseModel):
 
 
 def initialize_google_scholar():
-    """Initialize the Google Scholar API wrapper with credentials from environment.
+    """Initialize the Google Scholar API wrapper with credentials from environment
     variables.
 
     This function loads environment variables and configures the Google Scholar API client.

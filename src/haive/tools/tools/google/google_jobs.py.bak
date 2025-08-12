@@ -52,7 +52,7 @@ class GoogleJobsInput(BaseModel):
 
 
 def initialize_google_jobs():
-    """Initialize the Google Jobs API wrapper with credentials from environment.
+    """Initialize the Google Jobs API wrapper with credentials from environment
     variables.
 
     This function loads environment variables and configures the Google Jobs API client.

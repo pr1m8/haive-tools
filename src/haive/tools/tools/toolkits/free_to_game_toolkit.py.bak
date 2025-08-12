@@ -33,7 +33,7 @@ BASE_URL = "https://www.freetogame.com/api"
 
 
 class GetAllGamesInput(BaseModel):
-    """Input model for retrieving all free-to-play games with optional filtering.
+    """Input model for retrieving all free-to-play games with optional filtering
     parameters.
 
     Attributes:
@@ -56,7 +56,7 @@ class GetAllGamesInput(BaseModel):
 
 
 def get_all_games(input: GetAllGamesInput) -> list[dict]:
-    """Retrieve all free-to-play games with optional filtering by platform, category,.
+    """Retrieve all free-to-play games with optional filtering by platform, category,
     and sort order.
 
     Args:

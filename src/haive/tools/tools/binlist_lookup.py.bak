@@ -45,7 +45,7 @@ class BinLookupInput(BaseModel):
 
 
 def lookup_bin(bin_input: BinLookupInput) -> dict:
-    """Look up information about a payment card based on its BIN/IIN using the.
+    """Look up information about a payment card based on its BIN/IIN using the
     Binlist.net API.
 
     Args:

@@ -37,7 +37,7 @@ class GoogleBooksResult(BaseModel):
 
 
 def initialize_google_books():
-    """Initialize the Google Books API wrapper with credentials from environment.
+    """Initialize the Google Books API wrapper with credentials from environment
     variables.
 
     This function loads environment variables and configures the Google Books API client.

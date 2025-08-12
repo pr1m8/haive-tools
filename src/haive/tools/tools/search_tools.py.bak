@@ -46,7 +46,7 @@ def tavily_qna(
     include_domains: Sequence[str] = [],
     exclude_domains: Sequence[str] = [],
 ) -> str:
-    """Search tool for getting a quick answer to a specific question using Tavily's QnA.
+    """Search tool for getting a quick answer to a specific question using Tavily's QnA
     search.
 
     This tool queries the Tavily API with a question and returns a direct answer along
@@ -176,7 +176,7 @@ def tavily_search_tool(
     exclude_domains: list[str] | None = None,
     verbose: bool | None = False,
 ) -> dict:
-    """Query Tavily Search API with full configurability for comprehensive search.
+    """Query Tavily Search API with full configurability for comprehensive search
     results.
 
     This tool provides complete access to all Tavily search options and returns structured

@@ -72,7 +72,7 @@ class ObjectNameInput(BaseModel):
 
 
 def _get_rps101_object_outcomes(object_name: str) -> dict:
-    """Get detailed information about a specific RPS-101 object, including what it.
+    """Get detailed information about a specific RPS-101 object, including what it
     defeats.
 
     Args:

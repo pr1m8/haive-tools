@@ -70,7 +70,24 @@ instance/
 .scrapy
 
 # Sphinx documentation
+docs/build/
 docs/_build/
+docs/logs/
+docs/autoapi/
+docs/source/_static/
+docs/source/_tags/
+docs/source/autoapi/
+docs/source/changelog.rst
+*.pdf
+*.tex
+sphinx*
+readthedocs-sphinx-search/
+*.rst~
+**/*.rst~
+
+# PyDevelop-Docs artifacts  
+.pydevelop/
+!.pydevelop/docs.yaml
 
 # PyBuilder
 .pybuilder/

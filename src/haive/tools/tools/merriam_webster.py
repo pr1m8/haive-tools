@@ -13,14 +13,12 @@ Requires:
     - langchain_community package with Merriam-Webster integration
     - requests package
 
-Example:
+Examples:
     To use the Merriam-Webster dictionary tools in an agent:
-    ```python
-    from haive.tools.tools.merriam_webster import merriam_webster_tools
+            from haive.tools.tools.merriam_webster import merriam_webster_tools
 
-    # Add to your agent's toolkit
-    agent = Agent(tools=merriam_webster_tools)
-    ```
+            # Add to your agent's toolkit
+            agent = Agent(tools=merriam_webster_tools)
 
 Note:
     - Merriam-Webster API requires registration for an API key

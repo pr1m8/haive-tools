@@ -5,10 +5,8 @@ allowing agents to search for poems by author, title, or content,
 and retrieve random poems. It simplifies the process of finding and
 analyzing poetry from a variety of sources.
 
-Example:
-    ```python
-    tools = get_poetry_toolkit()
-    ```
+Examples:
+            tools = get_poetry_toolkit()
 
 Attributes:
     BASE_URL: The base URL for the PoetryDB API

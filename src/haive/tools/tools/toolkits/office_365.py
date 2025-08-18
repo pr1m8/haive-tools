@@ -4,11 +4,9 @@ This toolkit provides a Langchain-compatible interface to Microsoft 365 services
 allowing agents to work with calendars, emails, and other Microsoft 365 data.
 It handles authentication and provides ready-to-use tools for common operations.
 
-Example:
-    ```python
-    # Tools are already initialized in this module
-    from haive.tools.toolkits.office_365 import tools
-    ```
+Examples:
+            # Tools are already initialized in this module
+            from haive.tools.toolkits.office_365 import tools
 
 Attributes:
     tools: The list of available Office 365 tools

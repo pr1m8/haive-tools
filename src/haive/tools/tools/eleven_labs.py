@@ -12,14 +12,12 @@ Requires:
     - langchain_community package
     - python-dotenv package
 
-Example:
+Examples:
     To use the Eleven Labs text-to-speech tool in an agent:
-    ```python
-    from haive.tools.tools.eleven_labs import eleven_labs_text2speech_tool
+            from haive.tools.tools.eleven_labs import eleven_labs_text2speech_tool
 
-    # Add to your agent's toolkit
-    agent = Agent(tools=[eleven_labs_text2speech_tool[0]])
-    ```
+            # Add to your agent's toolkit
+            agent = Agent(tools=[eleven_labs_text2speech_tool[0]])
 
 """
 

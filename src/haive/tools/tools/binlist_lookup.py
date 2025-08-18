@@ -8,16 +8,14 @@ such as the card scheme, type, brand, country of issuance, and issuing bank.
 This information can be useful for payment processing, fraud detection, and understanding
 the origin of payment cards.
 
-Example:
-    ```python
-    from haive.tools.tools.binlist_lookup import bin_lookup_tool
+Examples:
+            from haive.tools.tools.binlist_lookup import bin_lookup_tool
 
-    # Add to your agent's toolkit
-    agent = Agent(tools=[bin_lookup_tool])
+            # Add to your agent's toolkit
+            agent = Agent(tools=[bin_lookup_tool])
 
-    # Example use in an agent
-    response = agent.run("Look up information about a Visa card with BIN 411111")
-    ```
+            # Example use in an agent
+            response = agent.run("Look up information about a Visa card with BIN 411111")
 
 Note:
     - The Binlist.net API has rate limits and usage restrictions

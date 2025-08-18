@@ -5,10 +5,8 @@ allowing agents to look up verses by reference, get random verses,
 list available translations, and retrieve full chapters. It helps
 create agents that can work with biblical text and references.
 
-Example:
-    ```python
-    tools = vbible_toolkit
-    ```
+Examples:
+            tools = vbible_toolkit
 
 Attributes:
     BASE_URL: The base URL for the Bible API
@@ -267,33 +265,45 @@ vbible_toolkit = [query_tool, random_tool, translations_tool, books_tool, chapte
 
 
 def test_query_single_verse():
+    """Test Query Single Verse.
+"""
     output = query_bible_by_reference("John 3:16")
     assert "John 3:16" in output
 
 
 def test_query_multi_verse():
+    """Test Query Multi Verse.
+"""
     output = query_bible_by_reference("Matt 5:1-3")
     assert "Matthew 5:1" in output
     assert "Matthew 5:3" in output
 
 
 def test_get_random_verse():
+    """Test Get Random Verse.
+"""
     output = get_random_verse()
     assert isinstance(output, str)
     assert any(c.isdigit() for c in output)  # should contain chapter/verse
 
 
 def test_list_translations():
+    """Test List Translations.
+"""
     output = list_translations()
     assert "kjv" in output.lower()
     assert "web" in output.lower()
 
 
 def test_list_books_for_translation():
+    """Test List Books For Translation.
+"""
     output = list_books("web")
     assert "GEN: Genesis" in output or "Genesis" in output
 
 
 def test_get_verses_in_chapter():
+    """Test Get Verses In Chapter.
+"""
     output = get_chapter_verses("web", "JHN", 3)
     assert "16: " in output  # John 3 has a verse 16

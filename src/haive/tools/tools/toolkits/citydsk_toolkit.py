@@ -5,11 +5,9 @@ including the Linked Data API for SPARQL queries and the Tourism API
 for points of interest information. These tools help agents find and
 process structured city information.
 
-Example:
-    ```python
-    toolkit = CitySDKToolkit()
-    tools = toolkit.get_tools()
-    ```
+Examples:
+            toolkit = CitySDKToolkit()
+            tools = toolkit.get_tools()
 
 Attributes:
     None

@@ -18,7 +18,7 @@ with the Reddit API.
 The module exports a StructuredTool that can be used in LangChain-based agents
 to search and retrieve Reddit content programmatically.
 
-Example:
+Examples:
     >>> from haive.tools.tools.reddit_search import RedditStructuredTool
     >>> result = RedditStructuredTool.invoke({
     >>>     "query": "machine learning",
@@ -67,6 +67,8 @@ except (ImportError, ValueError) as e:
 
     class _DummyRedditAPI:
         def search(self, *args, **kwargs):
+            """Search.
+"""
             raise RuntimeError(
                 "Reddit Search tool is not available. "
                 "Please set REDDIT_CLIENT_ID, REDDIT_CLIENT_SECRET, and REDDIT_USER_AGENT environment variables."

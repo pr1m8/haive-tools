@@ -13,14 +13,12 @@ Requires:
     - python-dotenv package
     - Proper Discord application setup with API access
 
-Example:
+Examples:
     To use the Discord tools in an agent:
-    ```python
-    from haive.tools.tools.discord_tools import discord_tools
+            from haive.tools.tools.discord_tools import discord_tools
 
-    # Add to your agent's toolkit
-    agent = Agent(tools=discord_tools)
-    ```
+            # Add to your agent's toolkit
+            agent = Agent(tools=discord_tools)
 
 """
 

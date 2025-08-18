@@ -4,11 +4,9 @@ This toolkit provides tools to interact with the LCBO API, allowing agents to
 search for products and retrieve detailed product information from the Liquor
 Control Board of Ontario's product database.
 
-Example:
-    ```python
-    toolkit = LCBOApiToolkit()
-    tools = toolkit.get_tools()
-    ```
+Examples:
+            toolkit = LCBOApiToolkit()
+            tools = toolkit.get_tools()
 
 Attributes:
     None

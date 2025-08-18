@@ -12,17 +12,15 @@ Requires:
     - langchain_community package with PubMed integration
     - Internet access to query the PubMed API
 
-Example:
+Examples:
     To use the PubMed tools in an agent:
-    ```python
-    from haive.tools.tools.pubmed import pubmed_tools
+            from haive.tools.tools.pubmed import pubmed_tools
 
-    # Add to your agent's toolkit
-    agent = Agent(tools=pubmed_tools)
+            # Add to your agent's toolkit
+            agent = Agent(tools=pubmed_tools)
 
-    # Example use in an agent
-    response = agent.run("Find recent research on COVID-19 vaccines")
-    ```
+            # Example use in an agent
+            response = agent.run("Find recent research on COVID-19 vaccines")
 
 Note:
     - PubMed API has usage limits and rate restrictions

@@ -41,25 +41,23 @@ The tools are designed with the following principles:
 - Async/await support for performance
 
 Usage:
-    ```python
-    from haive.tools.google import GoogleSearchTool
-    from haive.tools.arxiv import ArxivTool
-    from haive.tools.dataforseo import DataForSEOTool
+            from haive.tools.google import GoogleSearchTool
+            from haive.tools.arxiv import ArxivTool
+            from haive.tools.dataforseo import DataForSEOTool
 
-    # Initialize search tool
-    search_tool = GoogleSearchTool(api_key="your_key")
+            # Initialize search tool
+            search_tool = GoogleSearchTool(api_key="your_key")
 
-    # Perform a search
-    results = await search_tool.search("artificial intelligence")
+            # Perform a search
+            results = await search_tool.search("artificial intelligence")
 
-    # Search academic papers
-    arxiv_tool = ArxivTool()
-    papers = await arxiv_tool.search("machine learning", max_results=10)
+            # Search academic papers
+            arxiv_tool = ArxivTool()
+            papers = await arxiv_tool.search("machine learning", max_results=10)
 
-    # SEO analysis
-    seo_tool = DataForSEOTool(username="user", pass="pass
-    analysis = await seo_tool.analyze_website("example.com")
-    ```
+            # SEO analysis
+            seo_tool = DataForSEOTool(username="user", pass="pass
+            analysis = await seo_tool.analyze_website("example.com")
 
 Configuration:
     Most tools require API keys or credentials. These can be provided via:

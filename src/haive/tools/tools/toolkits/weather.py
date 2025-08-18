@@ -126,6 +126,14 @@ class WeatherData(BaseModel):
         """
 
         def c_to_f(c: float | None) -> float | None:
+            """C To F.
+
+Args:
+    c: [TODO: Add description]
+
+Returns:
+    [TODO: Add return description]
+"""
             return round(c * 9 / 5 + 32, 2) if c is not None else None
 
         return WeatherData(

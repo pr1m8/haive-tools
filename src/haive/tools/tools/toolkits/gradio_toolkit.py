@@ -8,10 +8,8 @@ Note: Some tools may be unavailable if the corresponding Gradio spaces are
 experiencing runtime errors or other issues. Make sure to handle potential
 errors gracefully when using these tools.
 
-Example:
-    ```python
-    from haive.tools.toolkits.gradio_toolkit import gradio_toolkit
-    ```
+Examples:
+            from haive.tools.toolkits.gradio_toolkit import gradio_toolkit
 
 Attributes:
     gradio_toolkit: List of Langchain-compatible tools for various AI tasks

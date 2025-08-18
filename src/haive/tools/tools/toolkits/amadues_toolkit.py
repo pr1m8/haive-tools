@@ -17,15 +17,13 @@ This toolkit provides a Langchain-compatible interface to the Amadeus Travel API
 allowing agents to search for flights and find nearby airports. It simplifies
 the process of authenticating with Amadeus and configuring the necessary tools.
 
-Example:
-    ```python
-    config = AmadeusToolkitConfig(
-        client_id=os.getenv("AMADEUS_CLIENT_ID"),
-        client_secret=os.getenv("AMADEUS_CLIENT_SECRET"),
-    )
-    toolkit = AmadeusToolkit.from_config(config)
-    tools = toolkit.get_tools()
-    ```
+Examples:
+            config = AmadeusToolkitConfig(
+                client_id=os.getenv("AMADEUS_CLIENT_ID"),
+                client_secret=os.getenv("AMADEUS_CLIENT_SECRET"),
+            )
+            toolkit = AmadeusToolkit.from_config(config)
+            tools = toolkit.get_tools()
 
 Attributes:
     None

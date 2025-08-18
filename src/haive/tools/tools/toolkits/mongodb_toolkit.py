@@ -11,15 +11,13 @@ The toolkit includes functionality for:
 - Analyzing data from MongoDB databases
 
 Typical usage:
-    ```python
-    from haive.tools.toolkits.mongodb_toolkit import get_mongodb_toolkit
+            from haive.tools.toolkits.mongodb_toolkit import get_mongodb_toolkit
 
-    # Create a toolkit with a connection string
-    toolkit = get_mongodb_toolkit(
-        connection_string="mongodb://localhost:27017/mydatabase",
-        temperature=0
-    )
-    ```
+            # Create a toolkit with a connection string
+            toolkit = get_mongodb_toolkit(
+                connection_string="mongodb://localhost:27017/mydatabase",
+                temperature=0
+            )
 
 """
 
@@ -50,24 +48,22 @@ def get_mongodb_toolkit(
     Returns:
         MongoDBDatabaseToolkit: A toolkit for working with MongoDB databases.
 
-    Example:
-        ```python
-        # Basic usage with default connection
-        toolkit = get_mongodb_toolkit()
+    Examples:
+                # Basic usage with default connection
+                toolkit = get_mongodb_toolkit()
 
-        # Custom connection and temperature
-        toolkit = get_mongodb_toolkit(
-            connection_string="mongodb://username:password@host:27017/database",
-            temperature=0.1
-        )
+                # Custom connection and temperature
+                toolkit = get_mongodb_toolkit(
+                    connection_string="mongodb://username:password@host:27017/database",
+                    temperature=0.1
+                )
 
-        # With custom LLM
-        my_llm = ChatOpenAI(temperature=0.1, model="gpt-4")
-        toolkit = get_mongodb_toolkit(
-            connection_string="mongodb://localhost:27017/analytics",
-            llm=my_llm
-        )
-        ```
+                # With custom LLM
+                my_llm = ChatOpenAI(temperature=0.1, model="gpt-4")
+                toolkit = get_mongodb_toolkit(
+                    connection_string="mongodb://localhost:27017/analytics",
+                    llm=my_llm
+                )
 
     """
     db = MongoDBDatabase.from_connection_string(connection_string)

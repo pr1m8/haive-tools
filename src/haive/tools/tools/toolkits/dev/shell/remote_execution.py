@@ -18,6 +18,13 @@ class RemoteExecutor:
     """Securely execute commands on a remote machine via SSH."""
 
     def __init__(self, hostname: str, username: str, key_path: str):
+        """  Init  .
+
+Args:
+    hostname: [TODO: Add description]
+    username: [TODO: Add description]
+    key_path: [TODO: Add description]
+"""
         self.hostname = hostname
         self.username = username
         self.key_path = key_path

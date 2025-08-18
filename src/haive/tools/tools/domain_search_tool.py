@@ -8,16 +8,14 @@ or competitive analysis.
 The tool returns a list of registered domain names matching the provided key,
 limited to the top 10 results to avoid overwhelming responses.
 
-Example:
-    ```python
-    from haive.tools.tools.domain_search_tool import domain_search_tool
+Examples:
+            from haive.tools.tools.domain_search_tool import domain_search_tool
 
-    # Add to your agent's toolkit
-    agent = Agent(tools=[domain_search_tool])
+            # Add to your agent's toolkit
+            agent = Agent(tools=[domain_search_tool])
 
-    # Example use in an agent
-    response = agent.run("Find domains related to 'python'")
-    ```
+            # Example use in an agent
+            response = agent.run("Find domains related to 'python'")
 
 Note:
     - The domainsdb.info API has usage limits and may throttle requests

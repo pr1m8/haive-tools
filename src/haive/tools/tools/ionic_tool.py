@@ -5,10 +5,8 @@ thousands of online retailers using the Ionic Commerce platform. The tool
 allows agents to find, discover, and compare products based on user queries
 and optional price range specifications.
 
-Example:
-    ```python
-    from haive.tools.tools.ionic_tool import tools
-    ```
+Examples:
+            from haive.tools.tools.ionic_tool import tools
 
 Attributes:
     ionic_tool: Configured Ionic Commerce shopping tool

@@ -1,0 +1,36 @@
+{
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "**/node_modules",
+    "**/__pycache__",
+    "**/.pytest_cache",
+    "**/.mypy_cache",
+    "**/.ruff_cache",
+    "**/build",
+    "**/dist",
+    "**/*.egg-info",
+    "**/docs/_build",
+    "**/vectorstore",
+    "**/lc_cache",
+    "**/scratch**",
+    "**/test_data",
+    "**/.trunk/**",
+    "**/logs",
+    "**/data"
+  ],
+  "extraPaths": [
+    "src",
+    "../haive-core/src",
+    "../../.venv/lib/python3.12/site-packages"
+  ],
+  "pythonVersion": "3.12",
+  "pythonPlatform": "Linux",
+  "typeCheckingMode": "basic",
+  "useLibraryCodeForTypes": true,
+  "verboseOutput": false,
+  "reportMissingImports": "warning",
+  "reportMissingTypeStubs": "none"
+}
+

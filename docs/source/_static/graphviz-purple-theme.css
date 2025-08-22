@@ -1,0 +1,189 @@
+/* Purple-Enhanced Graphviz Diagram Styling */
+
+/* Style all graphviz SVG diagrams */
+.graphviz {
+  margin: 2rem auto !important;
+  text-align: center !important;
+  max-width: 100% !important;
+  overflow-x: auto !important;
+}
+
+/* Add purple-themed container for diagrams */
+.graphviz-wrapper,
+div.graphviz {
+  background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 100%) !important;
+  border: 2px solid #8b5cf6 !important;
+  border-radius: 12px !important;
+  padding: 1.5rem !important;
+  margin: 2rem 0 !important;
+  box-shadow: 0 4px 16px rgba(139, 92, 246, 0.1) !important;
+}
+
+/* Dark mode graphviz container */
+@media (prefers-color-scheme: dark) {
+  .graphviz-wrapper,
+  div.graphviz {
+    background: linear-gradient(135deg, #1a1a2e 0%, #2a2a3e 100%) !important;
+    border-color: #a78bfa !important;
+    box-shadow: 0 4px 16px rgba(167, 139, 250, 0.2) !important;
+  }
+}
+
+/* Style the SVG elements inside graphviz */
+.graphviz svg {
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+/* Purple theme for graph nodes - More specific selectors */
+.graphviz svg g.node polygon,
+.graphviz svg g.node ellipse,
+div.graphviz svg g.node polygon,
+div.graphviz svg g.node ellipse {
+  fill: #ede9fe !important;
+  stroke: #8b5cf6 !important;
+  stroke-width: 2px !important;
+}
+
+.graphviz svg g.node text,
+div.graphviz svg g.node text {
+  fill: #5b21b6 !important;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  font-weight: 500 !important;
+}
+
+/* Hover effects for nodes */
+.graphviz g.node:hover polygon,
+.graphviz g.node:hover ellipse {
+  fill: #ddd6fe !important;
+  stroke: #7c3aed !important;
+  stroke-width: 3px !important;
+  filter: drop-shadow(0 4px 8px rgba(139, 92, 246, 0.3)) !important;
+}
+
+/* Style edges/arrows */
+.graphviz g.edge path {
+  stroke: #8b5cf6 !important;
+  stroke-width: 2px !important;
+}
+
+.graphviz g.edge polygon {
+  fill: #8b5cf6 !important;
+  stroke: #8b5cf6 !important;
+}
+
+/* Style for clusters/subgraphs */
+.graphviz g.cluster polygon {
+  fill: #f3e8ff !important;
+  stroke: #a78bfa !important;
+  stroke-width: 2px !important;
+  stroke-dasharray: 5, 5 !important;
+}
+
+.graphviz g.cluster text {
+  fill: #7c3aed !important;
+  font-weight: 600 !important;
+  font-size: 1.1em !important;
+}
+
+/* Dark mode adjustments for graph elements */
+@media (prefers-color-scheme: dark) {
+  .graphviz g.node polygon,
+  .graphviz g.node ellipse {
+    fill: #312e81 !important;
+    stroke: #a78bfa !important;
+  }
+  
+  .graphviz g.node text {
+    fill: #e9d5ff !important;
+  }
+  
+  .graphviz g.node:hover polygon,
+  .graphviz g.node:hover ellipse {
+    fill: #4c1d95 !important;
+    stroke: #c084fc !important;
+  }
+  
+  .graphviz g.edge path {
+    stroke: #a78bfa !important;
+  }
+  
+  .graphviz g.edge polygon {
+    fill: #a78bfa !important;
+    stroke: #a78bfa !important;
+  }
+  
+  .graphviz g.cluster polygon {
+    fill: #1e1e3f !important;
+    stroke: #6366f1 !important;
+  }
+  
+  .graphviz g.cluster text {
+    fill: #c084fc !important;
+  }
+}
+
+/* Mermaid diagram styling (if used) */
+.mermaid {
+  background: transparent !important;
+  margin: 2rem auto !important;
+  text-align: center !important;
+}
+
+.mermaid svg {
+  max-width: 100% !important;
+  height: auto !important;
+}
+
+/* Purple theme for mermaid nodes */
+.mermaid .node rect,
+.mermaid .node circle,
+.mermaid .node ellipse,
+.mermaid .node polygon {
+  fill: #ede9fe !important;
+  stroke: #8b5cf6 !important;
+  stroke-width: 2px !important;
+}
+
+.mermaid .node .label {
+  color: #5b21b6 !important;
+}
+
+/* Mermaid edges */
+.mermaid .edgePath .path {
+  stroke: #8b5cf6 !important;
+  stroke-width: 2px !important;
+}
+
+.mermaid .edgeLabel {
+  background-color: #ffffff !important;
+  color: #7c3aed !important;
+  border: 1px solid #e9d5ff !important;
+  border-radius: 4px !important;
+  padding: 0.25rem 0.5rem !important;
+}
+
+/* Dark mode mermaid adjustments */
+@media (prefers-color-scheme: dark) {
+  .mermaid .node rect,
+  .mermaid .node circle,
+  .mermaid .node ellipse,
+  .mermaid .node polygon {
+    fill: #312e81 !important;
+    stroke: #a78bfa !important;
+  }
+  
+  .mermaid .node .label {
+    color: #e9d5ff !important;
+  }
+  
+  .mermaid .edgePath .path {
+    stroke: #a78bfa !important;
+  }
+  
+  .mermaid .edgeLabel {
+    background-color: #1a1a2e !important;
+    color: #c084fc !important;
+    border-color: #6366f1 !important;
+  }
+}

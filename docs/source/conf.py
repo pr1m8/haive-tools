@@ -54,3 +54,47 @@ def setup(app):
         
     if os.path.exists("_static/js/api-enhancements.js"):
         app.add_js_file("js/api-enhancements.js")
+
+
+# -- Purple Theme Configuration Overrides ------------------------------------
+# Ensure graphviz extension is enabled for diagrams
+extensions = globals().get('extensions', [])
+if "sphinx.ext.graphviz" not in extensions:
+    extensions.append("sphinx.ext.graphviz")
+
+# Syntax highlighting - use purple-friendly themes
+pygments_style = "default"  # Better for light mode with our custom CSS
+pygments_dark_style = "monokai"  # Good for dark mode
+
+# AutoAPI configuration for prominent API Reference
+autoapi_add_toctree_entry = True
+autoapi_toctree_caption = "🔍 API Reference"
+autoapi_toctree_first = True  # Put at top!
+autoapi_own_page_level = "module"  # Hierarchical organization
+
+# Graphviz configuration for beautiful diagrams
+graphviz_output_format = "svg"
+graphviz_dot_args = [
+    "-Kdot",
+    "-Tsvg",
+    "-Gfontname=Inter",
+    "-Nfontname=Inter",
+    "-Efontname=Inter",
+    "-Gbgcolor=transparent",
+    "-Gpad=0.5",
+    "-Grankdir=TB",
+    "-Gnodesep=0.7",
+    "-Granksep=0.8",
+    "-Gsplines=true",
+]
+
+# CSS files in correct order - purple theme loads last to override
+html_css_files = [
+    "enhanced-design.css",
+    "breadcrumb-navigation.css",
+    "mermaid-custom.css",
+    "tippy-enhancements.css",
+    "graphviz-purple-theme.css",  # Purple diagram theme
+    "code-purple-theme.css",  # Purple code blocks (MUST be last)
+    "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&display=swap",
+]

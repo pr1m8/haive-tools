@@ -18,7 +18,7 @@ Haive Tools Documentation
    comprehensive_toolkits
    quickstart
    examples
-   autoapi/index
+   api_reference
    changelog
 
 Welcome to Haive Tools

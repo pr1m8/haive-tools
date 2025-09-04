@@ -35,9 +35,9 @@ google-search-results = "^2.4.2"
 optional = true
 
 [tool.poetry.group.docs.dependencies]
-# Use the shared pydevelop-docs system (contains all 43+ Sphinx extensions)
-pydevelop-docs = { path = "../../tools/pydevelop-docs", develop = true }
+# Documentation dependencies
 sphinx = "^8.2.3"
+sphinx-autoapi = "^3.6.0"
 sphinx-autodoc-typehints = "^3.1.0"
 autodoc-pydantic = "^2.2.0"
 furo = "^2024.8.6"
@@ -71,7 +71,6 @@ sphinx-issues = "^5.0.0"
 sphinx-git = "^11.0.0"
 sphinx-changelog = "^1.6.0"
 sphinx-prompt = "^1.9.0"
-sphinx-autoapi = "^3.6.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

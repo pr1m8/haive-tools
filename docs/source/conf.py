@@ -1,4 +1,4 @@
-"""Sphinx configuration for haive-tools documentation."""
+"""Sphinx configuration for haive-mcp documentation."""
 
 import os
 import sys
@@ -18,34 +18,43 @@ release = "0.1.0"
 extensions = [
     "autoapi.extension",  # Must be first
     "sphinx.ext.autodoc", 
+    "sphinx.ext.autosummary",  # Add autosummary for detailed docs
     "sphinx.ext.napoleon",
     "sphinx.ext.viewcode",
     "sphinx.ext.intersphinx",
+    "sphinx_codeautolink",  # Automatic GitHub source links
     "sphinx_copybutton",
     "sphinx_design",
     "sphinxcontrib.mermaid",
     "sphinx.ext.graphviz",
+    "myst_parser",  # Parse README.md files
 ]
 
 # AutoAPI Configuration
-autoapi_dirs = ["../../src"]
+autoapi_dirs = ["../../src/haive"]
 autoapi_type = "python"
 autoapi_add_toctree_entry = True
-autoapi_keep_files = True
+autoapi_keep_files = True  # Keep generated files like haive-mcp
 autoapi_root = "autoapi"
 autoapi_include_inheritance_diagram = False
+# autoapi_template_dir = "_templates/autoapi"  # Use custom templates
 autoapi_options = [
     "members",
-    "undoc-members",
     "show-inheritance",
     "show-module-summary",
-    "imported-members",
-    "special-members",
 ]
 
 # CRITICAL: Use module-level pages for hierarchical organization
-autoapi_own_page_level = "module"
+autoapi_own_page_level = "module"  # Module-level pages like haive-mcp
 autoapi_member_order = "groupwise"
+autoapi_generate_api_docs = True
+
+# Skip problematic patterns  
+autoapi_ignore = ["**/test_*.py", "**/tests/*", "**/*_test.py"]
+
+# Enable both AutoAPI and autosummary to work together
+autoapi_python_class_content = "both"  # Include both class and __init__ docstrings
+autoapi_python_use_implicit_namespaces = True
 
 # -- Options for HTML output -------------------------------------------------
 html_theme = "furo"
@@ -60,14 +69,14 @@ html_theme_options = {
     "navigation_depth": 4,
     "show_toc_level": 3,
     "light_css_variables": {
-        "color-brand-primary": "#7C4DFF",
-        "color-brand-content": "#6C3DDF",
+        "color-brand-primary": "#8b5cf6",
+        "color-brand-content": "#7c3aed",
         "color-sidebar-background": "#faf5ff",
         "color-sidebar-background-border": "#e9d5ff", 
     },
     "dark_css_variables": {
-        "color-brand-primary": "#9C7DFF",
-        "color-brand-content": "#8C6DFF",
+        "color-brand-primary": "#a78bfa",
+        "color-brand-content": "#c084fc",
         "color-background-primary": "#0f0019",  # Very dark purple
         "color-background-secondary": "#1a0033",  # Dark purple
         "color-background-hover": "#2d0059",  # Purple hover
@@ -81,29 +90,30 @@ html_theme_options = {
         "color-content-foreground": "#ffffff",
         "color-code-background": "#1e0936",  # Dark purple code bg
     },
-    "announcement": "🛠️ <b>haive-tools</b> - 120+ AI tools and toolkits for the Haive ecosystem",
-    "footer_icons": [
-        {
-            "name": "GitHub",
-            "url": "https://github.com/haive-ai/haive-tools",
-            "html": '<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path></svg>',
-        },
-    ],
-    "source_repository": "https://github.com/haive-ai/haive-tools",
-    "source_branch": "main",
-    "source_directory": "packages/haive-tools/docs/source/",
 }
 
 # Napoleon settings
 napoleon_google_docstring = True
 napoleon_numpy_docstring = True
+napoleon_include_init_with_doc = False
+napoleon_include_private_with_doc = False
+napoleon_include_special_with_doc = True
+
+# Autodoc settings to work with AutoAPI
+autodoc_typehints = "description"
+autodoc_member_order = "groupwise"
+autodoc_default_options = {
+    "members": True,
+    "member-order": "groupwise", 
+    "special-members": "__init__",
+    "undoc-members": True,
+    "exclude-members": "__weakref__"
+}
 
 # Intersphinx
 intersphinx_mapping = {
     "python": ("https://docs.python.org/3", None),
     "sphinx": ("https://www.sphinx-doc.org/en/master", None),
-    "pydantic": ("https://docs.pydantic.dev/latest/", None),
-    "langchain": ("https://python.langchain.com/", None),
 }
 
 # -- Purple Theme Configuration ----------------------------------------------
@@ -112,7 +122,7 @@ pygments_style = "default"  # Better for light mode with our custom CSS
 pygments_dark_style = "monokai"  # Good for dark mode
 
 # AutoAPI configuration for prominent API Reference
-autoapi_add_toctree_entry = True
+# Already configured above - removed duplicates
 autoapi_toctree_caption = "🔍 API Reference"
 autoapi_toctree_first = True  # Put at top!
 
@@ -133,18 +143,39 @@ graphviz_dot_args = [
 ]
 
 # CSS files in correct order - purple theme loads last to override
-html_css_files = [
-    "graphviz-purple-theme.css",  # Purple diagram theme
-    "code-purple-theme.css",  # Purple code blocks
-    "purple-theme-enhanced.css",  # Enhanced purple theming (MUST be last)
-    "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&display=swap",
+# Simplified - using Furo's built-in theme (no CSS overrides needed)
+# The dark_css_variables above already provide the purple theme
+
+# Autosummary settings for detailed API docs
+autosummary_generate = True
+autosummary_generate_overwrite = True
+autosummary_imported_members = True
+
+# Code autolink configuration for GitHub links
+codeautolink_concat_default = True
+codeautolink_global_preface = "https://github.com/pr1m8/haive-tools"
+
+# MyST parser configuration for README.md files
+source_suffix = {
+    ".rst": None,
+    ".md": "myst_parser",
+}
+
+myst_enable_extensions = [
+    "colon_fence",
+    "deflist",
+    "dollarmath",
+    "fieldlist",
+    "html_admonition",
+    "html_image",
+    "linkify",
+    "replacements",
+    "smartquotes",
+    "strikethrough",
+    "substitution",
+    "tasklist",
 ]
 
-# Exclude patterns
-exclude_patterns = [
-    "_build", 
-    "Thumbs.db", 
-    ".DS_Store",
-    "_autoapi_templates/*",
-    "_templates/*.backup/*"
-]
+# Include README.md files in documentation
+myst_heading_anchors = 3
+myst_title_to_header = True

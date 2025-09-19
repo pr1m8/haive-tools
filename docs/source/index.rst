@@ -5,8 +5,8 @@ Welcome to haive-tools
    :target: https://pypi.org/project/haive-tools/
    :alt: PyPI Version
 
-.. image:: https://img.shields.io/github/license/haive-ai/haive-tools?style=flat-square
-   :target: https://github.com/haive-ai/haive-tools/blob/main/LICENSE
+.. image:: https://img.shields.io/github/license/pr1m8/haive-tools?style=flat-square
+   :target: https://github.com/pr1m8/haive-tools/blob/main/LICENSE
    :alt: License
 
 **haive-tools** provides 120+ AI tools and toolkits for the Haive ecosystem - the most comprehensive collection of production-ready integrations.
@@ -121,18 +121,18 @@ Complete API documentation with examples:
 📊 **Project Info**
 ------------------
 
-* **GitHub**: https://github.com/haive-ai/haive-tools
-* **Documentation**: https://haive-tools.readthedocs.io
+* **GitHub**: https://github.com/pr1m8/haive-tools
+* **Documentation**: https://pub-7f716b302a2948e19f08b49b71408039.r2.dev/packages/haive-tools/
 * **PyPI**: https://pypi.org/project/haive-tools/
 * **License**: MIT
 
 🔗 **Related Projects**
 ----------------------
 
-* `haive-core <https://github.com/haive-ai/haive-core>`_ - Core agent framework
-* `haive-agents <https://github.com/haive-ai/haive-agents>`_ - Pre-built agent implementations  
-* `haive-hap <https://github.com/haive-ai/haive-hap>`_ - Agent orchestration protocol
-* `haive-mcp <https://github.com/haive-ai/haive-mcp>`_ - Model Context Protocol integration
+* `haive-core <https://github.com/pr1m8/haive-core>`_ - Core agent framework
+* `haive-agents <https://github.com/pr1m8/haive-agents>`_ - Pre-built agent implementations  
+* `haive-hap <https://github.com/pr1m8/haive-hap>`_ - Agent orchestration protocol
+* `haive-mcp <https://github.com/pr1m8/haive-mcp>`_ - Model Context Protocol integration
 
 📄 **Indices and Tables**
 -------------------------

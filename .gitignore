@@ -192,3 +192,9 @@ cython_debug/
 .pypirc
 .history/
 poetry.lock
+# Documentation builds
+docs/build/
+docs/source/_build/
+
+# Archives
+docs/archive/

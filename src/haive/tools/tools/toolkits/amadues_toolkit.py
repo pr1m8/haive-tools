@@ -4,7 +4,7 @@ import os
 
 from amadeus import Client
 from dotenv import load_dotenv
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
+from haive.core.models.llm.base import OpenAILLMConfig, LLMConfig
 from langchain_community.tools.amadeus.closest_airport import AmadeusClosestAirport
 from langchain_community.tools.amadeus.flight_search import AmadeusFlightSearch
 from langchain_core.language_models import BaseLanguageModel
@@ -62,7 +62,7 @@ class AmadeusToolkitConfig(BaseModel):
         description="Amadeus API client secret.",
     )
     llm_config: LLMConfig | None = Field(
-        default=AzureLLMConfig(),
+        default=OpenAILLMConfig(),
         description="LLM configuration dict, passed to LLMConfig",
     )
 

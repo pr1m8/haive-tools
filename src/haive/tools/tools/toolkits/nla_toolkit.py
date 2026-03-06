@@ -3,7 +3,7 @@ from __future__ import annotations
 import os
 
 from dotenv import load_dotenv
-from haive.core.models.llm.base import AzureLLMConfig, LLMConfig
+from haive.core.models.llm.base import OpenAILLMConfig, LLMConfig
 from langchain_community.agent_toolkits.nla.toolkit import NLAToolkit as RawNLAToolkit
 from langchain_community.utilities.requests import Requests
 from langchain_core.language_models import BaseLanguageModel
@@ -27,7 +27,7 @@ Typical usage:
     # Configure and create the toolkit
     config = NLAToolkitConfig(
         url="https://example.com/openapi.json",
-        llm_config=AzureLLMConfig(deployment_name="my-model")
+        llm_config=OpenAILLMConfig(deployment_name="my-model")
     )
 
     # Create the toolkit and get tools
@@ -59,13 +59,13 @@ class NLAToolkitConfig(BaseModel):
     Attributes:
         url: URL of the OpenAPI spec or AI plugin manifest.
         llm_config: LLM configuration for the model to use with the toolkit.
-            Defaults to an AzureLLMConfig instance.
+            Defaults to an OpenAILLMConfig instance.
 
     """
 
     url: str = Field(..., description="URL of the OpenAPI spec or AI plugin manifest.")
     llm_config: LLMConfig | None = Field(
-        default_factory=AzureLLMConfig, description="LLM configuration."
+        default_factory=OpenAILLMConfig, description="LLM configuration."
     )
 
     def create_llm(self) -> BaseLanguageModel | None:

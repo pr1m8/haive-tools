@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "haive-tools"
 version = "1.0.0"
-description = "haive-tools for Haive framework"
+description = "Tool implementations for Haive agents — search, calculators, APIs, and integrations"
 authors = ["pr1m8 <william.astley@algebraicwealth.com>"]
 license = "MIT"
 readme = "README.md"

@@ -1,11 +1,25 @@
 [tool.poetry]
 name = "haive-tools"
-version = "1.0.0"
+version = "1.0.1"
 description = "Tool implementations for Haive agents — search, calculators, APIs, and integrations"
 authors = ["pr1m8 <william.astley@algebraicwealth.com>"]
 license = "MIT"
 readme = "README.md"
 packages = [{ include = "haive", from = "src" }]
+homepage = "https://github.com/pr1m8/haive-tools"
+repository = "https://github.com/pr1m8/haive-tools"
+documentation = "https://pr1m8.github.io/haive-tools/"
+keywords = ["ai-agents", "tools", "langchain", "search", "tavily", "llm-tools", "calculators", "web-scraping"]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
 [tool.poetry.dependencies]
 haive-core = "^1.0.0"
 python = ">=3.12,<3.13"
